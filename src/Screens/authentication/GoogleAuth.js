@@ -43,7 +43,7 @@ const GoogleAuth = () => {
   useEffect(() => {
     if (userInfo !== null) {
       console.log("Navigation", navigation);
-      navigation.navigate('Dashboard')
+      navigation.navigate('Dashboard', { _signOut })
     }
   }, [userInfo]);
 
@@ -114,6 +114,7 @@ const GoogleAuth = () => {
       console.error(error);
     }
     setGettingLoginStatus(false);
+    navigation.navigate('Home')
   };
 
   if (gettingLoginStatus) {
@@ -124,7 +125,7 @@ const GoogleAuth = () => {
     );
   } else {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ backgroundColor: '#fff', }}>
         <View style={styles.container}>
           <View style={styles.container}>
             {/* {
@@ -168,11 +169,6 @@ const GoogleAuth = () => {
               color={GoogleSigninButton.Color.Light}
               onPress={_signIn}
             />
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={_signOut}>
-              <Text>Logout</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </SafeAreaView>
@@ -184,8 +180,6 @@ export default GoogleAuth;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,

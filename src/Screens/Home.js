@@ -13,7 +13,7 @@ const Home = () => {
     // }, [ userInfo]);
 
     return (
-        <View style = {{flex:1}}>
+        <View style = {{flex:1, justifyContent: 'center', backgroundColor: '#fff'}}>
             <GoogleAuth />
             {/* <AppleAuth /> */}
             <Form />

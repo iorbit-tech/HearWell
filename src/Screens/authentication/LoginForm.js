@@ -8,9 +8,9 @@ import SubmitButton from '../../Components/SubmitButton';
 import { useNavigation } from '@react-navigation/native';
 
 const LoginForm = () => {
-    
+
     const navigation = useNavigation();
-    
+
     const submit = value => {
         console.log(value, 'value');
     }
@@ -19,7 +19,7 @@ const LoginForm = () => {
         validators.reduce((error, validator) => error || validator(value), undefined)
 
     return (
-        <View style={{ alignItems: 'center' }}>
+        <View style={{ alignItems: 'center', backgroundColor: '#fff', }}>
             <Form onSubmit={submit}
                 render={({ handleSubmit, invalid }) => (
                     <View>
@@ -61,7 +61,6 @@ const LoginForm = () => {
                                 text={'Register'}
                                 textStyle={{ textDecorationLine: 'underline', fontWeight: 'bold' }}
                                 submit={() => navigation.navigate('Register')}
-                                // submit={() => console.log('Register')}
                             >
                             </SubmitButton>
                         </View>
