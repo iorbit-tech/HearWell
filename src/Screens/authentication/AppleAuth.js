@@ -10,12 +10,11 @@ import {
 } from 'react-native';
 import { appleAuth, appleAuthAndroid, AppleButton } from '@invertase/react-native-apple-authentication';
 
-import AppleLogo from '../assets/apple-logo.png';
+import AppleLogo from '../../assets/apple-logo.png';
 
 const AppleAuth = () => {
 
   const onAppleButtonPress = async () => {
-
     try {
       let response = {};
       let appleId = '';
@@ -89,7 +88,6 @@ const AppleAuth = () => {
     }
 
   }
-
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
