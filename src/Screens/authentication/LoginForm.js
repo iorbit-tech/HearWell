@@ -36,10 +36,11 @@ const LoginForm = () => {
                             name='password'
                             label="Password *"
                             validate={composeValidators(required(), length({ min: 8 }))}
-                            keyboardType={'password'}
+                            keyboardType={'default'}
                             autoCapitalize={'none'}
                             component={Input}
                             placeholderName='Password'
+                            secureTextEntry = {true}
                         />
                         <View style={{ backgroundColor: '#000', opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignSelf: 'center', flexDirection: 'row' }}>
                             {/* <SubmitButton

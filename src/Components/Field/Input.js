@@ -4,7 +4,7 @@ import { View, TextInput, Text } from "react-native";
 const Input = (props) => {
     const [values, setvalues] = useState(props.input.value || props.initValue || "");
     const [valueEntered, setvalueEntered] = useState((props.input.value || props.initValue) ? true : false);
-    const { meta: { touched, error }, input: { value }, initValue, label, serverError, inputstyle = {}, without_background = false, placeholderName, getValue, } = props;
+    const { meta: { touched, error }, input: { value }, initValue, label, serverError, inputstyle = {}, without_background = false, placeholderName, secureTextEntry, getValue, } = props;
 
     useEffect(() => {
         setvalueEntered(initValue !== "" ? true : false)
@@ -28,6 +28,7 @@ const Input = (props) => {
                     autoCorrect={false}
                     {...props}
                     placeholderTextColor={'grey'}
+                    secureTextEntry={secureTextEntry}
                 />
                 <View style={{ bottom: 15, left: 5 }}>
                     {value.length > 0 &&
