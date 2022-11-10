@@ -20,6 +20,7 @@
     "react-native": "0.70.5",
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "^3.18.2",
+    "react-native-simple-radio-button": "^2.7.4",
     "redux-form-validators": "^3.3.2"
   },
   "devDependencies": {
