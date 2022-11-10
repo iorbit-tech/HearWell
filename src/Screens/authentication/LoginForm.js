@@ -5,9 +5,12 @@ import { required, email, length } from 'redux-form-validators';
 
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
+import { useNavigation } from '@react-navigation/native';
 
-const LoginForm = ({ navigation }) => {
-
+const LoginForm = () => {
+    
+    const navigation = useNavigation();
+    
     const submit = value => {
         console.log(value, 'value');
     }
@@ -57,8 +60,8 @@ const LoginForm = ({ navigation }) => {
                             <SubmitButton
                                 text={'Register'}
                                 textStyle={{ textDecorationLine: 'underline', fontWeight: 'bold' }}
-                                // submit={() => navigation.navigate('Register')}
-                                submit={() => console.log('Register')}
+                                submit={() => navigation.navigate('Register')}
+                                // submit={() => console.log('Register')}
                             >
                             </SubmitButton>
                         </View>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import AppleAuth from './authentication/AppleAuth';
-import Form from './authentication/Form';
+import Form from './authentication/LoginForm';
 import GoogleAuth from './authentication/GoogleAuth';
 
 const Home = () => {

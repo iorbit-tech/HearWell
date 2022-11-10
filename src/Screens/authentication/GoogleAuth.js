@@ -18,15 +18,10 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import Dashboard from '../Dashboard';
-// import { Form, Field } from 'react-final-form';
-// import { required, email, length } from 'redux-form-validators';
-// import { appleAuth, appleAuthAndroid, AppleButton } from '@invertase/react-native-apple-authentication';
-// import AppleLogo from './assets/apple-logo.png'
-// import Input from './components/Field/input';
-// import SubmitButton from './components/SubmitButton';
+import { useNavigation } from '@react-navigation/native';
 
 const GoogleAuth = () => {
+  const navigation = useNavigation();
   const [userInfo, setUserInfo] = useState(null);
   const [gettingLoginStatus, setGettingLoginStatus] = useState(true);
 
@@ -47,7 +42,8 @@ const GoogleAuth = () => {
   // need to handle in Home Screen
   useEffect(() => {
     if (userInfo !== null) {
-      console.log('LoggedIn');
+      console.log("Navigation", navigation);
+      navigation.navigate('Dashboard')
     }
   }, [userInfo]);
 
