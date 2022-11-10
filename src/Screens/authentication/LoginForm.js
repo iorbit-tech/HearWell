@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
 
@@ -13,6 +13,9 @@ const LoginForm = () => {
 
     const submit = value => {
         console.log(value, 'value');
+        if(Platform.OS == 'ios') {
+            navigation.navigate('Dashboard');
+        }
     }
 
     const composeValidators = (...validators) => value =>

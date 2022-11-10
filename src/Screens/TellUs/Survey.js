@@ -64,7 +64,7 @@ const Survey = ({ navigation }) => {
                     text={'Next'}
                     btnStyle={{ backgroundColor: 'blue', padding: 20, borderRadius: 10 }}
                     textStyle={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}
-                    submit={() => setQuestionIndex(questionIndex + 1)}
+                    submit={() => (questionIndex< (Questions.length-1)) ? setQuestionIndex(questionIndex + 1): setQuestionIndex(questionIndex)}
                 />
             </View>
         </View>

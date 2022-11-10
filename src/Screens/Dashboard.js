@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import SubmitButton from '../Components/SubmitButton';
 
 const Dashboard = ({ route, navigation }) => {
-    const { _signOut } = route.params;
+    // const { _signOut } = route.params;
     return (
         <View style={{ flex: 1 }}>
             <View style={{ backgroundColor: 'grey' }}>
@@ -41,11 +41,11 @@ const Dashboard = ({ route, navigation }) => {
                     </View>
                 </View>
             </View>
-            <SubmitButton
-                submit={_signOut}
+            {/* <SubmitButton
+                submit={_signOut? _signOut : ''}
                 text={'Logout'}
                 btnStyle={{ backgroundColor: 'grey', padding: 10, width: 100, alignItems: 'center', alignSelf: 'center' }}
-            />
+            /> */}
         </View>
     )
 };
