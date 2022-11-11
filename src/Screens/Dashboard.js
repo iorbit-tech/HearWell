@@ -31,7 +31,9 @@ const Dashboard = ({ route, navigation }) => {
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, marginRight: 10, }}
                             text={'Ask Us'}
-                            textStyle={{ textAlign: 'center' }} />
+                            textStyle={{ textAlign: 'center' }} 
+                            submit={() => navigation.navigate('Ask us')}
+                            />
                     </View>
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
