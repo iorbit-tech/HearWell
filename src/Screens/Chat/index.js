@@ -32,7 +32,6 @@ const Chat = () => {
             <View style={{ flexDirection: 'row', position: 'absolute', right: 60, top:10 }}>
                 <Image style={{ width: 25, height: 25, marginLeft: 10, tintColor: 'grey', transform: [{ rotate: '130deg' }] }} source={AttachmentPin} />
                 {/* <Image style = {{width: 30, height: 30, marginLeft: 10, tintColor: 'grey'}} source = {Microphone} /> */}
-
             </View>
         );
     }
@@ -90,6 +89,7 @@ const Chat = () => {
             messages={messages}
             onSend={messages => onSend(messages)}
             renderActions={renderActions}
+            // isTyping = {true}
             user={{
                 _id: 1,
             }}

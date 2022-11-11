@@ -6,6 +6,7 @@ import { required, email, length } from 'redux-form-validators';
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
 import { useNavigation } from '@react-navigation/native';
+import { submitLogin } from '../../actions';
 
 const LoginForm = () => {
 
@@ -16,6 +17,7 @@ const LoginForm = () => {
         if(Platform.OS == 'ios') {
             navigation.navigate('Dashboard');
         }
+        submitLogin(value)
     }
 
     const composeValidators = (...validators) => value =>

@@ -6,14 +6,15 @@ import { required, email, length } from 'redux-form-validators';
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
 import { useNavigation } from '@react-navigation/native';
+import { submitSignup } from '../../actions';
 
 const Register = () => {
 
     const navigation = useNavigation();
 
     const submit = value => {
-        console.log(value, 'value');
-    }
+        submitSignup(value);
+      }
 
     const composeValidators = (...validators) => value =>
         validators.reduce((error, validator) => error || validator(value), undefined)
