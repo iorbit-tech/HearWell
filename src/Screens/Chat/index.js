@@ -29,8 +29,8 @@ const Chat = () => {
 
     const renderActions = () => {
         return (
-            <View style={{ flexDirection: 'row', position: 'absolute', right: 60 }}>
-                <Image style={{ width: 30, height: 30, marginLeft: 10, tintColor: 'grey' }} source={AttachmentPin} />
+            <View style={{ flexDirection: 'row', position: 'absolute', right: 60, top:10 }}>
+                <Image style={{ width: 25, height: 25, marginLeft: 10, tintColor: 'grey', transform: [{ rotate: '130deg' }] }} source={AttachmentPin} />
                 {/* <Image style = {{width: 30, height: 30, marginLeft: 10, tintColor: 'grey'}} source = {Microphone} /> */}
 
             </View>
@@ -67,10 +67,11 @@ const Chat = () => {
     return (
         <GiftedChat
             messagesContainerStyle={{ width: window.width }}
-            placeholder='Type a message...'
+            placeholder='Reply'
             renderSend={(props) => {
                 const { text, messageIdGenerator, user, onSend } = props
                 return (
+                    <View style = {{position: 'absolute', top:10, right:5}}>
                     <TouchableOpacity onPress={
                         () => {
                             if (text && onSend) {
@@ -78,8 +79,9 @@ const Chat = () => {
                             }
                         }
                     } style={{}}>
-                        <Image style={{ width: 30, height: 30, marginRight: 10, tintColor: '#5CB6FC' }} source={SendArrow} />
+                        <Image style={{ width: 28, height: 28, marginRight: 10, tintColor: 'grey', }} source={SendArrow} />
                     </TouchableOpacity>
+                    </View>
                 )
             }}
             renderInputToolbar={renderInputToolbar}
