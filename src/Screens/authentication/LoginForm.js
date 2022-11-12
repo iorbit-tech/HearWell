@@ -47,7 +47,8 @@ const LoginForm = () => {
                             placeholderName='Password'
                             secureTextEntry = {true}
                         />
-                        <View style={{ backgroundColor: '#000', opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignSelf: 'center', flexDirection: 'row' }}>
+                        <View style = {{flexDirection: 'row',  alignItems: 'center'}}>
+                        <View style={{ backgroundColor: '#000', marginLeft:10, opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignItems: 'center' }}>
                             {/* <SubmitButton
                                 disabled={invalid == true && true}
                                 submit={() => navigation.navigate('Register')}
@@ -61,18 +62,22 @@ const LoginForm = () => {
                                 textStyle={{ color: '#fff' }}
                             />
                         </View>
-                        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                            <Text>New User </Text>
+                        <View style = {{position: 'absolute', right: 10}}>
+                           <SubmitButton
+                           text={'Forgot Password'}
+                           textStyle ={{textDecorationLine: 'underline', fontWeight: '400'}}
+                           />
+                        </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', alignSelf: 'center', top: 20 }}>
+                            <Text>Don't have an account? </Text>
                             <SubmitButton
-                                text={'Register'}
+                                text={'Sign up here'}
                                 textStyle={{ textDecorationLine: 'underline', fontWeight: 'bold' }}
                                 submit={() => navigation.navigate('Register')}
                             >
                             </SubmitButton>
                         </View>
-                        {/* <View>
-                            <Text>Forgot Password</Text>
-                        </View> */}
                     </View>
                 )
                 }

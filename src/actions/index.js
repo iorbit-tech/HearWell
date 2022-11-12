@@ -1,6 +1,7 @@
 import api from "./api";
 
 export const submitSignup = async (data) => {
+    console.log(data, 'data');
     await api.post('api/user/', data)
     .then(response => {
     console.log(response, 'signupData1');
