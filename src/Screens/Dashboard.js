@@ -30,17 +30,17 @@ const Dashboard = ({ route, navigation }) => {
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, marginRight: 10, }}
+                            text={'Profile'}
+                            textStyle={{ textAlign: 'center' }} 
+                            submit={() => navigation.navigate('Profile')}/>
+                    </View>
+                    <View style={{ flex: 0.5 }}>
+                        <SubmitButton
+                            btnStyle={{ backgroundColor: '#51B3FF', padding: 20, }}
                             text={'Ask Us'}
                             textStyle={{ textAlign: 'center' }} 
                             submit={() => navigation.navigate('Ask us')}
                             />
-                    </View>
-                    <View style={{ flex: 0.5 }}>
-                        <SubmitButton
-                            btnStyle={{ backgroundColor: '#51B3FF', padding: 20 }}
-                            text={'Profile'}
-                            textStyle={{ textAlign: 'center' }} 
-                            submit={() => navigation.navigate('Profile')}/>
                     </View>
                 </View>
             </View>

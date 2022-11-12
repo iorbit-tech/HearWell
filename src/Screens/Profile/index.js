@@ -8,8 +8,7 @@ import ProfilePhoto from '../../assets/profile.png'
 import SubmitButton from '../../Components/SubmitButton';
 import Checkbox from '../../Components/Field/CheckBox';
 
-const Profile = () => {
-
+const Profile = ({navigation}) => {
     const submit = (value) => {
         console.log(value, 'value');
     }
@@ -30,7 +29,7 @@ const Profile = () => {
                                 name='name'
                                 label="name *"
                                 // validate={composeValidators(required(), email())}
-                                keyboardType={'email-address'}
+                                keyboardType={'default'}
                                 autoCapitalize={'none'}
                                 component={Input}
                                 placeholderName='Name'
@@ -92,11 +91,14 @@ const Profile = () => {
                                 />
                                 <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>Hearing aid user</Text>
                                 </View>
+                               {/* {hearingaiduser === true && */}
                             <SubmitButton
-                                        submit={handleSubmit}
+                                        submit={() => navigation.navigate('Hearing aid details')}
                                         text={'Submit'}
-                                        textStyle={{ fontWeight: 'bold', }}
+                                        textStyle={{ fontWeight: 'bold', color: '#fff' }}
+                                        btnStyle = {{alignSelf: 'center', backgroundColor: '#000', padding: 10, borderRadius: 10, marginTop: 40}}
                                     />
+                               {/* } */}
                         </View>
                     )}
                 />

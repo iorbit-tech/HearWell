@@ -10,6 +10,7 @@ import TellUs from './src/Screens/TellUs';
 import Survey from './src/Screens/TellUs/Survey';
 import Chat from './src/Screens/Chat';
 import Profile from './src/Screens/Profile';
+import HearingDetails from './src/Screens/Profile/HearingDetails';
 
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ const App = () => {
         <Stack.Screen name="Hearing test" component={Survey} />
         <Stack.Screen name="Ask us" component={Chat} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Hearing aid details" component={HearingDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
