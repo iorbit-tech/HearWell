@@ -5,11 +5,11 @@ import {  getHeight, getWidth } from '../../Components/utils';
 
 const TellUs = ({navigation}) => {
     return (
-        <View style={{ flex: 1, backgroundColor: '#fff', }}>
+        <View style={{ flex: 1, backgroundColor: '#fff'}}>
             <View style={{ padding: 20 }}>
                 <Text>Take the survey to help us understand your lifestyle and how it may be affected by your hearing</Text>
             </View>
-            <View style={{ width: getWidth()/1.2, alignSelf: 'center', marginTop: getHeight()/1.2, position: 'absolute' }}>
+            <View style={{ width: getWidth()/1.2, alignSelf: 'center', marginTop: getHeight()/1.3, position: 'absolute' }}>
                 <SubmitButton
                     text={'Start'}
                     btnStyle={{ backgroundColor: 'blue', padding: 20, borderRadius: 10 }}

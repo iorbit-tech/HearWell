@@ -5,10 +5,11 @@ import { getHeight, getWidth } from '../../Components/utils';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 const Questions = [
-    { id: 0, question: 1, name: "I have worn a hearing device", },
-    { id: 1, question: 2, name: "I have worn a hearing device 2", },
-    { id: 2, question: 3, name: "I have worn a hearing device 3", },
-    { id: 3, question: 4, name: "I have worn a hearing device 4", },
+    { id: 0, question: 1, name: "I have worn a hearing device?", },
+    { id: 1, question: 2, name: "How long do you have any discomfort using the Hearing Device?", },
+    { id: 2, question: 3, name: "How long are you using this device?", },
+    { id: 3, question: 4, name: "At what age you started using the device?", },
+    { id: 4, question: 5, name: "How long you are using this Brand of your Hearing Device?" },
 ];
 
 const Survey = ({ navigation }) => {
@@ -59,12 +60,12 @@ const Survey = ({ navigation }) => {
                 }
             </RadioForm>
             </View>
-            <View style={{ width: getWidth() / 1.2, alignSelf: 'center', marginTop: getHeight() / 1.2, position: 'absolute' }}>
+            <View style={{ width: getWidth() / 1.2, alignSelf: 'center', marginTop: getHeight() / 1.3, position: 'absolute' }}>
                 <SubmitButton
                     text={'Next'}
                     btnStyle={{ backgroundColor: 'blue', padding: 20, borderRadius: 10 }}
                     textStyle={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}
-                    submit={() => (questionIndex< (Questions.length-1)) ? setQuestionIndex(questionIndex + 1): setQuestionIndex(questionIndex)}
+                    submit={() => (questionIndex< (Questions.length-1)) ? setQuestionIndex(questionIndex + 1): navigation.navigate('Dashboard')}
                 />
             </View>
         </View>
