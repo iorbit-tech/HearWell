@@ -15,7 +15,7 @@ const Checkbox = (props) => {
     return (
         <>
             <View>
-            <CheckBox
+                <CheckBox
                     style={{}}
                     disabled={false}
                     value={values}

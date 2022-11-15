@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Field, Form } from 'react-final-form';
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, ScrollView } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 
 import Input from '../../Components/Field/Input';
@@ -8,13 +8,13 @@ import ProfilePhoto from '../../assets/profile.png'
 import SubmitButton from '../../Components/SubmitButton';
 import Checkbox from '../../Components/Field/CheckBox';
 
-const Profile = ({navigation}) => {
+const Profile = ({ navigation }) => {
     const submit = (value) => {
         console.log(value, 'value');
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+        <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
             <View style={{ marginTop: 10, marginLeft: 10 }}>
                 <SubmitButton
                     imageUri={ProfilePhoto}
@@ -74,36 +74,36 @@ const Profile = ({navigation}) => {
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>HearingLoss</Text>
                             </View>
-                            <View style = {{marginTop: 20}}>
-                            <Field
-                                name='other'
-                                label="currentheotheralthstatistics *"
-                                keyboardType={'default'}
-                                autoCapitalize={'none'}
-                                component={Input}
-                                placeholderName='Other'
-                            />
+                            <View style={{ marginTop: 20 }}>
+                                <Field
+                                    name='other'
+                                    label="currentheotheralthstatistics *"
+                                    keyboardType={'default'}
+                                    autoCapitalize={'none'}
+                                    component={Input}
+                                    placeholderName='Other'
+                                />
                             </View>
-                            <View style = {{flexDirection: 'row', marginTop: 10}}>
-                            <Field
+                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                                <Field
                                     name='hearingaiduser'
                                     component={Checkbox}
                                 />
                                 <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>Hearing aid user</Text>
-                                </View>
-                               {/* {hearingaiduser === true && */}
+                            </View>
+                            {/* {hearingaiduser === true && */}
                             <SubmitButton
-                                        submit={() => navigation.navigate('Hearing aid details')}
-                                        text={'Submit'}
-                                        textStyle={{ fontWeight: 'bold', color: '#fff' }}
-                                        btnStyle = {{alignSelf: 'center', backgroundColor: '#000', padding: 10, borderRadius: 10, marginTop: 40}}
-                                    />
-                               {/* } */}
+                                submit={() => navigation.navigate('Hearing aid details')}
+                                text={'Submit'}
+                                textStyle={{ fontWeight: 'bold', color: '#fff' }}
+                                btnStyle={{ alignSelf: 'center', backgroundColor: '#000', padding: 10, borderRadius: 10, marginTop: 40 }}
+                            />
+                            {/* } */}
                         </View>
                     )}
                 />
             </View>
-        </View>
+        </ScrollView>
     )
 };
 

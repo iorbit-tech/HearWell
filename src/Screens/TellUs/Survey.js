@@ -31,41 +31,41 @@ const Survey = ({ navigation }) => {
                 <Text>Question{Questions[questionIndex].question}:</Text>
                 <Text>{Questions[questionIndex].name}:</Text>
             </View>
-            <View style = {{ padding: 20, marginTop: 10}}>
-            <RadioForm>
-                {
-                    radio_props.map((obj, i) => (
-                        <RadioButton labelHorizontal={true} key={i} >
-                            <RadioButtonInput
-                                obj={obj}
-                                index={i}
-                                initial={0}
-                                onPress={(value) => { setValue(value) }}
-                                buttonSize={10}
-                                isSelected={setValue === i}
-                                buttonOuterColor={value === i ? '#9B9B9B' : 'grey'}
-                                buttonStyle={{backgroundColor: value === i ?  '#0E96FF' : '#fff'}}
-                            />
-                            <RadioButtonLabel
-                                obj={obj}
-                                index={i}
-                                initial={0}
-                                labelHorizontal={true}
-                                onPress={(value) => { setValue(value) }}
-                                labelStyle={{ fontSize: 20, color: 'grey' }}
-                                labelWrapStyle={{marginLeft: 10}}
-                            />
-                        </RadioButton>
-                    ))
-                }
-            </RadioForm>
+            <View style={{ padding: 20, marginTop: 10 }}>
+                <RadioForm>
+                    {
+                        radio_props.map((obj, i) => (
+                            <RadioButton labelHorizontal={true} key={i} >
+                                <RadioButtonInput
+                                    obj={obj}
+                                    index={i}
+                                    initial={0}
+                                    onPress={(value) => { setValue(value) }}
+                                    buttonSize={10}
+                                    isSelected={setValue === i}
+                                    buttonOuterColor={value === i ? '#9B9B9B' : 'grey'}
+                                    buttonStyle={{ backgroundColor: value === i ? '#0E96FF' : '#fff' }}
+                                />
+                                <RadioButtonLabel
+                                    obj={obj}
+                                    index={i}
+                                    initial={0}
+                                    labelHorizontal={true}
+                                    onPress={(value) => { setValue(value) }}
+                                    labelStyle={{ fontSize: 20, color: 'grey' }}
+                                    labelWrapStyle={{ marginLeft: 10 }}
+                                />
+                            </RadioButton>
+                        ))
+                    }
+                </RadioForm>
             </View>
             <View style={{ width: getWidth() / 1.2, alignSelf: 'center', marginTop: getHeight() / 1.3, position: 'absolute' }}>
                 <SubmitButton
                     text={'Next'}
                     btnStyle={{ backgroundColor: 'blue', padding: 20, borderRadius: 10 }}
                     textStyle={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}
-                    submit={() => (questionIndex< (Questions.length-1)) ? setQuestionIndex(questionIndex + 1): navigation.navigate('Dashboard')}
+                    submit={() => (questionIndex < (Questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}
                 />
             </View>
         </View>

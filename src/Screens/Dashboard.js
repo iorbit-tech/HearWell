@@ -15,15 +15,16 @@ const Dashboard = ({ route, navigation }) => {
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, marginRight: 10, }}
                             text={'Tell us more'}
-                            textStyle={{ textAlign: 'center' }} 
+                            textStyle={{ textAlign: 'center' }}
                             submit={() => navigation.navigate('Tell us more')}
-                            />
+                        />
                     </View>
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20 }}
                             text={'Hearing Diary'}
-                            textStyle={{ textAlign: 'center' }} />
+                            textStyle={{ textAlign: 'center' }}
+                            submit={() => navigation.navigate('Hearing Diary')} />
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 10 }}>
@@ -31,16 +32,16 @@ const Dashboard = ({ route, navigation }) => {
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, marginRight: 10, }}
                             text={'Profile'}
-                            textStyle={{ textAlign: 'center' }} 
-                            submit={() => navigation.navigate('Profile')}/>
+                            textStyle={{ textAlign: 'center' }}
+                            submit={() => navigation.navigate('Profile')} />
                     </View>
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, }}
                             text={'Ask Us'}
-                            textStyle={{ textAlign: 'center' }} 
+                            textStyle={{ textAlign: 'center' }}
                             submit={() => navigation.navigate('Ask us')}
-                            />
+                        />
                     </View>
                 </View>
             </View>
