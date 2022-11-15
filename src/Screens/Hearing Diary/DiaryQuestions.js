@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { View, Text } from 'react-native';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 import Checkbox from '../../Components/Field/CheckBox';
+import Radiobutton from '../../Components/Field/RadioButton';
 import SubmitButton from '../../Components/SubmitButton';
 import { NEXT } from '../../Constants/appconstants';
 
@@ -43,50 +43,37 @@ const DiaryQuestions = ({ navigation }) => {
                                     </View>
                                 )}
                             />
-
                         </View>
                     ))
                     }
-                    < SubmitButton
+                    <SubmitButton
                         btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
                         textStyle={{ color: '#fff', textAlign: 'center' }}
                         text={NEXT}
                         submit={() => (questionIndex < (Questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}
                     />
-
                 </View>
             }
             {Questions[questionIndex].type == 'radio' &&
                 <View style={{ padding: 20 }}>
                     <Text>{Questions[questionIndex].name}</Text>
-                    <RadioForm style={{ marginTop: 10, }}>
-                        {
-                            Questions[questionIndex].options.map((obj, i) => (
-                                <RadioButton style={{ marginTop: 10 }} labelHorizontal={true} key={i} >
-                                    <RadioButtonInput
-                                        obj={obj}
-                                        index={i}
-                                        initial={0}
-                                        onPress={(value) => { setValue(value) }}
-                                        buttonSize={10}
-                                        isSelected={setValue === i}
-                                        buttonOuterColor={value === i ? '#9B9B9B' : 'grey'}
-                                        buttonStyle={{ backgroundColor: value === i ? '#0E96FF' : '#fff' }}
-                                    />
-                                    <RadioButtonLabel
-                                        obj={obj}
-                                        index={i}
-                                        initial={0}
-                                        labelHorizontal={true}
-                                        onPress={(value) => { setValue(value) }}
-                                        labelStyle={{ fontSize: 20, color: 'grey' }}
-                                        labelWrapStyle={{ marginLeft: 10 }}
-                                    />
-                                </RadioButton>
-                            ))
-
-                        }
-                    </RadioForm>
+                    <View>
+                        <Form onSubmit={submit}
+                            render={({ handleSubmit, invalid }) => (
+                                <View>
+                                    <View style={{ flexDirection: 'row', marginTop: 10, }}>
+                                        <Field
+                                            name={questionIndex} //need to change
+                                            component={Radiobutton}
+                                            Questions={Questions}
+                                            questionIndex={questionIndex}
+                                            value={value}
+                                        />
+                                    </View>
+                                </View>
+                            )}
+                        />
+                    </View>
                     <SubmitButton
                         btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
                         textStyle={{ color: '#fff', textAlign: 'center' }}
