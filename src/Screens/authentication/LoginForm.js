@@ -8,17 +8,18 @@ import SubmitButton from '../../Components/SubmitButton';
 import { useNavigation } from '@react-navigation/native';
 import { submitLogin } from '../../actions';
 import { FORGOT_PASSWORD, LOGIN, NEW_ACCOUNT, NEW_USER, PASSWORD, USER_NAME } from '../../Constants/appconstants';
+import { useDispatch } from 'react-redux';
 
 const LoginForm = () => {
 
     const navigation = useNavigation();
-
+    const dispatch = useDispatch();
     const submit = value => {
         console.log(value, 'value');
         // if (Platform.OS == 'ios') {
         navigation.navigate('Dashboard');
         // }
-        submitLogin(value)
+        dispatch(submitLogin(value));
     }
 
     const composeValidators = (...validators) => value =>

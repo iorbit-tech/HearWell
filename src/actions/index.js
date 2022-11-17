@@ -1,24 +1,20 @@
 import api from "./api";
 
-export const submitSignup = async (data) => {
-    console.log(data, 'data');
-    await api.post('api/user/', data)
-        .then(response => {
-            console.log(response, 'signupData1');
-            // if Login/Signup successful, we need to setThe Token for further API calls
-            // api.defaults.headers.common["Authorization"] = `Bearer ${signupData.token}`;
-            // We need to return the signupData
+export const submitSignup = (data) => {
+    return dispatch => {
+        dispatch({
+            type: "SIGNUP",
+            payload: api.post('api/user/', data)
         })
-        .catch(error => console.log(error));
+    }
 }
 
 export const submitLogin = (data) => {
-    api.post('api/user/login', data)
-        .then(response => {
-            console.log(response, 'signupData');
-            // if Login/Signup successful, we need to setThe Token for further API calls
-            // api.defaults.headers.common["Authorization"] = `Bearer ${response.token}`;
-            // We need to return the signupData
+    console.log(data, 'data')
+    return dispatch => {
+        dispatch({
+            type: "LOGIN",
+            payload: api.post('api/user/login', data)
         })
-        .catch(error => console.log(error));
+    }
 }

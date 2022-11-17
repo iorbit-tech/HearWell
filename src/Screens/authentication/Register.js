@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
+import { useDispatch } from 'react-redux';
 
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
@@ -10,10 +11,11 @@ import { submitSignup } from '../../actions';
 
 const Register = () => {
 
+    const dispatch = useDispatch();
     const navigation = useNavigation();
 
     const submit = value => {
-        submitSignup(value);
+        dispatch(submitSignup(value));
     }
 
     const composeValidators = (...validators) => value =>
