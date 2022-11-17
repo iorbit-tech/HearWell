@@ -14,13 +14,13 @@ const Register = () => {
 
     const submit = value => {
         submitSignup(value);
-      }
+    }
 
     const composeValidators = (...validators) => value =>
         validators.reduce((error, validator) => error || validator(value), undefined)
 
     return (
-        <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', }}>
             <Form onSubmit={submit}
                 render={({ handleSubmit, invalid }) => (
                     <View>
@@ -41,7 +41,7 @@ const Register = () => {
                             autoCapitalize={'none'}
                             component={Input}
                             placeholderName='Password'
-                            secureTextEntry = {true}
+                            secureTextEntry={true}
                         />
                         <View style={{ backgroundColor: '#000', opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignSelf: 'center', flexDirection: 'row' }}>
                             {/* <SubmitButton

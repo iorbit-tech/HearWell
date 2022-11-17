@@ -1,9 +1,17 @@
 import React, { Suspense } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+
+import Logout from '../Components/Logout';
 import SubmitButton from '../Components/SubmitButton';
+import { AppBarStyle } from '../Components/utils';
+
 
 const Dashboard = ({ route, navigation }) => {
+
     // const { _signOut } = route.params;
+
+    AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout />, '')
+
     return (
         <View style={{ flex: 1 }}>
             <View style={{ backgroundColor: 'grey' }}>

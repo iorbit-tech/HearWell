@@ -15,9 +15,9 @@ const LoginForm = () => {
 
     const submit = value => {
         console.log(value, 'value');
-        if (Platform.OS == 'ios') {
-            navigation.navigate('Dashboard');
-        }
+        // if (Platform.OS == 'ios') {
+        navigation.navigate('Dashboard');
+        // }
         submitLogin(value)
     }
 
