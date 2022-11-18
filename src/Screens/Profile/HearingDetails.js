@@ -4,6 +4,7 @@ import { View, Text, useWindowDimensions, } from 'react-native';
 import Checkbox from '../../Components/Field/CheckBox';
 
 import Input from '../../Components/Field/Input';
+import { AID_USER, MAKE, MODEL, OTHER_DETAILS } from '../../Constants/appconstants';
 
 const HearingDetails = ({ navigation }) => {
 
@@ -23,7 +24,7 @@ const HearingDetails = ({ navigation }) => {
                                     name='hearingaiduser'
                                     component={Checkbox}
                                 />
-                                <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>Hearing aid user</Text>
+                                <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>{AID_USER}</Text>
                             </View>
                             <Field
                                 name='make'
@@ -31,7 +32,7 @@ const HearingDetails = ({ navigation }) => {
                                 keyboardType={'default'}
                                 autoCapitalize={'none'}
                                 component={Input}
-                                placeholderName='Make'
+                                placeholderName={MAKE}
                             />
                             <Field
                                 name='model'
@@ -39,7 +40,7 @@ const HearingDetails = ({ navigation }) => {
                                 keyboardType={'default'}
                                 autoCapitalize={'none'}
                                 component={Input}
-                                placeholderName='Model'
+                                placeholderName={MODEL}
                             />
                             <Field
                                 name='otherdetails'
@@ -47,7 +48,7 @@ const HearingDetails = ({ navigation }) => {
                                 keyboardType={'default'}
                                 autoCapitalize={'none'}
                                 component={Input}
-                                placeholderName='Other details'
+                                placeholderName={OTHER_DETAILS}
                             />
                         </View>
                     )}

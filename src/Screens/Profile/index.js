@@ -7,6 +7,7 @@ import Input from '../../Components/Field/Input';
 import ProfilePhoto from '../../assets/profile.png'
 import SubmitButton from '../../Components/SubmitButton';
 import Checkbox from '../../Components/Field/CheckBox';
+import { AID_USER, DEMENTIA, DIABETES, DOB, HEALTH_STATS, HEARING_LOSS, HYPER_TENSION, NAME, OTHER, SUBMIT } from '../../Constants/appconstants';
 
 const Profile = ({ navigation }) => {
     const submit = (value) => {
@@ -32,7 +33,7 @@ const Profile = ({ navigation }) => {
                                 keyboardType={'default'}
                                 autoCapitalize={'none'}
                                 component={Input}
-                                placeholderName='Name'
+                                placeholderName={NAME}
                             />
                             <Field
                                 name='yearofbirth'
@@ -40,7 +41,7 @@ const Profile = ({ navigation }) => {
                                 keyboardType={'default'}
                                 autoCapitalize={'none'}
                                 component={Input}
-                                placeholderName='Year of birth'
+                                placeholderName={DOB}
                             />
                             <Field
                                 name='currenthealthstatistics'
@@ -48,31 +49,31 @@ const Profile = ({ navigation }) => {
                                 keyboardType={'default'}
                                 autoCapitalize={'none'}
                                 component={Input}
-                                placeholderName='Current Health Statistics'
+                                placeholderName={HEALTH_STATS}
                             />
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
                                 <Field
                                     name='diabetes'
                                     component={Checkbox}
                                 />
-                                <Text style={{ marginHorizontal: 20 }}>Diabetes</Text>
+                                <Text style={{ marginHorizontal: 20 }}>{DIABETES}</Text>
                                 <Field
                                     name='hyperTension'
                                     component={Checkbox}
                                 />
-                                <Text style={{ marginHorizontal: 20 }}>HyperTension</Text>
+                                <Text style={{ marginHorizontal: 20 }}>{HYPER_TENSION}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
                                 <Field
                                     name='dementia'
                                     component={Checkbox}
                                 />
-                                <Text style={{ marginHorizontal: 20 }}>Dementia</Text>
+                                <Text style={{ marginHorizontal: 20 }}>{DEMENTIA}</Text>
                                 <Field
                                     name='hearingLoss'
                                     component={Checkbox}
                                 />
-                                <Text style={{ marginHorizontal: 20 }}>HearingLoss</Text>
+                                <Text style={{ marginHorizontal: 20 }}>{HEARING_LOSS}</Text>
                             </View>
                             <View style={{ marginTop: 20 }}>
                                 <Field
@@ -81,7 +82,7 @@ const Profile = ({ navigation }) => {
                                     keyboardType={'default'}
                                     autoCapitalize={'none'}
                                     component={Input}
-                                    placeholderName='Other'
+                                    placeholderName={OTHER}
                                 />
                             </View>
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
@@ -89,16 +90,14 @@ const Profile = ({ navigation }) => {
                                     name='hearingaiduser'
                                     component={Checkbox}
                                 />
-                                <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>Hearing aid user</Text>
+                                <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>{AID_USER}</Text>
                             </View>
-                            {/* {hearingaiduser === true && */}
                             <SubmitButton
                                 submit={() => navigation.navigate('Hearing aid details')}
-                                text={'Submit'}
+                                text={SUBMIT}
                                 textStyle={{ fontWeight: 'bold', color: '#fff' }}
                                 btnStyle={{ alignSelf: 'center', backgroundColor: '#000', padding: 10, borderRadius: 10, marginTop: 40 }}
                             />
-                            {/* } */}
                         </View>
                     )}
                 />

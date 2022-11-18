@@ -3,6 +3,7 @@ import { View, Text, useWindowDimensions } from 'react-native';
 import SubmitButton from '../../Components/SubmitButton';
 import { getHeight, getWidth } from '../../Components/utils';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import { NEXT } from '../../Constants/appconstants';
 
 const Questions = [
     { id: 0, question: 1, name: "I have worn a hearing device?", },
@@ -62,7 +63,7 @@ const Survey = ({ navigation }) => {
             </View>
             <View style={{ width: getWidth() / 1.2, alignSelf: 'center', marginTop: getHeight() / 1.3, position: 'absolute' }}>
                 <SubmitButton
-                    text={'Next'}
+                    text={NEXT}
                     btnStyle={{ backgroundColor: 'blue', padding: 20, borderRadius: 10 }}
                     textStyle={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}
                     submit={() => (questionIndex < (Questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}

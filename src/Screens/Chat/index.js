@@ -4,6 +4,7 @@ import { GiftedChat, MessageImage, Actions, InputToolbar } from 'react-native-gi
 import SendArrow from '../../assets/arrows.png';
 import AttachmentPin from '../../assets/attachment.png';
 import Microphone from '../../assets/microphone.png';
+import { REPLY } from '../../Constants/appconstants';
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
@@ -29,7 +30,7 @@ const Chat = () => {
 
     const renderActions = () => {
         return (
-            <View style={{ flexDirection: 'row', position: 'absolute', right: 60, top:10 }}>
+            <View style={{ flexDirection: 'row', position: 'absolute', right: 60, top: 10 }}>
                 <Image style={{ width: 25, height: 25, marginLeft: 10, tintColor: 'grey', transform: [{ rotate: '130deg' }] }} source={AttachmentPin} />
                 {/* <Image style = {{width: 30, height: 30, marginLeft: 10, tintColor: 'grey'}} source = {Microphone} /> */}
             </View>
@@ -66,20 +67,20 @@ const Chat = () => {
     return (
         <GiftedChat
             messagesContainerStyle={{ width: window.width }}
-            placeholder='Reply'
+            placeholder={REPLY}
             renderSend={(props) => {
                 const { text, messageIdGenerator, user, onSend } = props
                 return (
-                    <View style = {{position: 'absolute', top:10, right:5}}>
-                    <TouchableOpacity onPress={
-                        () => {
-                            if (text && onSend) {
-                                onSend({ text: text.trim(), user: user, _id: messageIdGenerator(), video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', image: 'https://t3.ftcdn.net/jpg/02/95/26/46/360_F_295264675_clwKZxogAhxLS9sD163Tgkz1WMHsq1RJ.jpg', }, true);
+                    <View style={{ position: 'absolute', top: 10, right: 5 }}>
+                        <TouchableOpacity onPress={
+                            () => {
+                                if (text && onSend) {
+                                    onSend({ text: text.trim(), user: user, _id: messageIdGenerator(), video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', image: 'https://t3.ftcdn.net/jpg/02/95/26/46/360_F_295264675_clwKZxogAhxLS9sD163Tgkz1WMHsq1RJ.jpg', }, true);
+                                }
                             }
-                        }
-                    } style={{}}>
-                        <Image style={{ width: 28, height: 28, marginRight: 10, tintColor: 'grey', }} source={SendArrow} />
-                    </TouchableOpacity>
+                        } style={{}}>
+                            <Image style={{ width: 28, height: 28, marginRight: 10, tintColor: 'grey', }} source={SendArrow} />
+                        </TouchableOpacity>
                     </View>
                 )
             }}

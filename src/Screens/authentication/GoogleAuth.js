@@ -43,7 +43,8 @@ const GoogleAuth = () => {
   useEffect(() => {
     if (userInfo !== null) {
       console.log("Navigation", navigation);
-      navigation.navigate('Dashboard', { _signOut })
+      // navigation.navigate('Dashboard', { _signOut })
+      navigation.navigate('Dashboard');
     }
   }, [userInfo]);
 
