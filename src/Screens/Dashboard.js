@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Logout from '../Components/Logout';
 import SubmitButton from '../Components/SubmitButton';
 import { AppBarStyle } from '../Components/utils';
+import { ASK_US, HEARING_DIARY, PROFILE, TELL_US } from '../Constants/appconstants';
 
 
 const Dashboard = ({ route, navigation }) => {
@@ -22,7 +23,7 @@ const Dashboard = ({ route, navigation }) => {
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, marginRight: 10, }}
-                            text={'Tell us more'}
+                            text={TELL_US}
                             textStyle={{ textAlign: 'center' }}
                             submit={() => navigation.navigate('Tell us more')}
                         />
@@ -30,7 +31,7 @@ const Dashboard = ({ route, navigation }) => {
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20 }}
-                            text={'Hearing Diary'}
+                            text={HEARING_DIARY}
                             textStyle={{ textAlign: 'center' }}
                             submit={() => navigation.navigate('Hearing Diary')} />
                     </View>
@@ -39,14 +40,14 @@ const Dashboard = ({ route, navigation }) => {
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, marginRight: 10, }}
-                            text={'Profile'}
+                            text={PROFILE}
                             textStyle={{ textAlign: 'center' }}
                             submit={() => navigation.navigate('Profile')} />
                     </View>
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, }}
-                            text={'Ask Us'}
+                            text={ASK_US}
                             textStyle={{ textAlign: 'center' }}
                             submit={() => navigation.navigate('Ask us')}
                         />

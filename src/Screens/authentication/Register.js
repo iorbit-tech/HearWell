@@ -1,18 +1,21 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, Alert } from 'react-native';
 import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
-import { useNavigation } from '@react-navigation/native';
 import { submitSignup } from '../../actions';
+import { LOGIN, OLD_USER, PASSWORD, REGISTER, USER_NAME } from '../../Constants/appconstants';
 
 const Register = () => {
 
     const dispatch = useDispatch();
     const navigation = useNavigation();
+    const { data } = useSelector((state) => state.user);
+    const isInitialMount = useRef(true);
 
     const submit = value => {
         dispatch(submitSignup(value));
@@ -20,6 +23,16 @@ const Register = () => {
 
     const composeValidators = (...validators) => value =>
         validators.reduce((error, validator) => error || validator(value), undefined)
+
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            if (data.message == 'User registration successfull') {
+                navigation.navigate('Home');
+            }
+        }
+    }, [data]);
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', }}>
@@ -33,7 +46,7 @@ const Register = () => {
                             keyboardType={'email-address'}
                             autoCapitalize={'none'}
                             component={Input}
-                            placeholderName='UserName'
+                            placeholderName={USER_NAME}
                         />
                         <Field
                             name='password'
@@ -42,29 +55,23 @@ const Register = () => {
                             keyboardType={'default'}
                             autoCapitalize={'none'}
                             component={Input}
-                            placeholderName='Password'
+                            placeholderName={PASSWORD}
                             secureTextEntry={true}
                         />
                         <View style={{ backgroundColor: '#000', opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignSelf: 'center', flexDirection: 'row' }}>
-                            {/* <SubmitButton
-                                disabled={invalid == true && true}
-                                submit={() => navigation.navigate('Register')}
-                                text='Register'
-                                textStyle={{ color: '#fff' }}
-                            /> */}
                             <SubmitButton
                                 disabled={invalid == true && true}
                                 submit={handleSubmit}
-                                text='Register'
+                                text={REGISTER}
                                 textStyle={{ color: '#fff' }}
                             />
                         </View>
                         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                            <Text>Existing User </Text>
+                            <Text>{OLD_USER}</Text>
                             <SubmitButton
-                                text={'Login'}
+                                text={LOGIN}
                                 textStyle={{ textDecorationLine: 'underline', fontWeight: 'bold' }}
-                                submit={() => navigation.goBack()}
+                                submit={() => navigation.navigate('Home')}
                             >
                             </SubmitButton>
                         </View>

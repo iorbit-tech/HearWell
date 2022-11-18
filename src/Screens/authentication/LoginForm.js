@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, Text, Platform } from 'react-native';
 import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
@@ -8,12 +8,15 @@ import SubmitButton from '../../Components/SubmitButton';
 import { useNavigation } from '@react-navigation/native';
 import { submitLogin } from '../../actions';
 import { FORGOT_PASSWORD, LOGIN, NEW_ACCOUNT, NEW_USER, PASSWORD, USER_NAME } from '../../Constants/appconstants';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LoginForm = () => {
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const { data } = useSelector((state) => state.user);
+    const isInitialMount = useRef(true);
+
     const submit = value => {
         console.log(value, 'value');
         // if (Platform.OS == 'ios') {
@@ -21,6 +24,17 @@ const LoginForm = () => {
         // }
         dispatch(submitLogin(value));
     }
+
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            if (data.message == 'User login successfull') {
+                // navigation.goBack();
+            }
+        }
+
+    }, [data]);
 
     const composeValidators = (...validators) => value =>
         validators.reduce((error, validator) => error || validator(value), undefined)
@@ -51,12 +65,6 @@ const LoginForm = () => {
                         />
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <View style={{ backgroundColor: '#000', marginLeft: 10, opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignItems: 'center' }}>
-                                {/* <SubmitButton
-                                disabled={invalid == true && true}
-                                submit={() => navigation.navigate('Register')}
-                                text='Register'
-                                textStyle={{ color: '#fff' }}
-                            /> */}
                                 <SubmitButton
                                     disabled={invalid == true && true}
                                     submit={handleSubmit}
