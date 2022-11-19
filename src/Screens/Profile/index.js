@@ -13,7 +13,7 @@ const Profile = ({ navigation }) => {
     const submit = (value) => {
         console.log(value, 'value');
     }
-
+    console.log('Profile');
     return (
         <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
             <View style={{ marginTop: 10, marginLeft: 10 }}>
