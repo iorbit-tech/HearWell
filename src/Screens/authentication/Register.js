@@ -103,7 +103,7 @@ const Register = () => {
                                     <Field
                                         name='dob'
                                         label="dob *"
-                                        validate={composeValidators(required())}
+                                        // validate={composeValidators(required())}
                                         keyboardType={'default'}
                                         autoCapitalize={'none'}
                                         component={Datepicker}
