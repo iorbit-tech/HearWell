@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,6 +35,10 @@ const Register = () => {
     }, [data]);
 
     return (
+        <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{flex:1}}
+    >
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', }}>
             <Form onSubmit={submit}
                 render={({ handleSubmit, invalid }) => (
@@ -83,6 +87,7 @@ const Register = () => {
                 }
             />
         </View>
+        </KeyboardAvoidingView>
     )
 };
 
