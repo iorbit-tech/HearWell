@@ -9,7 +9,7 @@ export default (props) => {
     const [open, setOpen] = useState(false)
     const [values, setvalues] = useState(props.input.value || props.initValue || "");
     const [valueEntered, setvalueEntered] = useState((props.input.value || props.initValue) ? true : false);
-    const { meta: { touched, error }, input: { value }, initValue, label, serverError, inputstyle = {}, without_background = false, placeholderName, secureTextEntry, getValue, } = props;
+    const { meta: { touched, error }, input: { value }, initValue, placeholderName, getValue, } = props;
 
 
     useEffect(() => {
@@ -43,6 +43,7 @@ export default (props) => {
                         autoCorrect={false}
                         {...props}
                         placeholderTextColor={'grey'}
+                        editable={false}
                     />
                 </View>
             </View>
@@ -57,7 +58,6 @@ export default (props) => {
                     setOpen(false)
                     setDate(date)
                 }
-
                 }
                 onCancel={() => {
                     setOpen(false)

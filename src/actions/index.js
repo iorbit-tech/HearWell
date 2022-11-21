@@ -1,10 +1,34 @@
 import api from "./api";
 
 export const submitSignup = (data) => {
+    const gender = data.gender;
+    const maritalStatus = data.maritalStatus;
+    let newData = {
+        ...data,
+
+    };
+    if (gender == 0) {
+        newData.gender = 'male'
+    }
+    else if (gender == 1) {
+        newData.gender = 'female'
+    }
+    else {
+        newData.gender = 'other'
+    }
+    if (maritalStatus == 0) {
+        newData.maritalStatus = 'single'
+    }
+    else {
+        newData.maritalStatus = 'married'
+    }
+    newData.userType = 'user';
+    newData.status = 'true';
+
     return dispatch => {
         dispatch({
             type: "SIGNUP",
-            payload: api.post('api/user/', data)
+            payload: api.post('api/user/', newData)
         })
     }
 }
