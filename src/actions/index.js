@@ -24,7 +24,7 @@ export const submitSignup = (data) => {
     }
     newData.userType = 'user';
     newData.status = 'true';
-
+    console.log(newData, 'newData')
     return dispatch => {
         dispatch({
             type: "SIGNUP",
