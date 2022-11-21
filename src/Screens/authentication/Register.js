@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Alert, KeyboardAvoidingView, Platform, ScrollView, SafeAreaView } from 'react-native';
 import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
@@ -9,6 +9,21 @@ import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
 import { submitSignup } from '../../actions';
 import { LOGIN, OLD_USER, PASSWORD, REGISTER, USER_NAME } from '../../Constants/appconstants';
+import Radiobutton from '../../Components/Field/RadioButton';
+import Datepicker from '../../Components/Field/DatePicker';
+
+// const RadioInput = [
+//     { value: 0, input: 1, name: "Gender", options: ["Male", "Female", "Trans Gender"] },
+//     { value: 1, input: 2, name: "Marital Status", options: ["Single", "Married"] }
+// ];
+
+const Gender = [
+    { value: 0, options: [{ label: 'Male', value: 0 }, { label: 'Female', value: 1 }, { label: 'Other', value: 2 }] },
+];
+
+const MaritalStatus = [
+    { value: 0, options: [{ label: 'Single', value: 0 }, { label: 'Married', value: 1 }] },
+];
 
 const Register = () => {
 
@@ -16,6 +31,7 @@ const Register = () => {
     const navigation = useNavigation();
     const { data } = useSelector((state) => state.user);
     const isInitialMount = useRef(true);
+    const [value, setValue] = useState(0);
 
     const submit = value => {
         console.log(value, 'value');
@@ -83,32 +99,31 @@ const Register = () => {
                                         component={Input}
                                         placeholderName={'Last Name'}
                                     />
+                                    <Text style={{ fontSize: 18 }}>DOB:</Text>
                                     <Field
                                         name='dob'
                                         label="dob *"
                                         validate={composeValidators(required())}
                                         keyboardType={'default'}
                                         autoCapitalize={'none'}
-                                        component={Input}
+                                        component={Datepicker}
                                         placeholderName={'DOB'}
                                     />
+                                    <Text style={{ fontSize: 18, paddingTop: 10 }}>Gender:</Text>
                                     <Field
                                         name='gender'
-                                        label="gender *"
-                                        validate={composeValidators(required())}
-                                        keyboardType={'default'}
-                                        autoCapitalize={'none'}
-                                        component={Input}
-                                        placeholderName={'Gender'}
+                                        component={Radiobutton}
+                                        Questions={Gender}
+                                        questionIndex={0}
+                                        value={value}
                                     />
+                                    <Text style={{ fontSize: 18, paddingTop: 10 }}>Marital Status:</Text>
                                     <Field
                                         name='maritalStatus'
-                                        label="maritalStatus *"
-                                        validate={composeValidators(required())}
-                                        keyboardType={'default'}
-                                        autoCapitalize={'none'}
-                                        component={Input}
-                                        placeholderName={'Marital Status'}
+                                        component={Radiobutton}
+                                        Questions={MaritalStatus}
+                                        questionIndex={0}
+                                        value={value}
                                     />
                                     <Field
                                         name='address1'

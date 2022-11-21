@@ -6,7 +6,6 @@ const Radiobutton = (props) => {
     const [values, setValues] = useState(props.value || props || "");
     const { Questions, questionIndex } = props;
 
-
     const onChangeHandler = (value) => {
         const { input: { onChange } } = props;
         onChange(value);
