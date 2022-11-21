@@ -28,7 +28,12 @@ export default (props) => {
 
         return day + '-' + month + '-' + year;
     }
-
+    function minimumDate() {
+        return new Date("1900-01-01")
+    }
+    function maximumDate() {
+        return new Date("2015-12-31")
+    }
     const onChangeHandler = (value) => {
         const { input: { onChange } } = props;
         onChange(getFormattedDate(value));
@@ -62,8 +67,8 @@ export default (props) => {
             <DatePicker
                 modal
                 open={open}
-                // maximumDate =
-                // minimumDate
+                maximumDate={maximumDate()}
+                minimumDate={minimumDate()}
                 mode='date'
                 date={date}
                 onConfirm={(date) => {
