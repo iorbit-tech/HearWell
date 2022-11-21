@@ -14,14 +14,14 @@ const Home = () => {
 
     return (
         <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{flex:1}}
-    >
-        <View style = {{flex:1, justifyContent: 'center', backgroundColor: '#fff'}}>
-            <GoogleAuth />
-            {/* <AppleAuth /> */}
-            <Form />
-        </View>
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{ flex: 1 }}
+        >
+            <View style={{ flex: 1, justifyContent: 'center', backgroundColor: '#fff' }}>
+                <GoogleAuth />
+                {/* <AppleAuth /> */}
+                <Form />
+            </View>
         </KeyboardAvoidingView>
     )
 };

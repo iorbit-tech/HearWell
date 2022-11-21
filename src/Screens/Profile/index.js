@@ -36,7 +36,7 @@ const Profile = ({ navigation }) => {
                                 placeholderName={NAME}
                             />
                             <Field
-                                name='yearofbirth'
+                                name='yearOfBirth'
                                 label="yearofbirth *"
                                 keyboardType={'default'}
                                 autoCapitalize={'none'}
@@ -44,7 +44,7 @@ const Profile = ({ navigation }) => {
                                 placeholderName={DOB}
                             />
                             <Field
-                                name='currenthealthstatistics'
+                                name='currentHealthStatus'
                                 label="currenthealthstatistics *"
                                 keyboardType={'default'}
                                 autoCapitalize={'none'}
@@ -53,7 +53,7 @@ const Profile = ({ navigation }) => {
                             />
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
                                 <Field
-                                    name='diabetes'
+                                    name='diabets'
                                     component={Checkbox}
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{DIABETES}</Text>
@@ -77,7 +77,7 @@ const Profile = ({ navigation }) => {
                             </View>
                             <View style={{ marginTop: 20 }}>
                                 <Field
-                                    name='other'
+                                    name='otherHealthConditions'
                                     label="currentheotheralthstatistics *"
                                     keyboardType={'default'}
                                     autoCapitalize={'none'}
@@ -87,7 +87,7 @@ const Profile = ({ navigation }) => {
                             </View>
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                 <Field
-                                    name='hearingaiduser'
+                                    name='hearingAidUser'
                                     component={Checkbox}
                                 />
                                 <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>{AID_USER}</Text>
