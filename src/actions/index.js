@@ -42,3 +42,14 @@ export const submitLogin = (data) => {
         })
     }
 }
+
+export const submitVitals = (data, userId) => {
+    const append = { ...data, userId }
+    console.log(append, 'append');
+    return dispatch => {
+        dispatch({
+            type: "CREATE_VITALS",
+            payload: api.post('api/vitals', append)
+        })
+    }
+}
