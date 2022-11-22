@@ -18,10 +18,6 @@ const LoginForm = () => {
     const isInitialMount = useRef(true);
 
     const submit = value => {
-        console.log(value, 'value');
-        // if (Platform.OS == 'ios') {
-        navigation.navigate('Dashboard');
-        // }
         dispatch(submitLogin(value));
     }
 
@@ -29,8 +25,8 @@ const LoginForm = () => {
         if (isInitialMount.current) {
             isInitialMount.current = false;
         } else {
-            if (data.message == 'User login successfull') {
-                // navigation.goBack();
+            if (data.message == 'Authentication Success') {
+                navigation.navigate('Dashboard');
             }
         }
 
@@ -47,7 +43,8 @@ const LoginForm = () => {
                         <Field
                             name='username'
                             label="Username *"
-                            validate={composeValidators(required(), email())}
+                            validate={composeValidators(required())}
+                            // validate={composeValidators(required(), email())}
                             keyboardType={'email-address'}
                             autoCapitalize={'none'}
                             component={Input}

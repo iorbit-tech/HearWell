@@ -46,7 +46,7 @@ const Register = () => {
             isInitialMount.current = false;
         } else {
             if (data.message == 'User registration successfull') {
-                // navigation.navigate('Home');
+                navigation.navigate('Home');
             }
         }
     }, [data]);
