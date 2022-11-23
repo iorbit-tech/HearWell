@@ -27,9 +27,11 @@ export default function userReducer(state = defaultState, action) {
         }
 
         case "SIGNUP_REJECTED": {
+            let response = action.payload;
             return {
                 ...state,
                 fetching: false,
+                data: response
             }
         }
         case "LOGIN_PENDING": {
@@ -51,9 +53,11 @@ export default function userReducer(state = defaultState, action) {
         }
 
         case "LOGIN_REJECTED": {
+            let response = action.payload;
             return {
                 ...state,
                 fetching: false,
+                data: response
             }
         }
         case "CREATE_VITALS_PENDING": {

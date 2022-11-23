@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Platform } from 'react-native';
+import { View, Text, Platform, Alert } from 'react-native';
 import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
-import { useNavigation } from '@react-navigation/native';
 import { submitLogin } from '../../actions';
 import { FORGOT_PASSWORD, LOGIN, NEW_ACCOUNT, NEW_USER, PASSWORD, USER_NAME } from '../../Constants/appconstants';
-import { useDispatch, useSelector } from 'react-redux';
+import { showToast } from '../../Components/utils';
 
 const LoginForm = () => {
 
@@ -26,7 +27,20 @@ const LoginForm = () => {
             isInitialMount.current = false;
         } else {
             if (data.message == 'Authentication Success') {
+                showToast('Logged In Successfully!');
+                Alert.alert(
+                    "LOGIN SUCCESS",
+                    "Logged In Successfully!",
+                )
                 navigation.navigate('Dashboard');
+            }
+            else if (data.code == 'ERR_BAD_REQUEST') {
+                showToast(data.response.data.message);
+                Alert.alert(
+                    "LOGIN FAILED",
+                    data.response.data.message,
+                )
+                console.log(data.response.data.message)
             }
         }
 
