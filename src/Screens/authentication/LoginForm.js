@@ -10,6 +10,7 @@ import SubmitButton from '../../Components/SubmitButton';
 import { submitLogin } from '../../actions';
 import { FORGOT_PASSWORD, LOGIN, NEW_ACCOUNT, NEW_USER, PASSWORD, USER_NAME } from '../../Constants/appconstants';
 import { showToast } from '../../Components/utils';
+import { get } from 'lodash';
 
 const LoginForm = () => {
 
@@ -26,7 +27,7 @@ const LoginForm = () => {
         if (isInitialMount.current) {
             isInitialMount.current = false;
         } else {
-            if (data.message == 'Authentication Success') {
+            if (get(data, 'message') == 'Authentication Success') {
                 showToast('Logged In Successfully!');
                 Alert.alert(
                     "LOGIN SUCCESS",
@@ -34,13 +35,13 @@ const LoginForm = () => {
                 )
                 navigation.navigate('Dashboard');
             }
-            else if (data.code == 'ERR_BAD_REQUEST') {
-                showToast(data.response.data.message);
+            else if (get(data, 'code') == 'ERR_BAD_REQUEST') {
+                showToast(get(data, 'response.data.message'));
                 Alert.alert(
                     "LOGIN FAILED",
-                    data.response.data.message,
+                    get(data, 'response.data.message')
                 )
-                console.log(data.response.data.message)
+                console.log(get(data, 'response.data.message'))
             }
         }
 

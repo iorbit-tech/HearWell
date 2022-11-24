@@ -10,15 +10,21 @@ import SubmitButton from '../../Components/SubmitButton';
 import Checkbox from '../../Components/Field/CheckBox';
 import { AID_USER, DEMENTIA, DIABETES, DOB, HEALTH_STATS, HEARING_LOSS, HYPER_TENSION, NAME, OTHER, SUBMIT } from '../../Constants/appconstants';
 import { submitVitals } from '../../actions';
+import { get } from 'lodash';
+import { required } from 'redux-form-validators';
 
 const Profile = ({ navigation }) => {
 
+    const { data } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const submit = value => {
         console.log(value, 'value');
-        dispatch(submitVitals(value, data.data.userId));
+        dispatch(submitVitals(value, get(data, 'data.userId')));
     }
-    const { data } = useSelector((state) => state.user);
+
+    const composeValidators = (...validators) => value =>
+        validators.reduce((error, validator) => error || validator(value), undefined)
+
     return (
         <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
             <View style={{ marginTop: 10, marginLeft: 10 }}>

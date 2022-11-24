@@ -11,6 +11,7 @@ import { submitSignup } from '../../actions';
 import { LOGIN, OLD_USER, PASSWORD, REGISTER, USER_NAME } from '../../Constants/appconstants';
 import Radiobutton from '../../Components/Field/RadioButton';
 import Datepicker from '../../Components/Field/DatePicker';
+import { get } from 'lodash';
 
 // const RadioInput = [
 //     { value: 0, input: 1, name: "Gender", options: ["Male", "Female", "Trans Gender"] },
@@ -45,7 +46,7 @@ const Register = () => {
         if (isInitialMount.current) {
             isInitialMount.current = false;
         } else {
-            if (data.message == 'User registration successfull') {
+            if (get(data, 'message') == 'User registration successfull') {
                 navigation.navigate('Home');
             }
         }

@@ -1,8 +1,9 @@
+import { get } from "lodash";
 import api from "./api";
 
 export const submitSignup = (data) => {
-    const gender = data.gender;
-    const maritalStatus = data.maritalStatus;
+    const gender = get(data, 'gender');
+    const maritalStatus = get(data, 'maritalStatus');
     let newData = {
         ...data,
 
@@ -24,7 +25,6 @@ export const submitSignup = (data) => {
     }
     newData.userType = 'user';
     newData.status = 'true';
-    console.log(newData, 'newData')
     return dispatch => {
         dispatch({
             type: "SIGNUP",
@@ -44,7 +44,9 @@ export const submitLogin = (data) => {
 }
 
 export const submitVitals = (data, userId) => {
-    const append = { ...data, userId }
+    console.log(data, 'data');
+    var healthCondition = { 'diabets': get(data, 'diabets'), 'hyperTension': get(data, 'hyperTension') };
+    var append = { ...data, userId, healthCondition };
     console.log(append, 'append');
     return dispatch => {
         dispatch({
