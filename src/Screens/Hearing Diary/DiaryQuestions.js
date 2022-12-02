@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { View, Text } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import Checkbox from '../../Components/Field/CheckBox';
 import Radiobutton from '../../Components/Field/RadioButton';
@@ -19,15 +20,17 @@ const Questions = [
 const DiaryQuestions = ({ navigation }) => {
     const [questionIndex, setQuestionIndex] = useState(0);
     const [value, setValue] = useState(0);
+    const { questions } = useSelector((state) => state.hearing);
 
     const submit = (value) => {
         console.log(value, 'value');
     }
+
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             {Questions[questionIndex].type !== 'radio' &&
                 <View style={{ padding: 20, }}>
-                    <Text>{Questions[questionIndex].name}</Text>
+                    <Text>{questions[questionIndex].question}</Text>
                     {Questions[questionIndex].options.map((obj, i) => (
                         <View>
                             <Form onSubmit={submit}

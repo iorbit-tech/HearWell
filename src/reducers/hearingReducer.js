@@ -7,9 +7,9 @@ const defaultState = {
     isRegistered: "NOT_REGISTERED"
 }
 
-export default function tellusReducer(state = defaultState, action) {
+export default function hearingReducer(state = defaultState, action) {
     switch (action.type) {
-        case "TELLUS_LIST_PENDING": {
+        case "HEARING_LIST_PENDING": {
             return {
                 ...state,
                 fetching: true,
@@ -17,7 +17,7 @@ export default function tellusReducer(state = defaultState, action) {
                 serverError: []
             }
         }
-        case "TELLUS_LIST_FULFILLED": {
+        case "HEARING_LIST_FULFILLED": {
             let response = action.payload.data;
             return {
                 ...state,
@@ -25,7 +25,7 @@ export default function tellusReducer(state = defaultState, action) {
                 questions: response
             }
         }
-        case "TELLUS_LIST_REJECTED": {
+        case "HEARING_LIST_REJECTED": {
             return {
                 ...state,
                 fetching: false,

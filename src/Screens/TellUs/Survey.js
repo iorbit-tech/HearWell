@@ -17,7 +17,7 @@ const Questions = [
 const Survey = ({ navigation }) => {
     const [value, setValue] = useState(0);
     const [questionIndex, setQuestionIndex] = useState(0);
-    const { data } = useSelector((state) => state.tellus);
+    const { questions } = useSelector((state) => state.tellus);
     var radio_props = [
         { label: 'Never', value: 0 },
         { label: 'less than month', value: 1 },
@@ -31,8 +31,8 @@ const Survey = ({ navigation }) => {
                 <Text>Help us understand your lifestyle and how it may be affected by your hearing</Text>
             </View>
             <View style={{ padding: 20, flexDirection: 'row' }}>
-                <Text style={{ fontSize: 18, fontWeight: '600' }}>{data[questionIndex].order}: </Text>
-                <Text style={{ fontSize: 18, fontWeight: '600' }}>{data[questionIndex].question}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex].order}: </Text>
+                <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex].question}</Text>
             </View>
             <View style={{ padding: 20, marginTop: 10 }}>
                 <RadioForm>

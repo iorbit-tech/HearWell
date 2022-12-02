@@ -73,3 +73,12 @@ export const getTellusQuestions = () => {
         })
     }
 }
+
+export const getHearingQuestions = () => {
+    return dispatch => {
+        dispatch({
+            type: "HEARING_LIST",
+            payload: api.get('api/questions/page/hearingdiary')
+        })
+    }
+}
