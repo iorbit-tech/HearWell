@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { getTellusQuestions } from '../../actions';
 import SubmitButton from '../../Components/SubmitButton';
 import { getHeight, getWidth } from '../../Components/utils';
 import { START } from '../../Constants/appconstants';
 
 const TellUs = ({ navigation }) => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTellusQuestions());
+    }, []);
+
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <View style={{ padding: 20 }}>

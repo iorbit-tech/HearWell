@@ -1,3 +1,5 @@
+import api from "../actions/api";
+
 const defaultState = {
     fetching: false,
     data: {},
@@ -83,6 +85,13 @@ export default function userReducer(state = defaultState, action) {
                 ...state,
                 fetching: false,
             }
+        }
+        case "SET_TOKEN": {
+            api.defaults.headers.common["Authorization"] = `Bearer ${action.payload}`;
+            return {
+                ...state,
+                token: action.payload,
+            };
         }
     }
     return state;

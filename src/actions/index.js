@@ -55,3 +55,21 @@ export const submitVitals = (data, userId) => {
         })
     }
 }
+
+export const setToken = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: "SET_TOKEN",
+            payload: data,
+        });
+    };
+};
+
+export const getTellusQuestions = () => {
+    return dispatch => {
+        dispatch({
+            type: "TELLUS_LIST",
+            payload: api.get('api/questions/page/tellus')
+        })
+    }
+}
