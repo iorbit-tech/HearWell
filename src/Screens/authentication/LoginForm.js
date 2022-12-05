@@ -105,12 +105,12 @@ const LoginForm = () => {
                 )
                 }
             />
-            <SubmitButton
+            {/* <SubmitButton
                 text='Need to revert'
                 textStyle={{ textDecorationLine: 'underline', fontWeight: 'bold' }}
                 submit={() => navigation.navigate('Dashboard')}
             >
-            </SubmitButton>
+            </SubmitButton> */}
         </View>
     )
 };
