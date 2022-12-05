@@ -21,17 +21,38 @@ const DiaryQuestions = ({ navigation }) => {
     const [questionIndex, setQuestionIndex] = useState(0);
     const [value, setValue] = useState(0);
     const { questions } = useSelector((state) => state.hearing);
+    const [optionsList, setOptionsList] = useState([]);
 
     const submit = (value) => {
         console.log(value, 'value');
     }
+    console.log(questionIndex, 'questionIndex');
+    console.log(questions.length - 1, 'length');
+    // console.log(questions[questionIndex].answerType, 'questions')
+    useEffect(() => {
+        if (questionIndex < questions.length) {
+            setOptionsList([{
+                label: questions[questionIndex].options[0], value: 0
+            },
+            {
+                label: questions[questionIndex].options[1], value: 1
+            },
+            {
+                label: questions[questionIndex].options[2], value: 2
+            },
+            {
+                label: questions[questionIndex].options[3], value: 3
+            },
+            ])
+        }
+    }, [questionIndex]);
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            {Questions[questionIndex].type !== 'radio' &&
+            {questionIndex < questions.length && questions[questionIndex].answerType !== 'radio' &&
                 <View style={{ padding: 20, }}>
                     <Text>{questions[questionIndex].question}</Text>
-                    {Questions[questionIndex].options.map((obj, i) => (
+                    {questions[questionIndex].options.map((obj, i) => (
                         <View>
                             <Form onSubmit={submit}
                                 render={({ handleSubmit, invalid }) => (
@@ -49,17 +70,17 @@ const DiaryQuestions = ({ navigation }) => {
                         </View>
                     ))
                     }
-                    <SubmitButton
+                    {/* <SubmitButton
                         btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
                         textStyle={{ color: '#fff', textAlign: 'center' }}
                         text={NEXT}
                         submit={() => (questionIndex < (Questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}
-                    />
+                    /> */}
                 </View>
             }
-            {Questions[questionIndex].type == 'radio' &&
+            {questionIndex < questions.length && questions[questionIndex].answerType == 'radio' &&
                 <View style={{ padding: 20 }}>
-                    <Text>{Questions[questionIndex].name}</Text>
+                    <Text>{questions[questionIndex].question}</Text>
                     <View>
                         <Form onSubmit={submit}
                             render={({ handleSubmit, invalid }) => (
@@ -68,7 +89,7 @@ const DiaryQuestions = ({ navigation }) => {
                                         <Field
                                             name={questionIndex} //need to change
                                             component={Radiobutton}
-                                            Questions={Questions}
+                                            Questions={optionsList}
                                             questionIndex={questionIndex}
                                             value={value}
                                         />
@@ -77,14 +98,14 @@ const DiaryQuestions = ({ navigation }) => {
                             )}
                         />
                     </View>
-                    <SubmitButton
-                        btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
-                        textStyle={{ color: '#fff', textAlign: 'center' }}
-                        text={NEXT}
-                        submit={() => (questionIndex < (Questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}
-                    />
                 </View>
             }
+            <SubmitButton
+                btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
+                textStyle={{ color: '#fff', textAlign: 'center' }}
+                text={NEXT}
+                submit={() => (questionIndex < (questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}
+            />
         </View>
     )
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import SubmitButton from '../../Components/SubmitButton';
 import { getHeight, getWidth } from '../../Components/utils';
@@ -17,27 +17,43 @@ const Questions = [
 const Survey = ({ navigation }) => {
     const [value, setValue] = useState(0);
     const [questionIndex, setQuestionIndex] = useState(0);
+    const [optionsList, setOptionsList] = useState([]);
     const { questions } = useSelector((state) => state.tellus);
-    var radio_props = [
-        { label: 'Never', value: 0 },
-        { label: 'less than month', value: 1 },
-        { label: '1 year', value: 2 },
-        { label: 'more than 1 year', value: 3 }
-    ];
 
+    console.log(questionIndex)
+    useEffect(() => {
+        // if (questionIndex < (questions.length - 1)) {
+        setOptionsList([{
+            label: questions[questionIndex].options[0], value: 0
+        },
+        {
+            label: questions[questionIndex].options[1], value: 1
+        },
+        {
+            label: questions[questionIndex].options[2], value: 2
+        },
+        {
+            label: questions[questionIndex].options[3], value: 3
+        },
+        ])
+        // }
+    }, [questionIndex]);
+    console.log(questionIndex, 'questionIndex');
+    console.log(questions.length - 1, 'length');
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <View style={{ padding: 20 }}>
                 <Text>Help us understand your lifestyle and how it may be affected by your hearing</Text>
             </View>
             <View style={{ padding: 20, flexDirection: 'row' }}>
-                <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex].order}: </Text>
-                <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex].question}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
+                <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].question}</Text>
             </View>
             <View style={{ padding: 20, marginTop: 10 }}>
+                {/* {optionsList !== undefined && */}
                 <RadioForm>
                     {
-                        radio_props.map((obj, i) => (
+                        optionsList.map((obj, i) => (
                             <RadioButton labelHorizontal={true} key={i} >
                                 <RadioButtonInput
                                     obj={obj}
@@ -62,13 +78,16 @@ const Survey = ({ navigation }) => {
                         ))
                     }
                 </RadioForm>
+                {/* } */}
             </View>
             <View style={{ width: getWidth() / 1.2, alignSelf: 'center', marginTop: getHeight() / 1.3, position: 'absolute' }}>
                 <SubmitButton
                     text={NEXT}
                     btnStyle={{ backgroundColor: 'blue', padding: 20, borderRadius: 10 }}
                     textStyle={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}
-                    submit={() => (questionIndex < (Questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}
+                    // submit={() => (questions[questionIndex] !== undefined) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}
+                    submit={() => (questionIndex < (questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}
+
                 />
             </View>
         </View>

@@ -16,7 +16,7 @@ const Radiobutton = (props) => {
             <View>
                 <RadioForm style={{ marginTop: 10, }}>
                     {
-                        Questions[questionIndex].options.map((obj, i) => (
+                        Questions.map((obj, i) => (
                             <RadioButton style={{ marginTop: 10 }} labelHorizontal={true} key={i} >
                                 <RadioButtonInput
                                     obj={obj}
