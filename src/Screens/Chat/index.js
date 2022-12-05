@@ -4,28 +4,37 @@ import { GiftedChat, MessageImage, Actions, InputToolbar } from 'react-native-gi
 import SendArrow from '../../assets/arrows.png';
 import AttachmentPin from '../../assets/attachment.png';
 import Microphone from '../../assets/microphone.png';
-import { REPLY } from '../../Constants/appconstants';
+import { REPLY, SUBMIT } from '../../Constants/appconstants';
+import { useDispatch, useSelector } from 'react-redux';
+import { getChat, submitChat } from '../../actions/index'
+import { get } from 'lodash';
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
     const window = useWindowDimensions();
+    const dispatch = useDispatch();
+    const { data } = useSelector((state) => state.user.data);
+    const { chat } = useSelector((state) => state.chat);
 
     useEffect(() => {
-        setMessages([
-            {
-                name: 'Admin',
-                _id: 1,
-                text: 'Hello developer',
-                createdAt: new Date(),
+        console.log("chat.length", chat);
+        if (chat && chat.length > 0) {
+            let updatedChat = [];
+            chat.map((item, i) => {
+                updatedChat[i] = {
+                    item,
+                    text: get(item, "message", ""),
+                    createdAt: get(item, "sentTime", ""),
+                }
+            })
+            setMessages(updatedChat);
+            console.log(updatedChat, 'updatedChat');
+        }
+    }, [chat]);
 
-                user: {
-                    _id: 2,
-                    name: 'React Native',
-                    avatar: 'https://placeimg.com/140/140/any',
-                },
-            },
-        ])
-    }, [])
+    useEffect(() => {
+        dispatch(getChat(get(data[0], "userId", "")));
+    }, []);
 
 
     const renderActions = () => {
@@ -61,7 +70,8 @@ const Chat = () => {
         );
     }
     const onSend = useCallback((messages = []) => {
-        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+        console.log(messages, 'messages1');
+        dispatch(submitChat(messages, get(data[0], "userId", ""),));
     }, [])
 
     return (
