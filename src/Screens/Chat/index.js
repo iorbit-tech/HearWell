@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useWindowDimensions, View, Text, TouchableOpacity, Image } from 'react-native';
-import { GiftedChat, MessageImage, Actions, InputToolbar } from 'react-native-gifted-chat'
+import { GiftedChat, MessageImage, Actions, InputToolbar, Bubble } from 'react-native-gifted-chat'
 import SendArrow from '../../assets/arrows.png';
 import AttachmentPin from '../../assets/attachment.png';
 import Microphone from '../../assets/microphone.png';
 import { REPLY, SUBMIT } from '../../Constants/appconstants';
 import { useDispatch, useSelector } from 'react-redux';
-import { getChat, submitChat } from '../../actions/index'
+import { getChat, submitChat } from '../../actions/index';
 import { get } from 'lodash';
 
 const Chat = () => {
@@ -17,7 +17,6 @@ const Chat = () => {
     const { chat } = useSelector((state) => state.chat);
 
     useEffect(() => {
-        console.log("chat.length", chat);
         if (chat && chat.length > 0) {
             let updatedChat = [];
             chat.map((item, i) => {
@@ -25,9 +24,11 @@ const Chat = () => {
                     item,
                     text: get(item, "message", ""),
                     createdAt: get(item, "sentTime", ""),
+                    _id: get(item, '_id'),
+                    user: get(item, "senderId", "") == get(data[0], "userId", "") ? "You" : "Expert",
                 }
             })
-            setMessages(updatedChat);
+            setMessages(updatedChat.reverse());
             console.log(updatedChat, 'updatedChat');
         }
     }, [chat]);
@@ -63,6 +64,23 @@ const Chat = () => {
         );
     }
 
+    const renderBubble = (props) => {
+        return (
+            <Bubble
+                {...props}
+                position={get(props.currentMessage, "user") == "You" ? 'left' : 'right'}
+                wrapperStyle={{
+                    left: {
+                        backgroundColor: '#86ffdd',
+                    },
+                    right: {
+                        backgroundColor: '#6200ff47'
+                    }
+                }}
+            />
+        )
+    }
+
     const renderMessageImage = (props) => {
         return (
             <View>
@@ -76,7 +94,7 @@ const Chat = () => {
 
     return (
         <GiftedChat
-            messagesContainerStyle={{ width: window.width }}
+            messagesContainerStyle={{ width: window.width, }}
             placeholder={REPLY}
             renderSend={(props) => {
                 const { text, messageIdGenerator, user, onSend } = props
@@ -100,6 +118,7 @@ const Chat = () => {
             messages={messages}
             onSend={messages => onSend(messages)}
             renderActions={renderActions}
+            renderBubble={renderBubble}
             // isTyping = {true}
             user={{
                 _id: 1,
