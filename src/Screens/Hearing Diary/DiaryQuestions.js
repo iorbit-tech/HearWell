@@ -49,20 +49,21 @@ const DiaryQuestions = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            {questionIndex < questions.length && questions[questionIndex].answerType !== 'radio' &&
+            {questionIndex < questions.length && questions[questionIndex].answerType !== 'singlechoice' &&
                 <View style={{ padding: 20, }}>
                     <Text>{questions[questionIndex].question}</Text>
-                    {questions[questionIndex].options.map((obj, i) => (
+                    {questions[questionIndex].options.map((option, index) => (
                         <View>
                             <Form onSubmit={submit}
                                 render={({ handleSubmit, invalid }) => (
                                     <View>
                                         <View style={{ flexDirection: 'row', marginTop: 10, }}>
                                             <Field
-                                                name={obj}
+                                                name={"checkbox" + option} //need to change
                                                 component={Checkbox}
+                                                value={option}
                                             />
-                                            <Text style={{ marginHorizontal: 10, alignSelf: 'center' }}>{obj}</Text>
+                                            <Text style={{ marginHorizontal: 10, alignSelf: 'center' }}>{option}</Text>
                                         </View>
                                     </View>
                                 )}
@@ -78,7 +79,7 @@ const DiaryQuestions = ({ navigation }) => {
                     /> */}
                 </View>
             }
-            {questionIndex < questions.length && questions[questionIndex].answerType == 'radio' &&
+            {questionIndex < questions.length && questions[questionIndex].answerType == 'singlechoice' &&
                 <View style={{ padding: 20 }}>
                     <Text>{questions[questionIndex].question}</Text>
                     <View>
