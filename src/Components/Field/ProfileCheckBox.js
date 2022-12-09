@@ -1,25 +1,15 @@
 import CheckBox from "@react-native-community/checkbox";
 import React, { useEffect, useState, useContext } from "react";
-import { View } from "react-native";
+import { View, TextInput, Text } from "react-native";
 
-const Checkbox = (props) => {
+const ProfileCheckBox = (props) => {
     const [values, setvalues] = useState(props.input.value || props.initValue || "");
-    const { meta: { touched, error }, input: { newValue }, } = props;
-
-    useEffect(() => {
-        props.setArrayvalues([]);
-    }, [props.questionIndex]);
+    const { meta: { touched, error }, input: { newValue }, initValue, label, serverError, inputstyle = {}, without_background = false, placeholderName, secureTextEntry, getValue, } = props;
 
     const onChangeHandler = (newValue) => {
-        const { input: { onChange }, label, questionIndex, setArrayvalues, arrayvalues } = props;
+        const { input: { onChange }, label, } = props;
+        onChange(label);
         setvalues(newValue);
-        let array = [];
-        array = arrayvalues;
-        if (newValue)
-            array.push(label);
-        else
-            array = array.filter(value => value != label);
-        setArrayvalues(array);
     }
     return (
         <>
@@ -35,4 +25,4 @@ const Checkbox = (props) => {
         </>
     )
 }
-export default Checkbox;
+export default ProfileCheckBox;

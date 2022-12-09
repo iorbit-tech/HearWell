@@ -10,6 +10,7 @@ const Radiobutton = (props) => {
         const { input: { onChange } } = props;
         onChange(value);
         setValues(value);
+        console.log(value, 'value_Radiobutton');
     }
     return (
         <>
@@ -24,9 +25,9 @@ const Radiobutton = (props) => {
                                     initial={0}
                                     onPress={onChangeHandler}
                                     buttonSize={10}
-                                    isSelected={setValues === i}
-                                    buttonOuterColor={values === i ? '#9B9B9B' : 'grey'}
-                                    buttonStyle={{ backgroundColor: values === i ? '#0E96FF' : '#fff' }}
+                                    isSelected={setValues === obj.label}
+                                    buttonOuterColor={values === obj.label ? '#9B9B9B' : 'grey'}
+                                    buttonStyle={{ backgroundColor: values === obj.label ? '#0E96FF' : '#fff' }}
                                 />
                                 <RadioButtonLabel
                                     obj={obj}

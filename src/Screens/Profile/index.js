@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { View, Image, Text, ScrollView } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import { useDispatch, useSelector } from 'react-redux';
+import { get } from 'lodash';
+import { required, email } from 'redux-form-validators';
 
 import Input from '../../Components/Field/Input';
 import ProfilePhoto from '../../assets/profile.png'
 import SubmitButton from '../../Components/SubmitButton';
-import Checkbox from '../../Components/Field/CheckBox';
 import { AID_USER, DEMENTIA, DIABETES, DOB, HEALTH_STATS, HEARING_LOSS, HYPER_TENSION, NAME, OTHER, SUBMIT } from '../../Constants/appconstants';
 import { submitVitals } from '../../actions';
-import { get } from 'lodash';
-import { required } from 'redux-form-validators';
+import ProfileCheckBox from '../../Components/Field/ProfileCheckBox';
 
 const Profile = ({ navigation }) => {
 
@@ -68,12 +67,12 @@ const Profile = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
                                 <Field
                                     name='diabets'
-                                    component={Checkbox}
+                                    component={ProfileCheckBox}
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{DIABETES}</Text>
                                 <Field
                                     name='hyperTension'
-                                    component={Checkbox}
+                                    component={ProfileCheckBox}
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{HYPER_TENSION}</Text>
                             </View>
@@ -102,7 +101,7 @@ const Profile = ({ navigation }) => {
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                 <Field
                                     name='hearingAidUser'
-                                    component={Checkbox}
+                                    component={ProfileCheckBox}
                                 />
                                 <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>{AID_USER}</Text>
                             </View>
