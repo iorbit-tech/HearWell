@@ -1,7 +1,9 @@
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
 import { View, Text } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitAnswer } from '../../actions';
 
 import Checkbox from '../../Components/Field/CheckBox';
 import Input from '../../Components/Field/Input';
@@ -14,7 +16,10 @@ const DiaryQuestions = ({ navigation }) => {
     const [values, setValues] = useState('');
     const [arrayvalues, setArrayvalues] = useState([]);
     const { questions } = useSelector((state) => state.hearing);
+    const { user } = useSelector((state) => state.user.data);
     const [optionsList, setOptionsList] = useState([]);
+    const dispatch = useDispatch();
+    let question = questions[questionIndex];
 
     const submit = (value) => {
         console.log("valueABCD", value);
@@ -24,15 +29,27 @@ const DiaryQuestions = ({ navigation }) => {
             navigation.navigate('Dashboard')
         }
         if (questions[questionIndex].answerType == 'multiplechoice') {
-            // API with newData
-            console.log(arrayvalues, 'arrayvalues');
+            dispatchAns(arrayvalues);
         } else if (questions[questionIndex].answerType == 'singlechoice') {
             setValues(value);
-            console.log("value", values);
-            // API with value
+            dispatchAns(value);
+        }
+        else if (questions[questionIndex].answerType == 'textinput') {
+            dispatchAns(value.textinput[questionIndex]);
         }
     }
-    console.log(values, 'values');
+
+    const dispatchAns = (data) => {
+        var answerData = {
+            'questionId': get(question, 'questionId'),
+            'userId': get(user, 'userId'),
+            'order': parseInt(get(question, 'order')),
+            'answerType': get(question, 'answerType'),
+            'page': get(question, 'page'),
+            'options': data
+        };
+        dispatch(submitAnswer(answerData));
+    }
 
     useEffect(() => {
         if (questionIndex < questions.length) {
@@ -100,7 +117,7 @@ const DiaryQuestions = ({ navigation }) => {
                         {questionIndex < questions.length && questions[questionIndex].answerType == 'textinput' &&
                             <View style={{ padding: 20 }}>
                                 <Field
-                                    name='textinput'
+                                    name={`textinput.${questionIndex}`}
                                     label="Textinput *"
                                     keyboardType={'default'}
                                     autoCapitalize={'none'}

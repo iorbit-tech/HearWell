@@ -2,27 +2,9 @@ import { get } from "lodash";
 import api from "./api";
 
 export const submitSignup = (data) => {
-    const gender = get(data, 'gender');
-    const maritalStatus = get(data, 'maritalStatus');
     let newData = {
         ...data,
-
     };
-    if (gender == 0) {
-        newData.gender = 'male'
-    }
-    else if (gender == 1) {
-        newData.gender = 'female'
-    }
-    else {
-        newData.gender = 'other'
-    }
-    if (maritalStatus == 0) {
-        newData.maritalStatus = 'single'
-    }
-    else {
-        newData.maritalStatus = 'married'
-    }
     newData.userType = 'user';
     newData.status = 'true';
     return dispatch => {
@@ -95,11 +77,29 @@ export const submitChat = (data, userID) => {
 }
 
 export const getChat = (userID) => {
-    console.log(userID, 'getChat')
     return dispatch => {
         dispatch({
             type: "GET_CHAT",
             payload: api.get('/api/chat/' + userID)
+        })
+    }
+}
+
+export const submitAnswer = (data) => {
+    return dispatch => {
+        dispatch({
+            type: "SUBMIT_ANSWER",
+            payload: api.post('/api/answers', data)
+        })
+    }
+}
+
+export const submitTellusAnswer = (data) => {
+    console.log(data, 'submitTellusAnswer');
+    return dispatch => {
+        dispatch({
+            type: "TELLUS_ANSWER",
+            payload: api.post('/api/answers', data)
         })
     }
 }

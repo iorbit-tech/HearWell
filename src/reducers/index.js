@@ -10,7 +10,7 @@ const appReducer = combineReducers({
     user: userReducer,
     tellus: tellusReducer,
     hearing: hearingReducer,
-    chat: chatReducer
+    chat: chatReducer,
 });
 
 const rootReducer = (state, action) => {

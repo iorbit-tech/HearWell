@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import { useDispatch, useSelector } from 'react-redux';
+import { Field, Form } from 'react-final-form';
+
 import SubmitButton from '../../Components/SubmitButton';
 import { getHeight, getWidth } from '../../Components/utils';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { NEXT } from '../../Constants/appconstants';
-import { useSelector } from 'react-redux';
 import Input from '../../Components/Field/Input';
-import { Field, Form } from 'react-final-form';
+import { submitTellusAnswer } from '../../actions';
+import { get } from 'lodash';
 
 const Survey = ({ navigation }) => {
     const [value, setValue] = useState();
     const [questionIndex, setQuestionIndex] = useState(0);
     const [optionsList, setOptionsList] = useState([]);
     const { questions } = useSelector((state) => state.tellus);
+    const { user } = useSelector((state) => state.user.data);
+    const dispatch = useDispatch();
+    let question = questions[questionIndex];
 
     const submit = () => {
+        var answerData = {
+            'questionId': get(question, 'questionId'),
+            'userId': get(user, 'userId'),
+            'order': parseInt(get(question, 'order')),
+            'answerType': get(question, 'answerType'),
+            'page': get(question, 'page'),
+            'options': value
+        };
+        dispatch(submitTellusAnswer(answerData));
         console.log(value, 'value');
     }
 
