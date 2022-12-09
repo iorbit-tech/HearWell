@@ -19,11 +19,11 @@ import { get } from 'lodash';
 // ];
 
 const Gender = [
-    { label: 'Male', value: 0 }, { label: 'Female', value: 1 }, { label: 'Other', value: 2 }
+    { label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }, { label: 'Other', value: 'Other' }
 ];
 
 const MaritalStatus = [
-    { label: 'Single', value: 0 }, { label: 'Married', value: 1 }
+    { label: 'Single', value: 'Single' }, { label: 'Married', value: 'Married' }
 ];
 
 const Register = () => {
