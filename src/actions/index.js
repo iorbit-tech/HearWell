@@ -95,6 +95,7 @@ export const submitChat = (data, userID) => {
 }
 
 export const getChat = (userID) => {
+    console.log(userID, 'getChat')
     return dispatch => {
         dispatch({
             type: "GET_CHAT",

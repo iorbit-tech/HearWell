@@ -2,7 +2,7 @@ import api from "../actions/api";
 
 const defaultState = {
     fetching: false,
-    chat: {},
+    chat: [],
     serverError: [],
     isRegistered: "NOT_REGISTERED"
 }
@@ -18,6 +18,7 @@ export default function chatReducer(state = defaultState, action) {
             }
         }
         case "CREATE_CHAT_FULFILLED": {
+            console.log(state.chat, 'state.chat.chat')
             let olddata = state.chat;
             let response = action.payload.data.data;
             let newResponse = olddata.concat(response);

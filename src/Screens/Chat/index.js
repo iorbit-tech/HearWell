@@ -13,7 +13,7 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const window = useWindowDimensions();
     const dispatch = useDispatch();
-    const { data } = useSelector((state) => state.user.data);
+    const { user } = useSelector((state) => state.user.data);
     const { chat } = useSelector((state) => state.chat);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const Chat = () => {
                     text: get(item, "message", ""),
                     createdAt: get(item, "sentTime", ""),
                     _id: get(item, '_id'),
-                    user: get(item, "senderId", "") == get(data[0], "userId", "") ? "You" : "Expert",
+                    user: get(item, "senderId", "") == get(user, "userId", "") ? "You" : "Expert",
                 }
             })
             setMessages(updatedChat.reverse());
@@ -34,10 +34,14 @@ const Chat = () => {
     }, [chat]);
 
     useEffect(() => {
-        dispatch(getChat(get(data[0], "userId", "")));
+        // if (chat && chat.length > 0) {
+        // dispatch(getChat(get(data[0], "userId", "")));
+        dispatch(getChat(get(user, "userId", "")));
+
+        // }
     }, []);
 
-
+    console.log(user, 'user');
     const renderActions = () => {
         return (
             <View style={{ flexDirection: 'row', position: 'absolute', right: 60, top: 10 }}>
@@ -89,7 +93,7 @@ const Chat = () => {
     }
     const onSend = useCallback((messages = []) => {
         console.log(messages, 'messages1');
-        dispatch(submitChat(messages, get(data[0], "userId", ""),));
+        dispatch(submitChat(messages, get(user, "userId", ""),));
     }, [])
 
     return (
