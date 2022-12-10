@@ -1,10 +1,10 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 
-const Logout = () => {
+const Logout = ({ submit }) => {
     return (
         <View>
             <View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={submit}>
                     <View style={{ alignItems: 'center' }}>
                         <Image tintColor={'#000'} source={require('../assets/logout.png')}
                             style={{

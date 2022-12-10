@@ -118,3 +118,11 @@ export const checkRegistered = (data) => {
         });
     };
 };
+
+export const clearState = () => {
+    return (dispatch) => {
+        dispatch({
+            type: "LOGOUT",
+        });
+    };
+}

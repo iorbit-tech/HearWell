@@ -1,17 +1,24 @@
 import React, { Suspense } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store";
+import { useDispatch } from 'react-redux';
 
 import Logout from '../Components/Logout';
 import SubmitButton from '../Components/SubmitButton';
 import { AppBarStyle } from '../Components/utils';
-import { ASK_US, HEARING_DIARY, PROFILE, TELL_US } from '../Constants/appconstants';
-
+import { ASK_US, HEARING_DIARY, PROFILE, TELL_US, USER_TOKEN } from '../Constants/appconstants';
+import { clearState } from '../actions';
 
 const Dashboard = ({ route, navigation }) => {
-
+    const dispatch = useDispatch();
     // const { _signOut } = route.params;
 
-    AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout />, '')
+    AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout submit={() => clear()} />, '')
+
+    const clear = () => {
+        dispatch(clearState());
+        RNSecureKeyStore.set(USER_TOKEN, "", { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY });
+    }
 
     return (
         <View style={{ flex: 1 }}>
