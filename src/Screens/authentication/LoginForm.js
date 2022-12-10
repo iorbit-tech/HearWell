@@ -4,13 +4,13 @@ import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { get } from 'lodash';
 
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
-import { checkRegistered, setToken, submitLogin } from '../../actions';
+import { checkRegistered, setToken, setUser, submitLogin } from '../../actions';
 import { FORGOT_PASSWORD, LOGIN, NEW_ACCOUNT, NEW_USER, PASSWORD, USER_NAME } from '../../Constants/appconstants';
 import { showToast } from '../../Components/utils';
-import { get } from 'lodash';
 
 const LoginForm = () => {
 
@@ -33,7 +33,7 @@ const LoginForm = () => {
                     "LOGIN SUCCESS",
                     "Logged In Successfully!",
                 )
-                dispatch(setToken(get(data, 'token')));
+                dispatch(setToken(get(data, 'token'), (get(data.user, 'userId'))));
                 dispatch(checkRegistered("REGISTERED"));
             }
             else if (get(data, 'code') == 'ERR_BAD_REQUEST') {

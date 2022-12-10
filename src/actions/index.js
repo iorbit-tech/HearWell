@@ -37,11 +37,13 @@ export const submitVitals = (data, userId) => {
     }
 }
 
-export const setToken = (data) => {
+export const setToken = (data, user) => {
     return (dispatch) => {
         dispatch({
             type: "SET_TOKEN",
-            payload: data,
+            payload: {
+                data: data, user: user
+            },
         });
     };
 };

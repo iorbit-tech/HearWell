@@ -1,6 +1,6 @@
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store";
 import api from "../actions/api";
-import { USER_TOKEN } from "../Constants/appconstants";
+import { USER, USER_TOKEN } from "../Constants/appconstants";
 
 const defaultState = {
     fetching: false,
@@ -90,13 +90,19 @@ export default function userReducer(state = defaultState, action) {
         }
 
         case "SET_TOKEN": {
-            RNSecureKeyStore.set(USER_TOKEN, action.payload, {
+            RNSecureKeyStore.set(USER_TOKEN, action.payload.data, {
                 accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
             });
-            api.defaults.headers.common["Authorization"] = `Bearer ${action.payload}`;
+            RNSecureKeyStore.set(USER, action.payload.user, {
+                accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
+            });
+            api.defaults.headers.common["Authorization"] = `Bearer ${action.payload.data}`;
             return {
                 ...state,
-                token: action.payload,
+                token: action.payload.data,
+                data: {
+                    user: { userId: action.payload.user }
+                }
             };
         }
 

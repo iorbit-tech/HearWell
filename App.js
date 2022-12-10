@@ -15,7 +15,7 @@ import HearingDetails from './src/Screens/Profile/HearingDetails';
 import HearingDiary from './src/Screens/Hearing Diary';
 import DiaryQuestions from './src/Screens/Hearing Diary/DiaryQuestions';
 import { checkRegistered, setToken } from './src/actions';
-import { USER_TOKEN } from './src/Constants/appconstants';
+import { USER, USER_TOKEN } from './src/Constants/appconstants';
 
 
 const Stack = createNativeStackNavigator();
@@ -28,8 +28,12 @@ const App = () => {
     RNSecureKeyStore.get(USER_TOKEN).then(
       (accessToken) => {
         if (accessToken) {
-          dispatch(setToken(accessToken));
-          dispatch(checkRegistered("REGISTERED"));
+          RNSecureKeyStore.get(USER).then(
+            (userdetails) => {
+              dispatch(setToken(accessToken, userdetails));
+              dispatch(checkRegistered("REGISTERED"));
+            }
+          )
         }
       },
       (err) => {
