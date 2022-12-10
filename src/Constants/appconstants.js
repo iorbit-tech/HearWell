@@ -40,4 +40,7 @@ export const OTHER_DETAILS = `Other details`;
 //Chat
 export const REPLY = `Reply`;
 
+//Token
+export var USER_TOKEN = '';
+
 

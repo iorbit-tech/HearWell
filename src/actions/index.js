@@ -26,7 +26,6 @@ export const submitLogin = (data) => {
 }
 
 export const submitVitals = (data, userId) => {
-    console.log(data, 'data');
     var healthCondition = { 'diabets': get(data, 'diabets'), 'hyperTension': get(data, 'hyperTension') };
     var append = { ...data, userId, healthCondition };
     console.log(append, 'append');
@@ -67,7 +66,6 @@ export const getHearingQuestions = () => {
 
 export const submitChat = (data, userID) => {
     var message = { 'subject': 'Message', 'message': data[0].text, 'sentTime': new Date(), 'senderId': userID, 'receiverId': '' };
-    console.log(message, 'submitChat');
     return dispatch => {
         dispatch({
             type: "CREATE_CHAT",
@@ -104,7 +102,6 @@ export const submitTellusAnswer = (data) => {
 }
 
 export const submitGoogleAuth = (data) => {
-    console.log(data, 'submitGoogleAuth');
     return dispatch => {
         dispatch({
             type: "GOOGLE_AUTH",
@@ -112,3 +109,12 @@ export const submitGoogleAuth = (data) => {
         })
     }
 }
+
+export const checkRegistered = (data) => {
+    return (dispatch) => {
+        dispatch({
+            type: "CHECK_REGISTERED",
+            payload: data,
+        });
+    };
+};
