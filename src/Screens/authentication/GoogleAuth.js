@@ -19,11 +19,15 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { useNavigation } from '@react-navigation/native';
+import { get } from 'lodash';
+import { submitGoogleAuth } from '../../actions';
+import { useDispatch } from 'react-redux';
 
 const GoogleAuth = () => {
   const navigation = useNavigation();
   const [userInfo, setUserInfo] = useState(null);
   const [gettingLoginStatus, setGettingLoginStatus] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Initial configuration
@@ -43,8 +47,8 @@ const GoogleAuth = () => {
   useEffect(() => {
     if (userInfo !== null) {
       console.log("Navigation", navigation);
-      // navigation.navigate('Dashboard', { _signOut })
-      navigation.navigate('Dashboard');
+      navigation.navigate('Dashboard', { _signOut })
+      // navigation.navigate('Dashboard');
     }
   }, [userInfo]);
 
@@ -85,8 +89,10 @@ const GoogleAuth = () => {
         showPlayServicesUpdateDialog: true,
       });
       const userInfo = await GoogleSignin.signIn();
-      console.log('User Info --> ', userInfo);
+      let usermail = { "email": get(userInfo.user, 'email') };
+      console.log('User Info --> ', usermail);
       setUserInfo(userInfo);
+      dispatch(submitGoogleAuth(usermail));
     } catch (error) {
       console.log('Message', JSON.stringify(error));
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

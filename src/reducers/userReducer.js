@@ -86,12 +86,40 @@ export default function userReducer(state = defaultState, action) {
                 fetching: false,
             }
         }
+
         case "SET_TOKEN": {
             api.defaults.headers.common["Authorization"] = `Bearer ${action.payload}`;
             return {
                 ...state,
                 token: action.payload,
             };
+        }
+
+        case "GOOGLE_AUTH_PENDING": {
+            return {
+                ...state,
+                fetching: true,
+                data: {},
+                serverError: []
+            }
+        }
+
+        case "GOOGLE_AUTH_FULFILLED": {
+            let response = action.payload.data;
+            return {
+                ...state,
+                fetching: false,
+                data: response
+            }
+        }
+
+        case "GOOGLE_AUTH_REJECTED": {
+            let response = action.payload;
+            return {
+                ...state,
+                fetching: false,
+                data: response
+            }
         }
     }
     return state;

@@ -55,7 +55,7 @@ const Dashboard = ({ route, navigation }) => {
                 </View>
             </View>
             {/* <SubmitButton
-                submit={_signOut? _signOut : ''}
+                submit={_signOut ? _signOut : ''}
                 text={'Logout'}
                 btnStyle={{ backgroundColor: 'grey', padding: 10, width: 100, alignItems: 'center', alignSelf: 'center' }}
             /> */}

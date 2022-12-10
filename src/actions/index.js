@@ -95,11 +95,20 @@ export const submitAnswer = (data) => {
 }
 
 export const submitTellusAnswer = (data) => {
-    console.log(data, 'submitTellusAnswer');
     return dispatch => {
         dispatch({
             type: "TELLUS_ANSWER",
             payload: api.post('/api/answers', data)
+        })
+    }
+}
+
+export const submitGoogleAuth = (data) => {
+    console.log(data, 'submitGoogleAuth');
+    return dispatch => {
+        dispatch({
+            type: "GOOGLE_AUTH",
+            payload: api.post('/api/user/isuser', data)
         })
     }
 }
