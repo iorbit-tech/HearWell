@@ -10,6 +10,8 @@ import { NEXT } from '../../Constants/appconstants';
 import Input from '../../Components/Field/Input';
 import { submitTellusAnswer } from '../../actions';
 import { get } from 'lodash';
+import Checkbox from '../../Components/Field/CheckBox';
+import Radiobutton from '../../Components/Field/RadioButton';
 
 const Survey = ({ navigation }) => {
     const [value, setValue] = useState();
@@ -19,18 +21,36 @@ const Survey = ({ navigation }) => {
     const { user } = useSelector((state) => state.user.data);
     const dispatch = useDispatch();
     let question = questions[questionIndex];
+    const [arrayvalues, setArrayvalues] = useState([]);
 
-    const submit = () => {
+    const submit = (value) => {
+        console.log("valueABCD", value);
+        if (questionIndex < (questions.length - 1)) {
+            setQuestionIndex(questionIndex + 1);
+        } else {
+            navigation.navigate('Dashboard')
+        }
+        if (questions[questionIndex].answerType == 'multiplechoice') {
+            dispatchAns(arrayvalues);
+        } else if (questions[questionIndex].answerType == 'singlechoice') {
+            setValue(value);
+            dispatchAns(value);
+        }
+        else if (questions[questionIndex].answerType == 'textinput') {
+            dispatchAns(get(value, `textinput[${questionIndex}]`, ""));
+        }
+    }
+
+    const dispatchAns = (data) => {
         var answerData = {
             'questionId': get(question, 'questionId'),
             'userId': get(user, 'userId'),
             'order': parseInt(get(question, 'order')),
             'answerType': get(question, 'answerType'),
             'page': get(question, 'page'),
-            'options': value
+            'options': data
         };
         dispatch(submitTellusAnswer(answerData));
-        console.log(value, 'value');
     }
 
     useEffect(() => {
@@ -54,42 +74,56 @@ const Survey = ({ navigation }) => {
                 <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].question}</Text>
             </View>
             <View style={{ padding: 20, marginTop: 10 }}>
-                {questions[questionIndex].answerType !== 'textinput' ?
-                    <RadioForm>
-                        {
-                            optionsList.map((obj, i) => (
-                                console.log(obj, 'obj'),
-                                <RadioButton labelHorizontal={true} key={i} >
-                                    <RadioButtonInput
-                                        obj={obj}
-                                        index={i}
-                                        initial={0}
-                                        onPress={(value) => { setValue(value) }}
-                                        buttonSize={10}
-                                        isSelected={setValue === obj.label}
-                                        buttonOuterColor={value === obj.label ? '#9B9B9B' : 'grey'}
-                                        buttonStyle={{ backgroundColor: value === obj.label ? '#0E96FF' : '#fff' }}
-                                    />
-                                    <RadioButtonLabel
-                                        obj={obj}
-                                        index={i}
-                                        initial={0}
-                                        labelHorizontal={true}
-                                        onPress={(value) => { setValue(value) }}
-                                        labelStyle={{ fontSize: 20, color: 'grey' }}
-                                        labelWrapStyle={{ marginLeft: 10 }}
-                                    />
-                                </RadioButton>
-                            ))
-                        }
-                    </RadioForm>
-                    :
-                    <Form onSubmit={submit}
-                        render={({ handleSubmit, invalid }) => (
-                            <View>
-                                <View>
+                < Form onSubmit={submit}
+                    render={({ handleSubmit, invalid }) => (
+                        <View>
+                            {questions[questionIndex].answerType == 'multiplechoice' &&
+                                <View style={{ padding: 20, }}>
+                                    <Text>{questions[questionIndex].question}</Text>
+                                    {questions[questionIndex].options.map((option, index) => (
+                                        <View>
+                                            <View>
+                                                <View style={{ flexDirection: 'row', marginTop: 10, }}>
+                                                    <Field
+                                                        name={"checkbox" + option} //need to change
+                                                        component={Checkbox}
+                                                        // value={option}
+                                                        questionIndex={questionIndex}
+                                                        label={option}
+                                                        setArrayvalues={setArrayvalues}
+                                                        arrayvalues={arrayvalues}
+                                                    />
+                                                    <Text style={{ marginHorizontal: 10, alignSelf: 'center' }}>{option}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    ))
+                                    }
+                                </View>
+                            }
+                            {questions[questionIndex].answerType == 'singlechoice' &&
+                                <View style={{ padding: 20 }}>
+                                    <Text>{questions[questionIndex].question}</Text>
+                                    <View>
+                                        <View>
+                                            <View style={{ flexDirection: 'row', marginTop: 10, }}>
+                                                <Field
+                                                    name={questionIndex} //need to change
+                                                    component={Radiobutton}
+                                                    Questions={optionsList}
+                                                    questionIndex={questionIndex}
+                                                // value={values}
+                                                />
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
+                            }
+                            {questions[questionIndex].answerType == 'textinput' &&
+                                <View style={{ padding: 20 }}>
                                     <Field
-                                        name='textinput'
+                                        name={`textinput.${questionIndex}`}
                                         label="Textinput *"
                                         keyboardType={'default'}
                                         autoCapitalize={'none'}
@@ -97,29 +131,18 @@ const Survey = ({ navigation }) => {
                                         placeholderName={'Enter your input here...'}
                                     />
                                 </View>
-                                {/* <View style={{ backgroundColor: '#000', opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignSelf: 'center', flexDirection: 'row' }}>
-                                    <SubmitButton
-                                        disabled={invalid == true && true}
-                                        submit={handleSubmit}
-                                        text={'REGISTER'}
-                                        textStyle={{ color: '#fff' }}
-                                    />
-                                </View> */}
-                            </View>
-                        )}
-                    />
-                }
-            </View>
-            <View style={{ width: getWidth() / 1.2, alignSelf: 'center', marginTop: getHeight() / 1.3, position: 'absolute' }}>
-                <SubmitButton
-                    text={NEXT}
-                    btnStyle={{ backgroundColor: 'blue', padding: 20, borderRadius: 10 }}
-                    textStyle={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}
-                    submit={() => { submit(); (questionIndex < (questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard') }}
-
+                            }
+                            <SubmitButton
+                                btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
+                                textStyle={{ color: '#fff', textAlign: 'center' }}
+                                text={NEXT}
+                                submit={() => handleSubmit()}
+                            />
+                        </View>
+                    )}
                 />
             </View>
-        </View>
+        </View >
     )
 };
 

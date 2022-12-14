@@ -104,6 +104,7 @@ export const submitTellusAnswer = (data) => {
 }
 
 export const submitGoogleAuth = (data) => {
+    console.log("data submitGoogleAuth", data);
     return dispatch => {
         dispatch({
             type: "GOOGLE_AUTH",

@@ -34,9 +34,8 @@ const DiaryQuestions = ({ navigation }) => {
             setValues(value);
             dispatchAns(value);
         }
-        else if (questions[questionIndex].answerType == 'textinput') {
-            dispatchAns(value.textinput[questionIndex]);
-        }
+        else if (questions[questionIndex].answerType == 'textinput')
+            dispatchAns(get(value, `textinput[${questionIndex}]`, ""));
     }
 
     const dispatchAns = (data) => {

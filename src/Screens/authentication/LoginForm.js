@@ -42,7 +42,8 @@ const LoginForm = () => {
                     "LOGIN FAILED",
                     get(data, 'response.data.message')
                 )
-                console.log(get(data, 'response.data.message'))
+                // navigation.navigate('Register');
+                console.log("USER Exist", get(data, 'response.data.message'))
             }
         }
 
