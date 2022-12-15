@@ -31,8 +31,13 @@ const DiaryQuestions = ({ navigation }) => {
         if (questions[questionIndex].answerType == 'multiplechoice') {
             dispatchAns(arrayvalues);
         } else if (questions[questionIndex].answerType == 'singlechoice') {
-            setValues(value);
-            dispatchAns(value);
+            if (value && Object.keys(value).length === 0) {
+                dispatchAns([]);
+            }
+            else {
+                setValues(value);
+                dispatchAns(value);
+            }
         }
         else if (questions[questionIndex].answerType == 'textinput') {
             if (get(value, 'textinput', '') != '') {

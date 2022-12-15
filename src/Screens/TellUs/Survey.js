@@ -33,8 +33,14 @@ const Survey = ({ navigation }) => {
         if (questions[questionIndex].answerType == 'multiplechoice') {
             dispatchAns(arrayvalues);
         } else if (questions[questionIndex].answerType == 'singlechoice') {
-            setValue(value);
-            dispatchAns(value);
+            console.log(value, 'value_singlechoice')
+            if (value && Object.keys(value).length === 0) {
+                dispatchAns([]);
+            }
+            else {
+                setValue(value);
+                dispatchAns(value);
+            }
         }
         else if (questions[questionIndex].answerType == 'textinput') {
             if (get(value, 'textinput', '') != '') {
