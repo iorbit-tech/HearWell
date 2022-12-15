@@ -8,6 +8,7 @@ const Checkbox = (props) => {
 
     useEffect(() => {
         props.setArrayvalues([]);
+        setvalues('');
     }, [props.questionIndex]);
 
     const onChangeHandler = (newValue) => {
