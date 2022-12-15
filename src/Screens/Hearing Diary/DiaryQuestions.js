@@ -34,8 +34,14 @@ const DiaryQuestions = ({ navigation }) => {
             setValues(value);
             dispatchAns(value);
         }
-        else if (questions[questionIndex].answerType == 'textinput')
-            dispatchAns(get(value, `textinput[${questionIndex}]`, ""));
+        else if (questions[questionIndex].answerType == 'textinput') {
+            if (get(value, 'textinput', '') != '') {
+                dispatchAns(value.textinput[questionIndex]);
+            }
+            else {
+                dispatchAns([]);
+            }
+        }
     }
 
     const dispatchAns = (data) => {
@@ -65,19 +71,21 @@ const DiaryQuestions = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <View style={{ flexDirection: 'row', margin: 20 }}>
+                <Text>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
+                <Text>{questions[questionIndex].question}</Text>
+            </View>
             <Form onSubmit={submit}
                 render={({ handleSubmit, invalid }) => (
                     <View>
                         {questionIndex < questions.length && questions[questionIndex].answerType == 'multiplechoice' &&
                             <View style={{ padding: 20, }}>
-                                <Text>{questions[questionIndex].question}</Text>
                                 {questions[questionIndex].options.map((option, index) => (
                                     <View>
                                         <View>
                                             <View style={{ flexDirection: 'row', marginTop: 10, }}>
                                                 <Field
-                                                    // name={option} //need to change
-                                                    name={"checkbox" + option} //need to change
+                                                    name={"checkbox" + option}
                                                     component={Checkbox}
                                                     // value={option}
                                                     questionIndex={questionIndex}
@@ -95,13 +103,11 @@ const DiaryQuestions = ({ navigation }) => {
                         }
                         {questionIndex < questions.length && questions[questionIndex].answerType == 'singlechoice' &&
                             <View style={{ padding: 20 }}>
-                                <Text>{questions[questionIndex].question}</Text>
                                 <View>
-
                                     <View>
                                         <View style={{ flexDirection: 'row', marginTop: 10, }}>
                                             <Field
-                                                name={questionIndex} //need to change
+                                                name={questionIndex}
                                                 component={Radiobutton}
                                                 Questions={optionsList}
                                                 questionIndex={questionIndex}
@@ -122,6 +128,8 @@ const DiaryQuestions = ({ navigation }) => {
                                     autoCapitalize={'none'}
                                     component={Input}
                                     placeholderName={'Enter your input here...'}
+                                    multiline={true}
+                                    style={{ backgroundColor: '#fff', padding: 15, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
                                 />
                             </View>
                         }

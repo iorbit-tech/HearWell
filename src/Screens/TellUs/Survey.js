@@ -37,7 +37,12 @@ const Survey = ({ navigation }) => {
             dispatchAns(value);
         }
         else if (questions[questionIndex].answerType == 'textinput') {
-            dispatchAns(get(value, `textinput[${questionIndex}]`, ""));
+            if (get(value, 'textinput', '') != '') {
+                dispatchAns(value.textinput[questionIndex]);
+            }
+            else {
+                dispatchAns([]);
+            }
         }
     }
 
@@ -69,17 +74,16 @@ const Survey = ({ navigation }) => {
             <View style={{ padding: 20 }}>
                 <Text>Help us understand your lifestyle and how it may be affected by your hearing</Text>
             </View>
-            <View style={{ padding: 20, flexDirection: 'row' }}>
-                <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
-                <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].question}</Text>
-            </View>
             <View style={{ padding: 20, marginTop: 10 }}>
                 < Form onSubmit={submit}
                     render={({ handleSubmit, invalid }) => (
                         <View>
                             {questions[questionIndex].answerType == 'multiplechoice' &&
                                 <View style={{ padding: 20, }}>
-                                    <Text>{questions[questionIndex].question}</Text>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
+                                        <Text>{questions[questionIndex].question}</Text>
+                                    </View>
                                     {questions[questionIndex].options.map((option, index) => (
                                         <View>
                                             <View>
@@ -121,14 +125,17 @@ const Survey = ({ navigation }) => {
                                 </View>
                             }
                             {questions[questionIndex].answerType == 'textinput' &&
-                                <View style={{ padding: 20 }}>
+                                <View style={{}}>
                                     <Field
+                                        // validate={required()}
                                         name={`textinput.${questionIndex}`}
                                         label="Textinput *"
                                         keyboardType={'default'}
                                         autoCapitalize={'none'}
                                         component={Input}
                                         placeholderName={'Enter your input here...'}
+                                        multiline={true}
+                                        style={{ backgroundColor: '#fff', padding: 15, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
                                     />
                                 </View>
                             }
