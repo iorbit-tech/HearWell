@@ -1,7 +1,9 @@
 import React, { Suspense } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { get } from 'lodash';
 
 import Logout from '../Components/Logout';
 import SubmitButton from '../Components/SubmitButton';
@@ -11,14 +13,27 @@ import { clearState } from '../actions';
 
 const Dashboard = ({ route, navigation }) => {
     const dispatch = useDispatch();
-    // const { _signOut } = route.params;
+    const { authCheck } = useSelector((state) => state.user);
 
     AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout submit={() => clear()} />, '')
 
     const clear = () => {
         dispatch(clearState());
         RNSecureKeyStore.set(USER_TOKEN, "", { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY });
+        if (get(authCheck, 'message', '') == 'user exist') {
+            _signOut()
+        }
     }
+
+    const _signOut = async () => {
+        try {
+            await GoogleSignin.revokeAccess();
+            await GoogleSignin.signOut();
+        } catch (error) {
+            console.error(error);
+        }
+        navigation.navigate('Home')
+    };
 
     return (
         <View style={{ flex: 1 }}>

@@ -84,12 +84,12 @@ const Survey = ({ navigation }) => {
                 < Form onSubmit={submit}
                     render={({ handleSubmit, invalid }) => (
                         <View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ fontSize: 20, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
+                                <Text style={{ fontSize: 20, color: 'grey' }}>{questions[questionIndex].question}</Text>
+                            </View>
                             {questions[questionIndex].answerType == 'multiplechoice' &&
                                 <View style={{ padding: 20, }}>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={{ fontSize: 18, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
-                                        <Text>{questions[questionIndex].question}</Text>
-                                    </View>
                                     {questions[questionIndex].options.map((option, index) => (
                                         <View>
                                             <View>
@@ -113,7 +113,6 @@ const Survey = ({ navigation }) => {
                             }
                             {questions[questionIndex].answerType == 'singlechoice' &&
                                 <View style={{ padding: 20 }}>
-                                    <Text>{questions[questionIndex].question}</Text>
                                     <View>
                                         <View>
                                             <View style={{ flexDirection: 'row', marginTop: 10, }}>
@@ -122,6 +121,7 @@ const Survey = ({ navigation }) => {
                                                     component={Radiobutton}
                                                     Questions={optionsList}
                                                     questionIndex={questionIndex}
+                                                    labelStyle={{ fontSize: 20, color: 'grey' }}
                                                 // value={values}
                                                 />
                                             </View>
@@ -131,7 +131,7 @@ const Survey = ({ navigation }) => {
                                 </View>
                             }
                             {questions[questionIndex].answerType == 'textinput' &&
-                                <View style={{}}>
+                                <View style={{ paddingTop: 20 }}>
                                     <Field
                                         // validate={required()}
                                         name={`textinput.${questionIndex}`}

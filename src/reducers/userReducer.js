@@ -7,7 +7,8 @@ const defaultState = {
     data: {},
     vitals: {},
     serverError: [],
-    isRegistered: "NOT_REGISTERED"
+    isRegistered: "NOT_REGISTERED",
+    authCheck: ''
 }
 
 export default function userReducer(state = defaultState, action) {
@@ -117,7 +118,7 @@ export default function userReducer(state = defaultState, action) {
             return {
                 ...state,
                 fetching: true,
-                data: {},
+                authCheck: '',
                 serverError: []
             }
         }
@@ -127,16 +128,41 @@ export default function userReducer(state = defaultState, action) {
             return {
                 ...state,
                 fetching: false,
-                data: response
+                authCheck: response
             }
         }
 
         case "GOOGLE_AUTH_REJECTED": {
-            let response = action.payload;
+            let response = action.payload.response.data;
+            return {
+                ...state,
+                fetching: false,
+                authCheck: response
+            }
+        }
+
+        case "GOOGLE_AUTH_CHECK_PENDING": {
+            return {
+                ...state,
+                fetching: true,
+                data: '',
+                serverError: []
+            }
+        }
+
+        case "GOOGLE_AUTH_CHECK_FULFILLED": {
+            let response = action.payload.data;
             return {
                 ...state,
                 fetching: false,
                 data: response
+            }
+        }
+
+        case "GOOGLE_AUTH_CHECK_REJECTED": {
+            return {
+                ...state,
+                data: false,
             }
         }
     }

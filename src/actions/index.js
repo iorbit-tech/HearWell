@@ -38,6 +38,7 @@ export const submitVitals = (data, userId) => {
 }
 
 export const setToken = (data, user) => {
+    console.log(data, 'setToken')
     return (dispatch) => {
         dispatch({
             type: "SET_TOKEN",
@@ -128,4 +129,14 @@ export const clearState = () => {
             type: "LOGOUT",
         });
     };
+}
+
+export const googleauthcheck = (data) => {
+    console.log("authCheck", data);
+    return dispatch => {
+        dispatch({
+            type: "GOOGLE_AUTH_CHECK",
+            payload: api.post('/api/user/googlelogin', data)
+        })
+    }
 }

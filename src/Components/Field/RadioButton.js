@@ -4,7 +4,7 @@ import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from "reac
 
 const Radiobutton = (props) => {
     const [values, setValues] = useState(props.value || props || "");
-    const { Questions, questionIndex } = props;
+    const { Questions, questionIndex, labelStyle } = props;
 
     const onChangeHandler = (value) => {
         const { input: { onChange } } = props;
@@ -35,7 +35,8 @@ const Radiobutton = (props) => {
                                     initial={0}
                                     labelHorizontal={true}
                                     onPress={onChangeHandler}
-                                    labelStyle={{ fontSize: 20, color: 'grey' }}
+                                    // labelStyle={{ fontSize: 20, color: 'grey' }}
+                                    labelStyle={labelStyle}
                                     labelWrapStyle={{ marginLeft: 10 }}
                                 />
                             </RadioButton>

@@ -20,13 +20,15 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { useNavigation } from '@react-navigation/native';
 import { get } from 'lodash';
-import { submitGoogleAuth } from '../../actions';
-import { useDispatch } from 'react-redux';
+
+import { checkRegistered, googleauthcheck, setToken, submitGoogleAuth } from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const GoogleAuth = () => {
   const navigation = useNavigation();
   const [userInfo, setUserInfo] = useState(null);
   const [gettingLoginStatus, setGettingLoginStatus] = useState(true);
+  const { authCheck } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,12 +47,21 @@ const GoogleAuth = () => {
 
   // need to handle in Home Screen
   useEffect(() => {
-    if (userInfo !== null) {
-      console.log("Navigation", navigation);
-      navigation.navigate('Dashboard', { _signOut })
-      // navigation.navigate('Dashboard');
+    if (get(authCheck, 'message', '') == 'user exist') {
+      let userMail = { email: get(userInfo.user, 'email') }
+      dispatch(googleauthcheck(userMail));
+      dispatch(setToken(get(authCheck, 'token'), (get(authCheck.user, 'userId'))));
     }
-  }, [userInfo]);
+    else if (get(authCheck, 'message', '') == 'no user exist') {
+      Alert.alert(
+        "NO USER EXISTS",
+        "Create a new user!",
+      );
+      GoogleSignin.revokeAccess();
+      GoogleSignin.signOut();
+      navigation.navigate('Register');
+    }
+  }, [authCheck]);
 
   const _isSignedIn = async () => {
     const isSignedIn = await GoogleSignin.isSignedIn();

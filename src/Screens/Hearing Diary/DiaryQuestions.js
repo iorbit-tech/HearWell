@@ -77,8 +77,8 @@ const DiaryQuestions = ({ navigation }) => {
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <View style={{ flexDirection: 'row', margin: 20 }}>
-                <Text>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
-                <Text>{questions[questionIndex].question}</Text>
+                <Text style={{ fontSize: 20, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
+                <Text style={{ fontSize: 20, color: 'grey' }}>{questions[questionIndex].question}</Text>
             </View>
             <Form onSubmit={submit}
                 render={({ handleSubmit, invalid }) => (
@@ -116,6 +116,7 @@ const DiaryQuestions = ({ navigation }) => {
                                                 component={Radiobutton}
                                                 Questions={optionsList}
                                                 questionIndex={questionIndex}
+                                                labelStyle={{ fontSize: 20, color: 'grey' }}
                                             // value={values}
                                             />
                                         </View>
