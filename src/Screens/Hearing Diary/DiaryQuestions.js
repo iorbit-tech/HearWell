@@ -9,6 +9,7 @@ import Checkbox from '../../Components/Field/CheckBox';
 import Input from '../../Components/Field/Input';
 import Radiobutton from '../../Components/Field/RadioButton';
 import SubmitButton from '../../Components/SubmitButton';
+import { compare } from '../../Components/utils';
 import { NEXT } from '../../Constants/appconstants';
 
 const DiaryQuestions = ({ navigation }) => {
@@ -20,6 +21,8 @@ const DiaryQuestions = ({ navigation }) => {
     const [optionsList, setOptionsList] = useState([]);
     const dispatch = useDispatch();
     let question = questions[questionIndex];
+
+    questions.sort(compare);
 
     const submit = (value) => {
         console.log("valueABCD", value);
@@ -135,7 +138,7 @@ const DiaryQuestions = ({ navigation }) => {
                                     component={Input}
                                     placeholderName={'Enter your input here...'}
                                     multiline={true}
-                                    style={{ backgroundColor: '#fff', padding: 15, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
+                                    style={{ backgroundColor: '#fff', paddingBottom: 150, paddingHorizontal: 15, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
                                 />
                             </View>
                         }

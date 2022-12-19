@@ -8,7 +8,7 @@ import { required, email } from 'redux-form-validators';
 import Input from '../../Components/Field/Input';
 import ProfilePhoto from '../../assets/profile.png'
 import SubmitButton from '../../Components/SubmitButton';
-import { AID_USER, DEMENTIA, DIABETES, DOB, HEALTH_STATS, HEARING_LOSS, HYPER_TENSION, NAME, OTHER, SUBMIT, UPDATE } from '../../Constants/appconstants';
+import { AID_USER, DIABETES, DOB, HEALTH_STATS, HYPER_TENSION, NAME, OTHER, SUBMIT, UPDATE } from '../../Constants/appconstants';
 import { fetchVitals, submitVitals, updateVitals } from '../../actions';
 import ProfileCheckBox from '../../Components/Field/ProfileCheckBox';
 
@@ -88,18 +88,6 @@ const Profile = ({ navigation }) => {
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{HYPER_TENSION}</Text>
                             </View>
-                            {/* <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
-                                <Field
-                                    name='dementia'
-                                    component={Checkbox}
-                                />
-                                <Text style={{ marginHorizontal: 20 }}>{DEMENTIA}</Text>
-                                <Field
-                                    name='hearingLoss'
-                                    component={Checkbox}
-                                />
-                                <Text style={{ marginHorizontal: 20 }}>{HEARING_LOSS}</Text>
-                            </View> */}
                             <View style={{ marginTop: 20 }}>
                                 <Field
                                     name='otherHealthConditions'

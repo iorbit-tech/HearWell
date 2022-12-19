@@ -27,6 +27,13 @@ export const AppBarStyle = (color, titleColor, tintColor, title, headerRight, he
   )
 }
 
+export function compare(a, b) {
+  if (parseInt(a.order) > parseInt(b.order)) return 1;
+  if (parseInt(b.order) > parseInt(a.order)) return -1;
+
+  return 0;
+}
+
 export const showToast = (errors, color, multiple) => {
   if (multiple !== true) multiple = false;
 
