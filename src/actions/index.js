@@ -37,6 +37,31 @@ export const submitVitals = (data, userId) => {
     }
 }
 
+export const fetchVitals = (userId) => {
+    return dispatch => {
+        dispatch({
+            type: "FETCH_VITALS",
+            payload: api.get('api/vitals/userid/' + userId)
+        })
+    }
+}
+
+export const updateVitals = (data, userId, vitalId) => {
+    var healthCondition = { 'diabets': get(data, 'diabets'), 'hyperTension': get(data, 'hyperTension') };
+    var append = { ...data, userId, healthCondition };
+    console.log(vitalId, 'append');
+    return dispatch => {
+        dispatch({
+            type: "UPDATE_VITALS",
+            payload: api.put('/api/vitals/' + vitalId, append),
+            meta: {
+                data: append
+            }
+        })
+    }
+}
+
+
 export const setToken = (data, user) => {
     console.log(data, 'setToken')
     return (dispatch) => {

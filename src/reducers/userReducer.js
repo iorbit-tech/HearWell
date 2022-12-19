@@ -90,6 +90,59 @@ export default function userReducer(state = defaultState, action) {
             }
         }
 
+        case "FETCH_VITALS_PENDING": {
+            return {
+                ...state,
+                fetching: true,
+                vitals: {},
+                serverError: []
+            }
+        }
+
+        case "FETCH_VITALS_FULFILLED": {
+            let response = action.payload.data;
+            return {
+                ...state,
+                fetching: false,
+                vitals: response
+            }
+        }
+
+        case "FETCH_VITALS_REJECTED": {
+            return {
+                ...state,
+                fetching: false,
+            }
+        }
+
+        case "UPDATE_VITALS_PENDING": {
+            return {
+                ...state,
+                fetching: true,
+                vitals: {},
+                serverError: []
+            }
+        }
+
+        case "UPDATE_VITALS_FULFILLED": {
+            let updatedData = action.meta.data;
+            // let oldVitals = action.state.vitals;
+            // console.log("oldVitals", oldVitals);
+            // oldVitals[0] = updatedData;
+            return {
+                ...state,
+                fetching: false,
+                vitals: updatedData
+            }
+        }
+
+        case "UPDATE_VITALS_REJECTED": {
+            return {
+                ...state,
+                fetching: false,
+            }
+        }
+
         case "SET_TOKEN": {
             RNSecureKeyStore.set(USER_TOKEN, action.payload.data, {
                 accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,

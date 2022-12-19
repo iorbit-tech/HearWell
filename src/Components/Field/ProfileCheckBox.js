@@ -4,11 +4,11 @@ import { View, TextInput, Text } from "react-native";
 
 const ProfileCheckBox = (props) => {
     const [values, setvalues] = useState(props.input.value || props.initValue || "");
-    const { meta: { touched, error }, input: { newValue }, initValue, label, serverError, inputstyle = {}, without_background = false, placeholderName, secureTextEntry, getValue, } = props;
+    const { meta: { touched, error }, label, input: { newValue }, initValue, serverError, inputstyle = {}, without_background = false, placeholderName, secureTextEntry, getValue, } = props;
 
     const onChangeHandler = (newValue) => {
         const { input: { onChange }, label, } = props;
-        onChange(label);
+        onChange(newValue);
         setvalues(newValue);
     }
     return (
