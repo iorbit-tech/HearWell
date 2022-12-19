@@ -1,17 +1,39 @@
 import React, { Suspense } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store";
+import { useDispatch, useSelector } from 'react-redux';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { get } from 'lodash';
 
 import Logout from '../Components/Logout';
 import SubmitButton from '../Components/SubmitButton';
 import { AppBarStyle } from '../Components/utils';
-import { ASK_US, HEARING_DIARY, PROFILE, TELL_US } from '../Constants/appconstants';
-
+import { ASK_US, HEARING_DIARY, PROFILE, TELL_US, USER_TOKEN } from '../Constants/appconstants';
+import { clearState } from '../actions';
 
 const Dashboard = ({ route, navigation }) => {
+    const dispatch = useDispatch();
+    const { authCheck } = useSelector((state) => state.user);
 
-    // const { _signOut } = route.params;
+    AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout submit={() => clear()} />, '')
 
-    AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout />, '')
+    const clear = () => {
+        dispatch(clearState());
+        RNSecureKeyStore.set(USER_TOKEN, "", { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY });
+        if (get(authCheck, 'message', '') == 'user exist') {
+            _signOut()
+        }
+    }
+
+    const _signOut = async () => {
+        try {
+            await GoogleSignin.revokeAccess();
+            await GoogleSignin.signOut();
+        } catch (error) {
+            console.error(error);
+        }
+        navigation.navigate('Home')
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -55,7 +77,7 @@ const Dashboard = ({ route, navigation }) => {
                 </View>
             </View>
             {/* <SubmitButton
-                submit={_signOut? _signOut : ''}
+                submit={_signOut ? _signOut : ''}
                 text={'Logout'}
                 btnStyle={{ backgroundColor: 'grey', padding: 10, width: 100, alignItems: 'center', alignSelf: 'center' }}
             /> */}

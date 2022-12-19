@@ -1,33 +1,47 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useWindowDimensions, View, Text, TouchableOpacity, Image } from 'react-native';
-import { GiftedChat, MessageImage, Actions, InputToolbar } from 'react-native-gifted-chat'
+import { GiftedChat, MessageImage, Actions, InputToolbar, Bubble } from 'react-native-gifted-chat'
 import SendArrow from '../../assets/arrows.png';
 import AttachmentPin from '../../assets/attachment.png';
 import Microphone from '../../assets/microphone.png';
-import { REPLY } from '../../Constants/appconstants';
+import { REPLY, SUBMIT } from '../../Constants/appconstants';
+import { useDispatch, useSelector } from 'react-redux';
+import { getChat, submitChat } from '../../actions/index';
+import { get } from 'lodash';
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
     const window = useWindowDimensions();
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.user.data);
+    const { chat } = useSelector((state) => state.chat);
 
     useEffect(() => {
-        setMessages([
-            {
-                name: 'Admin',
-                _id: 1,
-                text: 'Hello developer',
-                createdAt: new Date(),
+        if (chat && chat.length > 0) {
+            let updatedChat = [];
+            chat.map((item, i) => {
+                updatedChat[i] = {
+                    item,
+                    text: get(item, "message", ""),
+                    createdAt: get(item, "sentTime", ""),
+                    _id: get(item, '_id'),
+                    user: get(item, "senderId", "") == get(user, "userId", "") ? "You" : "Expert",
+                }
+            })
+            setMessages(updatedChat.reverse());
+            console.log(updatedChat, 'updatedChat');
+        }
+    }, [chat]);
 
-                user: {
-                    _id: 2,
-                    name: 'React Native',
-                    avatar: 'https://placeimg.com/140/140/any',
-                },
-            },
-        ])
-    }, [])
+    useEffect(() => {
+        // if (chat && chat.length > 0) {
+        // dispatch(getChat(get(data[0], "userId", "")));
+        dispatch(getChat(get(user, "userId", "")));
 
+        // }
+    }, []);
 
+    console.log(user, 'user');
     const renderActions = () => {
         return (
             <View style={{ flexDirection: 'row', position: 'absolute', right: 60, top: 10 }}>
@@ -54,6 +68,23 @@ const Chat = () => {
         );
     }
 
+    const renderBubble = (props) => {
+        return (
+            <Bubble
+                {...props}
+                position={get(props.currentMessage, "user") == "You" ? 'left' : 'right'}
+                wrapperStyle={{
+                    left: {
+                        backgroundColor: '#86ffdd',
+                    },
+                    right: {
+                        backgroundColor: '#6200ff47'
+                    }
+                }}
+            />
+        )
+    }
+
     const renderMessageImage = (props) => {
         return (
             <View>
@@ -61,12 +92,13 @@ const Chat = () => {
         );
     }
     const onSend = useCallback((messages = []) => {
-        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+        console.log(messages, 'messages1');
+        dispatch(submitChat(messages, get(user, "userId", ""),));
     }, [])
 
     return (
         <GiftedChat
-            messagesContainerStyle={{ width: window.width }}
+            messagesContainerStyle={{ width: window.width, }}
             placeholder={REPLY}
             renderSend={(props) => {
                 const { text, messageIdGenerator, user, onSend } = props
@@ -90,6 +122,7 @@ const Chat = () => {
             messages={messages}
             onSend={messages => onSend(messages)}
             renderActions={renderActions}
+            renderBubble={renderBubble}
             // isTyping = {true}
             user={{
                 _id: 1,

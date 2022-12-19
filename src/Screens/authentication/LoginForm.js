@@ -4,13 +4,13 @@ import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { get } from 'lodash';
 
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
-import { submitLogin } from '../../actions';
+import { checkRegistered, setToken, setUser, submitLogin } from '../../actions';
 import { FORGOT_PASSWORD, LOGIN, NEW_ACCOUNT, NEW_USER, PASSWORD, USER_NAME } from '../../Constants/appconstants';
 import { showToast } from '../../Components/utils';
-import { get } from 'lodash';
 
 const LoginForm = () => {
 
@@ -33,7 +33,8 @@ const LoginForm = () => {
                     "LOGIN SUCCESS",
                     "Logged In Successfully!",
                 )
-                navigation.navigate('Dashboard');
+                dispatch(setToken(get(data, 'token'), (get(data.user, 'userId'))));
+                dispatch(checkRegistered("REGISTERED"));
             }
             else if (get(data, 'code') == 'ERR_BAD_REQUEST') {
                 showToast(get(data, 'response.data.message'));
@@ -41,7 +42,8 @@ const LoginForm = () => {
                     "LOGIN FAILED",
                     get(data, 'response.data.message')
                 )
-                console.log(get(data, 'response.data.message'))
+                // navigation.navigate('Register');
+                console.log("USER Exist", get(data, 'response.data.message'))
             }
         }
 
@@ -56,10 +58,9 @@ const LoginForm = () => {
                 render={({ handleSubmit, invalid }) => (
                     <View>
                         <Field
-                            name='username'
-                            label="Username *"
-                            validate={composeValidators(required())}
-                            // validate={composeValidators(required(), email())}
+                            name='email'
+                            label="Email *"
+                            validate={composeValidators(required(), email())}
                             keyboardType={'email-address'}
                             autoCapitalize={'none'}
                             component={Input}
@@ -68,7 +69,7 @@ const LoginForm = () => {
                         <Field
                             name='password'
                             label="Password *"
-                            validate={composeValidators(required(), length({ min: 8 }))}
+                            // validate={composeValidators(required(), length({ min: 8 }))}
                             keyboardType={'default'}
                             autoCapitalize={'none'}
                             component={Input}

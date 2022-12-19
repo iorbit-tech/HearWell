@@ -52,7 +52,7 @@ export default (props) => {
                 </View>
                 <View>
                     <TextInput
-                        style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
+                        style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1, }}
                         value={date.toDateString()}
                         onChangeText={onChangeHandler}
                         placeholder={placeholderName}

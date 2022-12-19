@@ -1,75 +1,163 @@
-import React, { useState } from 'react';
-import { View, Text, useWindowDimensions } from 'react-native';
-import SubmitButton from '../../Components/SubmitButton';
-import { getHeight, getWidth } from '../../Components/utils';
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
-import { NEXT } from '../../Constants/appconstants';
+import { useDispatch, useSelector } from 'react-redux';
+import { Field, Form } from 'react-final-form';
 
-const Questions = [
-    { id: 0, question: 1, name: "I have worn a hearing device?", },
-    { id: 1, question: 2, name: "How long do you have any discomfort using the Hearing Device?", },
-    { id: 2, question: 3, name: "How long are you using this device?", },
-    { id: 3, question: 4, name: "At what age you started using the device?", },
-    { id: 4, question: 5, name: "How long you are using this Brand of your Hearing Device?" },
-];
+import SubmitButton from '../../Components/SubmitButton';
+import { compare, getHeight, getWidth } from '../../Components/utils';
+import { NEXT } from '../../Constants/appconstants';
+import Input from '../../Components/Field/Input';
+import { submitTellusAnswer } from '../../actions';
+import { get } from 'lodash';
+import Checkbox from '../../Components/Field/CheckBox';
+import Radiobutton from '../../Components/Field/RadioButton';
 
 const Survey = ({ navigation }) => {
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState();
     const [questionIndex, setQuestionIndex] = useState(0);
-    var radio_props = [
-        { label: 'Never', value: 0 },
-        { label: 'less than month', value: 1 },
-        { label: '1 year', value: 2 },
-        { label: 'more than 1 year', value: 3 }
-    ];
+    const [optionsList, setOptionsList] = useState([]);
+    const { questions } = useSelector((state) => state.tellus);
+    const { user } = useSelector((state) => state.user.data);
+    const dispatch = useDispatch();
+    let question = questions[questionIndex];
+    const [arrayvalues, setArrayvalues] = useState([]);
+
+    questions.sort(compare);
+
+    const submit = (value) => {
+        console.log("valueABCD", value);
+        if (questionIndex < (questions.length - 1)) {
+            setQuestionIndex(questionIndex + 1);
+        } else {
+            navigation.navigate('Dashboard')
+        }
+        if (questions[questionIndex].answerType == 'multiplechoice') {
+            dispatchAns(arrayvalues);
+        } else if (questions[questionIndex].answerType == 'singlechoice') {
+            console.log(value, 'value_singlechoice')
+            if (value && Object.keys(value).length === 0) {
+                dispatchAns([]);
+            }
+            else {
+                setValue(value);
+                dispatchAns(value);
+            }
+        }
+        else if (questions[questionIndex].answerType == 'textinput') {
+            if (get(value, 'textinput', '') != '') {
+                dispatchAns(value.textinput[questionIndex]);
+            }
+            else {
+                dispatchAns([]);
+            }
+        }
+    }
+
+    const dispatchAns = (data) => {
+        var answerData = {
+            'questionId': get(question, 'questionId'),
+            'userId': get(user, 'userId'),
+            'order': parseInt(get(question, 'order')),
+            'answerType': get(question, 'answerType'),
+            'page': get(question, 'page'),
+            'options': data
+        };
+        dispatch(submitTellusAnswer(answerData));
+    }
+
+    useEffect(() => {
+        let dataList = [];
+        dataList = questions[questionIndex].options.map((option, i) => (
+            {
+                label: option, value: option
+            }
+        )
+        )
+        setOptionsList(dataList);
+    }, [questionIndex]);
 
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <View style={{ padding: 20 }}>
                 <Text>Help us understand your lifestyle and how it may be affected by your hearing</Text>
             </View>
-            <View style={{ padding: 20 }}>
-                <Text>Question{Questions[questionIndex].question}:</Text>
-                <Text>{Questions[questionIndex].name}:</Text>
-            </View>
             <View style={{ padding: 20, marginTop: 10 }}>
-                <RadioForm>
-                    {
-                        radio_props.map((obj, i) => (
-                            <RadioButton labelHorizontal={true} key={i} >
-                                <RadioButtonInput
-                                    obj={obj}
-                                    index={i}
-                                    initial={0}
-                                    onPress={(value) => { setValue(value) }}
-                                    buttonSize={10}
-                                    isSelected={setValue === i}
-                                    buttonOuterColor={value === i ? '#9B9B9B' : 'grey'}
-                                    buttonStyle={{ backgroundColor: value === i ? '#0E96FF' : '#fff' }}
-                                />
-                                <RadioButtonLabel
-                                    obj={obj}
-                                    index={i}
-                                    initial={0}
-                                    labelHorizontal={true}
-                                    onPress={(value) => { setValue(value) }}
-                                    labelStyle={{ fontSize: 20, color: 'grey' }}
-                                    labelWrapStyle={{ marginLeft: 10 }}
-                                />
-                            </RadioButton>
-                        ))
-                    }
-                </RadioForm>
-            </View>
-            <View style={{ width: getWidth() / 1.2, alignSelf: 'center', marginTop: getHeight() / 1.3, position: 'absolute' }}>
-                <SubmitButton
-                    text={NEXT}
-                    btnStyle={{ backgroundColor: 'blue', padding: 20, borderRadius: 10 }}
-                    textStyle={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}
-                    submit={() => (questionIndex < (Questions.length - 1)) ? setQuestionIndex(questionIndex + 1) : navigation.navigate('Dashboard')}
+                < Form onSubmit={submit}
+                    render={({ handleSubmit, invalid }) => (
+                        <View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ fontSize: 20, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
+                                <Text style={{ fontSize: 20, color: 'grey' }}>{questions[questionIndex].question}</Text>
+                            </View>
+                            {questions[questionIndex].answerType == 'multiplechoice' &&
+                                <View style={{ padding: 20, }}>
+                                    {questions[questionIndex].options.map((option, index) => (
+                                        <View>
+                                            <View>
+                                                <View style={{ flexDirection: 'row', marginTop: 10, }}>
+                                                    <Field
+                                                        name={"checkbox" + option} //need to change
+                                                        component={Checkbox}
+                                                        // value={option}
+                                                        questionIndex={questionIndex}
+                                                        label={option}
+                                                        setArrayvalues={setArrayvalues}
+                                                        arrayvalues={arrayvalues}
+                                                    />
+                                                    <Text style={{ marginHorizontal: 10, alignSelf: 'center' }}>{option}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    ))
+                                    }
+                                </View>
+                            }
+                            {questions[questionIndex].answerType == 'singlechoice' &&
+                                <View style={{ padding: 20 }}>
+                                    <View>
+                                        <View>
+                                            <View style={{ flexDirection: 'row', marginTop: 10, }}>
+                                                <Field
+                                                    name={questionIndex} //need to change
+                                                    component={Radiobutton}
+                                                    Questions={optionsList}
+                                                    questionIndex={questionIndex}
+                                                    labelStyle={{ fontSize: 20, color: 'grey' }}
+                                                // value={values}
+                                                />
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
+                            }
+                            {questions[questionIndex].answerType == 'textinput' &&
+                                <View style={{ paddingTop: 20 }}>
+                                    <Field
+                                        // validate={required()}
+                                        name={`textinput.${questionIndex}`}
+                                        label="Textinput *"
+                                        keyboardType={'default'}
+                                        autoCapitalize={'none'}
+                                        component={Input}
+                                        placeholderName={'Enter your input here...'}
+                                        multiline={true}
+                                        style={{ backgroundColor: '#fff', paddingBottom: 150, paddingHorizontal: 15, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
+                                    />
+                                </View>
+                            }
+                            <SubmitButton
+                                btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
+                                textStyle={{ color: '#fff', textAlign: 'center' }}
+                                text={NEXT}
+                                submit={() => handleSubmit()}
+                            />
+                        </View>
+                    )}
                 />
             </View>
-        </View>
+        </View >
     )
 };
 

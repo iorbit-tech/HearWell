@@ -31,6 +31,7 @@ export const HEARING_LOSS = `HearingLoss`;
 export const OTHER = `Other`;
 export const AID_USER = `Hearing aid user`;
 export const SUBMIT = `Submit`;
+export const UPDATE = `Update`;
 
 //HearingDetails
 export const MAKE = `Make`;
@@ -39,5 +40,9 @@ export const OTHER_DETAILS = `Other details`;
 
 //Chat
 export const REPLY = `Reply`;
+
+//UserDetails
+export var USER_TOKEN = 'user_token';
+export var USER = 'user';
 
 

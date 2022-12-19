@@ -4,19 +4,20 @@ import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from "reac
 
 const Radiobutton = (props) => {
     const [values, setValues] = useState(props.value || props || "");
-    const { Questions, questionIndex } = props;
+    const { Questions, questionIndex, labelStyle } = props;
 
     const onChangeHandler = (value) => {
         const { input: { onChange } } = props;
         onChange(value);
         setValues(value);
+        console.log(value, 'value_Radiobutton');
     }
     return (
         <>
             <View>
                 <RadioForm style={{ marginTop: 10, }}>
                     {
-                        Questions[questionIndex].options.map((obj, i) => (
+                        Questions.map((obj, i) => (
                             <RadioButton style={{ marginTop: 10 }} labelHorizontal={true} key={i} >
                                 <RadioButtonInput
                                     obj={obj}
@@ -24,9 +25,9 @@ const Radiobutton = (props) => {
                                     initial={0}
                                     onPress={onChangeHandler}
                                     buttonSize={10}
-                                    isSelected={setValues === i}
-                                    buttonOuterColor={values === i ? '#9B9B9B' : 'grey'}
-                                    buttonStyle={{ backgroundColor: values === i ? '#0E96FF' : '#fff' }}
+                                    isSelected={setValues === obj.label}
+                                    buttonOuterColor={values === obj.label ? '#9B9B9B' : 'grey'}
+                                    buttonStyle={{ backgroundColor: values === obj.label ? '#0E96FF' : '#fff' }}
                                 />
                                 <RadioButtonLabel
                                     obj={obj}
@@ -34,7 +35,8 @@ const Radiobutton = (props) => {
                                     initial={0}
                                     labelHorizontal={true}
                                     onPress={onChangeHandler}
-                                    labelStyle={{ fontSize: 20, color: 'grey' }}
+                                    // labelStyle={{ fontSize: 20, color: 'grey' }}
+                                    labelStyle={labelStyle}
                                     labelWrapStyle={{ marginLeft: 10 }}
                                 />
                             </RadioButton>
