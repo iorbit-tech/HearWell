@@ -8,7 +8,8 @@ const defaultState = {
     vitals: {},
     serverError: [],
     isRegistered: "NOT_REGISTERED",
-    authCheck: ''
+    authCheck: '',
+    response: {}
 }
 
 export default function userReducer(state = defaultState, action) {
@@ -95,7 +96,7 @@ export default function userReducer(state = defaultState, action) {
                 ...state,
                 fetching: true,
                 vitals: {},
-                serverError: []
+                serverError: [],
             }
         }
 
@@ -104,7 +105,7 @@ export default function userReducer(state = defaultState, action) {
             return {
                 ...state,
                 fetching: false,
-                vitals: response
+                vitals: response,
             }
         }
 
@@ -119,20 +120,20 @@ export default function userReducer(state = defaultState, action) {
             return {
                 ...state,
                 fetching: true,
-                vitals: {},
-                serverError: []
+                serverError: [],
             }
         }
 
         case "UPDATE_VITALS_FULFILLED": {
+            let payload = action.payload
+            let oldVitals = payload.data.vital;
             let updatedData = action.meta.data;
-            // let oldVitals = action.state.vitals;
-            // console.log("oldVitals", oldVitals);
-            // oldVitals[0] = updatedData;
+            let updatedVitals = { ...oldVitals, ...updatedData }
             return {
                 ...state,
                 fetching: false,
-                vitals: updatedData
+                vitals: updatedVitals,
+                response: payload
             }
         }
 
@@ -164,6 +165,13 @@ export default function userReducer(state = defaultState, action) {
             return {
                 ...state,
                 isRegistered: action.payload,
+            };
+        }
+
+        case "CLEAR_RESPONSE": {
+            return {
+                ...state,
+                response: {},
             };
         }
 

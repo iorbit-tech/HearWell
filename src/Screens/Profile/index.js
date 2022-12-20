@@ -9,29 +9,35 @@ import Input from '../../Components/Field/Input';
 import ProfilePhoto from '../../assets/profile.png'
 import SubmitButton from '../../Components/SubmitButton';
 import { AID_USER, DIABETES, DOB, HEALTH_STATS, HYPER_TENSION, NAME, OTHER, SUBMIT, UPDATE } from '../../Constants/appconstants';
-import { fetchVitals, submitVitals, updateVitals } from '../../actions';
+import { clearResponse, fetchVitals, submitVitals, updateVitals } from '../../actions';
 import ProfileCheckBox from '../../Components/Field/ProfileCheckBox';
 
 const Profile = ({ navigation }) => {
 
-    const { data } = useSelector((state) => state.user);
-    const { vitals } = useSelector((state) => state.user);
+    const { data, vitals } = useSelector((state) => state.user);
+    const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const submit = value => {
         console.log(value, 'value');
         Object.keys(vitals).length === 0 ?
             dispatch(submitVitals(value, get(data, 'user.userId')))
             :
-            dispatch(updateVitals(value, get(data, 'user.userId'), get(vitals[0], 'vitalId', '')));
+            dispatch(updateVitals(value, get(data, 'user.userId'), get(vitals, 'vitalId', '')));
     }
 
-    console.log(Object.keys(vitals).length === 0, 'vitals')
     const composeValidators = (...validators) => value =>
         validators.reduce((error, validator) => error || validator(value), undefined)
 
     useEffect(() => {
         dispatch(fetchVitals(get(data, 'user.userId')));
     }, []);
+
+    useEffect(() => {
+        if (user.response.status === 200 && user.response.data.message === 'updated successfully') {
+            navigation.navigate('Dashboard');
+            dispatch(clearResponse());
+        }
+    }, [user]);
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -48,12 +54,11 @@ const Profile = ({ navigation }) => {
                             <Field
                                 name='name'
                                 label="name *"
-                                validate={composeValidators(required())}
                                 keyboardType={'default'}
                                 autoCapitalize={'none'}
                                 component={Input}
                                 placeholderName={NAME}
-                                initValue={Object.keys(vitals).length !== 0 ? get(vitals[0], 'name', '') : ''}
+                                initValue={Object.keys(vitals).length !== 0 ? get(vitals, 'name', '') : ''}
 
                             />
                             <Field
@@ -63,7 +68,7 @@ const Profile = ({ navigation }) => {
                                 autoCapitalize={'none'}
                                 component={Input}
                                 placeholderName={DOB}
-                                initValue={Object.keys(vitals).length !== 0 ? get(vitals[0], 'yearOfBirth', '') : ''}
+                                initValue={Object.keys(vitals).length !== 0 ? get(vitals, 'yearOfBirth', '') : ''}
                             />
                             <Field
                                 name='currentHealthStatus'
@@ -72,19 +77,19 @@ const Profile = ({ navigation }) => {
                                 autoCapitalize={'none'}
                                 component={Input}
                                 placeholderName={HEALTH_STATS}
-                                initValue={Object.keys(vitals).length !== 0 ? get(vitals[0], 'currentHealthStatus', '') : ''}
+                                initValue={Object.keys(vitals).length !== 0 ? get(vitals, 'currentHealthStatus', '') : ''}
                             />
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
                                 <Field
                                     name='diabets'
                                     component={ProfileCheckBox}
-                                    initialValue={Object.keys(vitals).length !== 0 ? get(vitals[0], 'healthCondition.diabets', '') : false}
+                                    initialValue={Object.keys(vitals).length !== 0 ? get(vitals, 'healthCondition.diabets', '') : false}
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{DIABETES}</Text>
                                 <Field
                                     name='hyperTension'
                                     component={ProfileCheckBox}
-                                    initialValue={Object.keys(vitals).length !== 0 ? get(vitals[0], 'healthCondition.hyperTension', '') : false}
+                                    initialValue={Object.keys(vitals).length !== 0 ? get(vitals, 'healthCondition.hyperTension', '') : false}
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{HYPER_TENSION}</Text>
                             </View>
@@ -96,20 +101,18 @@ const Profile = ({ navigation }) => {
                                     autoCapitalize={'none'}
                                     component={Input}
                                     placeholderName={OTHER}
-                                    initValue={Object.keys(vitals).length !== 0 ? get(vitals[0], 'otherHealthConditions', '') : ''}
+                                    initValue={Object.keys(vitals).length !== 0 ? get(vitals, 'otherHealthConditions', '') : ''}
                                 />
                             </View>
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                 <Field
                                     name='hearingAidUser'
                                     component={ProfileCheckBox}
-                                    initialValue={Object.keys(vitals).length !== 0 ? get(vitals[0], 'hearingAidUser', '') : false}
+                                    initialValue={Object.keys(vitals).length !== 0 ? get(vitals, 'hearingAidUser', '') : false}
                                 />
                                 <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>{AID_USER}</Text>
                             </View>
                             <SubmitButton
-
-                                // submit={() => navigation.navigate('Hearing aid details')}
                                 submit={handleSubmit}
                                 disabled={pristine && true}
                                 text={Object.keys(vitals).length === 0 ? SUBMIT : UPDATE}

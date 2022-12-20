@@ -165,3 +165,11 @@ export const googleauthcheck = (data) => {
         })
     }
 }
+
+export const clearResponse = () => {
+    return dispatch => {
+        dispatch({
+            type: "CLEAR_RESPONSE",
+        })
+    }
+}
