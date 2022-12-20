@@ -43,7 +43,7 @@ const Profile = ({ navigation }) => {
             </View>
             <View style={{ marginLeft: 10, marginTop: 20 }}>
                 <Form onSubmit={submit}
-                    render={({ handleSubmit, invalid }) => (
+                    render={({ handleSubmit, pristine }) => (
                         <View>
                             <Field
                                 name='name'
@@ -108,11 +108,16 @@ const Profile = ({ navigation }) => {
                                 <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>{AID_USER}</Text>
                             </View>
                             <SubmitButton
+
                                 // submit={() => navigation.navigate('Hearing aid details')}
                                 submit={handleSubmit}
+                                disabled={pristine && true}
                                 text={Object.keys(vitals).length === 0 ? SUBMIT : UPDATE}
                                 textStyle={{ fontWeight: 'bold', color: '#fff' }}
-                                btnStyle={{ alignSelf: 'center', backgroundColor: '#000', paddingVertical: 12, paddingHorizontal: 30, borderRadius: 10, marginTop: 40, marginBottom: 20 }}
+                                btnStyle={{
+                                    alignSelf: 'center', backgroundColor: '#000', paddingVertical: 12, paddingHorizontal: 30,
+                                    borderRadius: 10, marginTop: 40, marginBottom: 20, opacity: !pristine ? 1 : 0.5
+                                }}
                             />
                         </View>
                     )}

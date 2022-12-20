@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitAnswer } from '../../actions';
 
@@ -75,6 +75,15 @@ const DiaryQuestions = ({ navigation }) => {
             )
             setOptionsList(dataList);
         }
+        const subscribe = navigation.addListener('beforeRemove', (e) => {
+            if (questionIndex < (questions.length - 1)) {
+                e.preventDefault();
+                Alert.alert('Complete HearingDiary',
+                    'Please complete all the questions of HearingDiary!'
+                )
+            }
+        })
+        return subscribe
     }, [questionIndex]);
 
     return (
