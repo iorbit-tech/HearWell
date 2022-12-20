@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Field, Form } from 'react-final-form';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitAnswer } from '../../actions';
 
@@ -87,81 +87,84 @@ const DiaryQuestions = ({ navigation }) => {
     }, [questionIndex]);
 
     return (
-        <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            <View style={{ flexDirection: 'row', margin: 20 }}>
-                <Text style={{ fontSize: 20, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
-                <Text style={{ fontSize: 20, color: 'grey' }}>{questions[questionIndex].question}</Text>
-            </View>
-            <Form onSubmit={submit}
-                render={({ handleSubmit, invalid }) => (
-                    <View>
-                        {questionIndex < questions.length && questions[questionIndex].answerType == 'multiplechoice' &&
-                            <View style={{ padding: 20, }}>
-                                {questions[questionIndex].options.map((option, index) => (
+        <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
+            <View >
+                <View style={{ flexDirection: 'row', margin: 20 }}>
+                    <Text style={{ fontSize: 20, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
+                    <Text style={{ fontSize: 20, color: 'grey' }}>{questions[questionIndex].question}</Text>
+                </View>
+                <Form onSubmit={submit}
+                    render={({ handleSubmit, invalid }) => (
+                        <View>
+                            {questionIndex < questions.length && questions[questionIndex].answerType == 'multiplechoice' &&
+                                <View style={{ padding: 20, }}>
+                                    {questions[questionIndex].options.map((option, index) => (
+                                        <View>
+                                            <View>
+                                                <View style={{ flexDirection: 'row', marginTop: 10, }}>
+                                                    <Field
+                                                        name={"checkbox" + option}
+                                                        component={Checkbox}
+                                                        // value={option}
+                                                        questionIndex={questionIndex}
+                                                        label={option}
+                                                        setArrayvalues={setArrayvalues}
+                                                        arrayvalues={arrayvalues}
+                                                    />
+                                                    <Text style={{ marginHorizontal: 10, alignSelf: 'center' }}>{option}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    ))
+                                    }
+                                </View>
+                            }
+                            {questionIndex < questions.length && questions[questionIndex].answerType == 'singlechoice' &&
+                                <View style={{ padding: 20 }}>
                                     <View>
                                         <View>
                                             <View style={{ flexDirection: 'row', marginTop: 10, }}>
                                                 <Field
-                                                    name={"checkbox" + option}
-                                                    component={Checkbox}
-                                                    // value={option}
+                                                    name={questionIndex}
+                                                    component={Radiobutton}
+                                                    Questions={optionsList}
                                                     questionIndex={questionIndex}
-                                                    label={option}
-                                                    setArrayvalues={setArrayvalues}
-                                                    arrayvalues={arrayvalues}
+                                                    labelStyle={{ fontSize: 20, color: 'grey' }}
+                                                // value={values}
                                                 />
-                                                <Text style={{ marginHorizontal: 10, alignSelf: 'center' }}>{option}</Text>
                                             </View>
                                         </View>
-                                    </View>
-                                ))
-                                }
-                            </View>
-                        }
-                        {questionIndex < questions.length && questions[questionIndex].answerType == 'singlechoice' &&
-                            <View style={{ padding: 20 }}>
-                                <View>
-                                    <View>
-                                        <View style={{ flexDirection: 'row', marginTop: 10, }}>
-                                            <Field
-                                                name={questionIndex}
-                                                component={Radiobutton}
-                                                Questions={optionsList}
-                                                questionIndex={questionIndex}
-                                                labelStyle={{ fontSize: 20, color: 'grey' }}
-                                            // value={values}
-                                            />
-                                        </View>
-                                    </View>
 
+                                    </View>
                                 </View>
-                            </View>
-                        }
-                        {questionIndex < questions.length && questions[questionIndex].answerType == 'textinput' &&
-                            <View style={{ padding: 20 }}>
-                                <Field
-                                    name={`textinput.${questionIndex}`}
-                                    label="Textinput *"
-                                    keyboardType={'default'}
-                                    autoCapitalize={'none'}
-                                    component={Input}
-                                    placeholderName={'Enter your input here...'}
-                                    multiline={true}
-                                    style={{ backgroundColor: '#fff', paddingBottom: 150, paddingHorizontal: 15, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
-                                />
-                            </View>
-                        }
-                        <SubmitButton
-                            btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
-                            textStyle={{ color: '#fff', textAlign: 'center' }}
-                            text={NEXT}
-                            submit={() => handleSubmit()}
-                        />
-                    </View>
-                )}
-            />
-        </View>
+                            }
+                            {questionIndex < questions.length && questions[questionIndex].answerType == 'textinput' &&
+                                <View style={{ padding: 20 }}>
+                                    <Field
+                                        name={`textinput.${questionIndex}`}
+                                        label="Textinput *"
+                                        keyboardType={'default'}
+                                        autoCapitalize={'none'}
+                                        component={Input}
+                                        placeholderName={'Enter your input here...'}
+                                        multiline={true}
+                                        style={{ backgroundColor: '#fff', paddingBottom: 150, paddingHorizontal: 15, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
+                                    />
+                                </View>
 
+                            }
+                            <SubmitButton
+                                btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50, marginBottom: 20 }}
+                                textStyle={{ color: '#fff', textAlign: 'center' }}
+                                text={NEXT}
+                                submit={() => handleSubmit()}
+                            />
+                        </View>
+
+                    )}
+                />
+            </View>
+        </ScrollView>
     )
 };
 
