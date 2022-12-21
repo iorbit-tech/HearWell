@@ -11,7 +11,7 @@ import { submitSignup } from '../../actions';
 import { LOGIN, OLD_USER, PASSWORD, REGISTER, USER_NAME } from '../../Constants/appconstants';
 import Radiobutton from '../../Components/Field/RadioButton';
 import Datepicker from '../../Components/Field/DatePicker';
-import { get } from 'lodash';
+import { get, pad } from 'lodash';
 
 // const RadioInput = [
 //     { value: 0, input: 1, name: "Gender", options: ["Male", "Female", "Trans Gender"] },
@@ -58,8 +58,8 @@ const Register = () => {
         //     behavior={Platform.OS === "ios" ? "padding" : "height"}
         //     style={{ flex: 1 }}
         // >
-        <KeyboardAvoidingView>
-            <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', }}>
+        <KeyboardAvoidingView keyboardVerticalOffset={100} behavior = {Platform.OS === 'ios'&& 'padding'} style = {{flex: 1}} enabled>
+            <ScrollView contentContainerStyle={{alignItems: 'center', justifyContent: 'center',backgroundColor: '#fff',}}>
                 <View style={{ marginVertical: 50 }}>
                     <Form onSubmit={submit}
                         render={({ handleSubmit, invalid }) => (
@@ -120,33 +120,7 @@ const Register = () => {
                                     value={value}
                                     labelStyle={{ fontSize: 16 }}
                                 />
-                                <Text style={{ fontSize: 18, paddingTop: 10 }}>Marital Status:</Text>
-                                <Field
-                                    name='maritalStatus'
-                                    component={Radiobutton}
-                                    Questions={MaritalStatus}
-                                    questionIndex={0}
-                                    value={value}
-                                    labelStyle={{ fontSize: 16 }}
-                                />
-                                <Field
-                                    name='address1'
-                                    label="address1 *"
-                                    validate={composeValidators(required())}
-                                    keyboardType={'default'}
-                                    autoCapitalize={'none'}
-                                    component={Input}
-                                    placeholderName={'Adderess'}
-                                />
-                                <Field
-                                    name='address2'
-                                    label="address2 *"
-                                    validate={composeValidators(required())}
-                                    keyboardType={'default'}
-                                    autoCapitalize={'none'}
-                                    component={Input}
-                                    placeholderName={'Address2'}
-                                />
+                                <View style = {{padding:10}}></View>
                                 <Field
                                     name='city'
                                     label="city *"
