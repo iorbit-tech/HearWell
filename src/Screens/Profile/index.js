@@ -81,13 +81,13 @@ const Profile = ({ navigation }) => {
                                 <Field
                                     name='diabets'
                                     component={ProfileCheckBox}
-                                    initialValue={vitals && get(vitals, 'healthCondition.diabets', '')}
+                                    initialValue={vitals && get(vitals, 'healthCondition.diabets', false)}
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{DIABETES}</Text>
                                 <Field
                                     name='hyperTension'
                                     component={ProfileCheckBox}
-                                    initialValue={vitals && get(vitals, 'healthCondition.hyperTension', '')}
+                                    initialValue={vitals && get(vitals, 'healthCondition.hyperTension', false)}
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{HYPER_TENSION}</Text>
                             </View>
@@ -106,7 +106,7 @@ const Profile = ({ navigation }) => {
                                 <Field
                                     name='hearingAidUser'
                                     component={ProfileCheckBox}
-                                    initialValue={vitals && get(vitals, 'hearingAidUser', '')}
+                                    initialValue={vitals && get(vitals, 'hearingAidUser', false)}
                                 />
                                 <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>{AID_USER}</Text>
                             </View>
