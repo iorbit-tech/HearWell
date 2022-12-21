@@ -13,7 +13,7 @@ import Checkbox from '../../Components/Field/CheckBox';
 import Radiobutton from '../../Components/Field/RadioButton';
 
 const Survey = ({ navigation }) => {
-    const [value, setValue] = useState();
+    const [values, setValues] = useState();
     const [questionIndex, setQuestionIndex] = useState(0);
     const [optionsList, setOptionsList] = useState([]);
     const { questions } = useSelector((state) => state.tellus);
@@ -21,11 +21,9 @@ const Survey = ({ navigation }) => {
     const dispatch = useDispatch();
     let question = questions[questionIndex];
     const [arrayvalues, setArrayvalues] = useState([]);
-
     questions.sort(compare);
 
-    const submit = (value) => {
-        console.log("valueABCD", value);
+    const submit = (value, form) => {
         if (questionIndex < (questions.length - 1)) {
             setQuestionIndex(questionIndex + 1);
         } else {
@@ -34,12 +32,10 @@ const Survey = ({ navigation }) => {
         if (questions[questionIndex].answerType == 'multiplechoice') {
             dispatchAns(arrayvalues);
         } else if (questions[questionIndex].answerType == 'singlechoice') {
-            console.log(value, 'value_singlechoice')
             if (value && Object.keys(value).length === 0) {
                 dispatchAns([]);
             }
             else {
-                setValue(value);
                 dispatchAns(value);
             }
         }
@@ -51,6 +47,7 @@ const Survey = ({ navigation }) => {
                 dispatchAns([]);
             }
         }
+        form.reset();
     }
 
     const dispatchAns = (data) => {
@@ -83,8 +80,8 @@ const Survey = ({ navigation }) => {
                     <Text>Help us understand your lifestyle and how it may be affected by your hearing</Text>
                 </View>
                 <View style={{ padding: 20, marginTop: 10 }}>
-                    < Form onSubmit={submit}
-                        render={({ handleSubmit, invalid }) => (
+                    <Form onSubmit={submit}
+                        render={({ handleSubmit, form }) => (
                             <View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={{ fontSize: 20, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
@@ -124,7 +121,6 @@ const Survey = ({ navigation }) => {
                                                         Questions={optionsList}
                                                         questionIndex={questionIndex}
                                                         labelStyle={{ fontSize: 20, color: 'grey' }}
-                                                    // value={values}
                                                     />
                                                 </View>
                                             </View>
@@ -135,7 +131,6 @@ const Survey = ({ navigation }) => {
                                 {questions[questionIndex].answerType == 'textinput' &&
                                     <View style={{ paddingTop: 20 }}>
                                         <Field
-                                            // validate={required()}
                                             name={`textinput.${questionIndex}`}
                                             label="Textinput *"
                                             keyboardType={'default'}
@@ -151,14 +146,16 @@ const Survey = ({ navigation }) => {
                                     btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
                                     textStyle={{ color: '#fff', textAlign: 'center' }}
                                     text={NEXT}
-                                    submit={() => handleSubmit()}
+                                    submit={() => handleSubmit({ form: form })}
                                 />
                             </View>
+
                         )}
+
                     />
                 </View>
             </View >
-        </ScrollView>
+        </ScrollView >
     )
 };
 

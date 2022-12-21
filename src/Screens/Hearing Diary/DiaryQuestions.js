@@ -24,8 +24,7 @@ const DiaryQuestions = ({ navigation }) => {
 
     questions.sort(compare);
 
-    const submit = (value) => {
-        console.log("valueABCD", value);
+    const submit = (value, form) => {
         if (questionIndex < (questions.length - 1)) {
             setQuestionIndex(questionIndex + 1);
         } else {
@@ -50,6 +49,7 @@ const DiaryQuestions = ({ navigation }) => {
                 dispatchAns([]);
             }
         }
+        form.reset();
     }
 
     const dispatchAns = (data) => {
@@ -94,7 +94,7 @@ const DiaryQuestions = ({ navigation }) => {
                     <Text style={{ fontSize: 20, color: 'grey' }}>{questions[questionIndex].question}</Text>
                 </View>
                 <Form onSubmit={submit}
-                    render={({ handleSubmit, invalid }) => (
+                    render={({ handleSubmit, form }) => (
                         <View>
                             {questionIndex < questions.length && questions[questionIndex].answerType == 'multiplechoice' &&
                                 <View style={{ padding: 20, }}>
@@ -157,7 +157,7 @@ const DiaryQuestions = ({ navigation }) => {
                                 btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50, marginBottom: 20 }}
                                 textStyle={{ color: '#fff', textAlign: 'center' }}
                                 text={NEXT}
-                                submit={() => handleSubmit()}
+                                submit={() => handleSubmit({ form: form })}
                             />
                         </View>
 

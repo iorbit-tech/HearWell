@@ -18,8 +18,7 @@ const Profile = ({ navigation }) => {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const submit = value => {
-        console.log(value, 'value');
-        Object.keys(vitals).length === 0 ?
+        vitals === null || Object.keys(vitals).length === 0 ?
             dispatch(submitVitals(value, get(data, 'user.userId')))
             :
             dispatch(updateVitals(value, get(data, 'user.userId'), get(vitals, 'vitalId', '')));
@@ -58,8 +57,7 @@ const Profile = ({ navigation }) => {
                                 autoCapitalize={'none'}
                                 component={Input}
                                 placeholderName={NAME}
-                                initValue={Object.keys(vitals).length !== 0 ? get(vitals, 'name', '') : ''}
-
+                                initValue={vitals ? get(vitals, 'name', '') : ''}
                             />
                             <Field
                                 name='yearOfBirth'
@@ -68,7 +66,7 @@ const Profile = ({ navigation }) => {
                                 autoCapitalize={'none'}
                                 component={Input}
                                 placeholderName={DOB}
-                                initValue={Object.keys(vitals).length !== 0 ? get(vitals, 'yearOfBirth', '') : ''}
+                                initValue={vitals ? get(vitals, 'yearOfBirth', '') : ''}
                             />
                             <Field
                                 name='currentHealthStatus'
@@ -77,19 +75,19 @@ const Profile = ({ navigation }) => {
                                 autoCapitalize={'none'}
                                 component={Input}
                                 placeholderName={HEALTH_STATS}
-                                initValue={Object.keys(vitals).length !== 0 ? get(vitals, 'currentHealthStatus', '') : ''}
+                                initValue={vitals ? get(vitals, 'currentHealthStatus', '') : ''}
                             />
                             <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
                                 <Field
                                     name='diabets'
                                     component={ProfileCheckBox}
-                                    initialValue={Object.keys(vitals).length !== 0 ? get(vitals, 'healthCondition.diabets', '') : false}
+                                    initialValue={vitals && get(vitals, 'healthCondition.diabets', '')}
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{DIABETES}</Text>
                                 <Field
                                     name='hyperTension'
                                     component={ProfileCheckBox}
-                                    initialValue={Object.keys(vitals).length !== 0 ? get(vitals, 'healthCondition.hyperTension', '') : false}
+                                    initialValue={vitals && get(vitals, 'healthCondition.hyperTension', '')}
                                 />
                                 <Text style={{ marginHorizontal: 20 }}>{HYPER_TENSION}</Text>
                             </View>
@@ -101,21 +99,21 @@ const Profile = ({ navigation }) => {
                                     autoCapitalize={'none'}
                                     component={Input}
                                     placeholderName={OTHER}
-                                    initValue={Object.keys(vitals).length !== 0 ? get(vitals, 'otherHealthConditions', '') : ''}
+                                    initValue={vitals ? get(vitals, 'otherHealthConditions', '') : ''}
                                 />
                             </View>
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                 <Field
                                     name='hearingAidUser'
                                     component={ProfileCheckBox}
-                                    initialValue={Object.keys(vitals).length !== 0 ? get(vitals, 'hearingAidUser', '') : false}
+                                    initialValue={vitals && get(vitals, 'hearingAidUser', '')}
                                 />
                                 <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>{AID_USER}</Text>
                             </View>
                             <SubmitButton
                                 submit={handleSubmit}
                                 disabled={pristine && true}
-                                text={Object.keys(vitals).length === 0 ? SUBMIT : UPDATE}
+                                text={vitals === null ? SUBMIT : UPDATE}
                                 textStyle={{ fontWeight: 'bold', color: '#fff' }}
                                 btnStyle={{
                                     alignSelf: 'center', backgroundColor: '#000', paddingVertical: 12, paddingHorizontal: 30,
