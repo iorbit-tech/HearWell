@@ -37,8 +37,7 @@ const DiaryQuestions = ({ navigation }) => {
                 dispatchAns([]);
             }
             else {
-                setValues(value);
-                dispatchAns(value);
+                dispatchAns(value[questionIndex + 'radio']);
             }
         }
         else if (questions[questionIndex].answerType == 'textinput') {
@@ -125,7 +124,7 @@ const DiaryQuestions = ({ navigation }) => {
                                         <View>
                                             <View style={{ flexDirection: 'row', marginTop: 10, }}>
                                                 <Field
-                                                    name={questionIndex}
+                                                    name={questionIndex + 'radio'}
                                                     component={Radiobutton}
                                                     Questions={optionsList}
                                                     questionIndex={questionIndex}

@@ -36,7 +36,7 @@ const Survey = ({ navigation }) => {
                 dispatchAns([]);
             }
             else {
-                dispatchAns(value);
+                dispatchAns(value[questionIndex + 'radio']);
             }
         }
         else if (questions[questionIndex].answerType == 'textinput') {
@@ -116,7 +116,7 @@ const Survey = ({ navigation }) => {
                                             <View>
                                                 <View style={{ flexDirection: 'row', marginTop: 10, }}>
                                                     <Field
-                                                        name={questionIndex} //need to change
+                                                        name={questionIndex + 'radio'} //need to change
                                                         component={Radiobutton}
                                                         Questions={optionsList}
                                                         questionIndex={questionIndex}
