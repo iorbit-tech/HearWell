@@ -90,7 +90,7 @@ const Survey = ({ navigation }) => {
                                 {questions[questionIndex].answerType == 'multiplechoice' &&
                                     <View style={{ padding: 20, }}>
                                         {questions[questionIndex].options.map((option, index) => (
-                                            <View>
+                                            <View key={index}>
                                                 <View>
                                                     <View style={{ flexDirection: 'row', marginTop: 10, }}>
                                                         <Field
