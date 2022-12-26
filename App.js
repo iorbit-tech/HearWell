@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux';
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store";
+import NetInfo from "@react-native-community/netinfo";
+import { Alert } from 'react-native';
 
 import Home from './src/Screens/Home';
 import Register from './src/Screens/authentication/Register';
@@ -25,6 +27,12 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    NetInfo.addEventListener(handleConnectivityChange);
+    NetInfo.fetch().then(state => {
+      console.log("Connection type", state.type);
+      console.log("Is connected?", state.isConnected);
+    });
+
     RNSecureKeyStore.get(USER_TOKEN).then(
       (accessToken) => {
         if (accessToken) {
@@ -41,6 +49,24 @@ const App = () => {
       }
     );
   }, []);
+
+  const handleConnectivityChange = (state) => {
+    if (state.isConnected == true) {
+      console.log("Connected to Internet");
+    }
+    else {
+      Alert.alert(
+        "No Internet Connection",
+        "Please check your network connection!",
+        [
+          {
+            text: "Cancel"
+          },
+          { text: "OK" }
+        ]
+      );
+    };
+  }
 
   return (
     <NavigationContainer>
