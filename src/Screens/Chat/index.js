@@ -8,18 +8,69 @@ import { REPLY, SUBMIT } from '../../Constants/appconstants';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChat, submitChat } from '../../actions/index';
 import { get } from 'lodash';
+// import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
+    const [senderId, setSenderId] = useState('');
     const window = useWindowDimensions();
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user.data);
     const { chat } = useSelector((state) => state.chat);
+    const [socketConnected, setSocketConnected] = useState(false);
+    // var socket = io('http://localhost:8000');
+    // var socket = io.connect('http://178.128.165.237:8000/', { jsonp: false, secure: true, transports: ['websocket'], });
+
+    var socket = io.connect('ws://localhost:8000/', { jsonp: false, secure: true, transports: ['websocket'], });
+
+    useEffect(() => {
+        socket.emit("setup", user.userId);
+        // socket.emit("connection", user.userId);
+        socket.on("connection", () => {
+            console.log('ABCD connect');
+            setSocketConnected(true);
+        }
+        );
+        socket.emit("join chat", senderId);
+        // socket.connect();
+        // socket.on('connect', () => {
+        //     console.log('connected to socket server');
+        // });
+        // if (chat && chat.length > 0) {
+        // dispatch(getChat(get(data[0], "userId", "")));
+        dispatch(getChat(get(user, "userId", "")));
+        console.log(senderId, 'senderId')
+
+        // }
+    }, []);
+
+    // // useEffect(() => {
+    // //     console.log(user.userId, 'senderId')
+    // //     socket.emit("setup", user.userId);
+    // //     socket.on("connection", () => setSocketConnected(true));
+    // //     socket.emit("join chat", '8198025f-8eeb-4990-87bd-37a469f8bca5');
+    // // }, []);
+
+    // // console.log(chat[0].senderId)
+    useEffect(() => {
+        socket.on("message received", (newMessageReceived) => {
+            console.log(newMessageReceived, 'newMessageReceived')
+            // if (!newMessageReceived) {
+
+            // }
+            // else {
+            dispatch(getChat(get(user, "userId", "")));
+            // setMessages([...messages, newMessageReceived])
+            // }
+        });
+    },);
 
     useEffect(() => {
         if (chat && chat.length > 0) {
             let updatedChat = [];
             chat.map((item, i) => {
+                setSenderId(item.senderId)
                 updatedChat[i] = {
                     item,
                     text: get(item, "message", ""),
@@ -32,14 +83,6 @@ const Chat = () => {
             console.log(updatedChat, 'updatedChat');
         }
     }, [chat]);
-
-    useEffect(() => {
-        // if (chat && chat.length > 0) {
-        // dispatch(getChat(get(data[0], "userId", "")));
-        dispatch(getChat(get(user, "userId", "")));
-
-        // }
-    }, []);
 
     console.log(user, 'user');
     const renderActions = () => {
@@ -94,6 +137,7 @@ const Chat = () => {
     const onSend = useCallback((messages = []) => {
         console.log(messages, 'messages1');
         dispatch(submitChat(messages, get(user, "userId", ""),));
+        socket.emit("new message", messages);
     }, [])
 
     return (
