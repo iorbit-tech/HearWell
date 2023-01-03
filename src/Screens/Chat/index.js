@@ -15,6 +15,7 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [senderId, setSenderId] = useState('');
     const window = useWindowDimensions();
+    const [msgState, setMsgState] = useState(0);
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user.data);
     const { chat } = useSelector((state) => state.chat);
@@ -64,7 +65,7 @@ const Chat = () => {
             // setMessages([...messages, newMessageReceived])
             // }
         });
-    },);
+    }, [msgState]);
 
     useEffect(() => {
         if (chat && chat.length > 0) {
@@ -138,6 +139,7 @@ const Chat = () => {
         console.log(messages, 'messages1');
         dispatch(submitChat(messages, get(user, "userId", ""),));
         socket.emit("new message", messages);
+        setMsgState(1);
     }, [])
 
     return (
