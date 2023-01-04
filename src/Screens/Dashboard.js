@@ -34,22 +34,8 @@ const Dashboard = ({ route, navigation }) => {
 
     useEffect(() => {
         if (chat && chat.length > 0) {
-            let updatedChat = [];
-            chat.map((item, i) => {
-                console.log(item, 'item')
-                // setSenderId(item.senderId)
-                updatedChat[i] = {
-                    item,
-                    text: get(item, "message", ""),
-                    createdAt: get(item, "sentTime", ""),
-                    _id: get(item, '_id'),
-                    user: get(item, "senderId", "") == get(data.user, "userId", "") ? "You" : "Expert",
-                    status: get(item, 'status', "")
-                }
-                setMsgstatus(get(item, 'status', ""));
-            })
-            // setMessages(updatedChat.reverse());
-            console.log(updatedChat, 'updatedChat');
+            var index = chat.length - 1;
+            setMsgstatus(chat[index].status);
         }
     }, [chat]);
 
