@@ -21,12 +21,12 @@ export default function chatReducer(state = defaultState, action) {
             console.log(state.chat, 'state.chat.chat')
             let olddata = state.chat;
             let response = action.payload.data.data;
-            let newResponse = olddata.concat(response);
+            // let newResponse = olddata.concat(response);
             // console.log(state.chat, 'oldResponse')
             return {
                 ...state,
                 fetching: false,
-                chat: newResponse,
+                chat: response,
             }
         }
         case "CREATE_CHAT_REJECTED": {

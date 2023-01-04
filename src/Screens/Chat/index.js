@@ -20,8 +20,6 @@ const Chat = () => {
     const { user } = useSelector((state) => state.user.data);
     const { chat } = useSelector((state) => state.chat);
     const [socketConnected, setSocketConnected] = useState(false);
-    // var socket = io('http://localhost:8000');
-    // var socket = io.connect('http://178.128.165.237:8000/', { jsonp: false, secure: true, transports: ['websocket'], });
 
     var socket = io.connect('ws://localhost:8000/', { jsonp: false, secure: true, transports: ['websocket'], });
 
@@ -46,26 +44,18 @@ const Chat = () => {
         // }
     }, []);
 
-    // // useEffect(() => {
-    // //     console.log(user.userId, 'senderId')
-    // //     socket.emit("setup", user.userId);
-    // //     socket.on("connection", () => setSocketConnected(true));
-    // //     socket.emit("join chat", '8198025f-8eeb-4990-87bd-37a469f8bca5');
-    // // }, []);
-
-    // // console.log(chat[0].senderId)
     useEffect(() => {
-        socket.on("message received", (newMessageReceived) => {
+        socket.on("Mobile message received", (newMessageReceived) => {
             console.log(newMessageReceived, 'newMessageReceived')
+            dispatch(getChat(get(user, "userId", "")));
             // if (!newMessageReceived) {
 
             // }
             // else {
-            dispatch(getChat(get(user, "userId", "")));
             // setMessages([...messages, newMessageReceived])
             // }
         });
-    }, [msgState]);
+    }, []);
 
     useEffect(() => {
         if (chat && chat.length > 0) {
@@ -138,6 +128,7 @@ const Chat = () => {
     const onSend = useCallback((messages = []) => {
         console.log(messages, 'messages1');
         dispatch(submitChat(messages, get(user, "userId", ""),));
+        dispatch(getChat(get(user, "userId", "")));
         socket.emit("new message", messages);
         setMsgState(1);
     }, [])
