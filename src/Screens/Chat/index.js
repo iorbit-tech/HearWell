@@ -126,10 +126,11 @@ const Chat = () => {
         );
     }
     const onSend = useCallback((messages = []) => {
+        var finalMessage = { 'subject': 'Message', 'message': messages[0].text, 'sentTime': new Date(), 'senderId': get(user, "userId", ""), 'receiverId': '', status: false };
         console.log(messages, 'messages1');
-        dispatch(submitChat(messages, get(user, "userId", ""),));
+        dispatch(submitChat(finalMessage));
         dispatch(getChat(get(user, "userId", "")));
-        socket.emit("new message", messages);
+        socket.emit("new message", finalMessage);
         setMsgState(1);
     }, [])
 

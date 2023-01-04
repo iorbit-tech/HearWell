@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store";
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,11 +9,14 @@ import Logout from '../Components/Logout';
 import SubmitButton from '../Components/SubmitButton';
 import { AppBarStyle } from '../Components/utils';
 import { ASK_US, HEARING_DIARY, PROFILE, TELL_US, USER_TOKEN } from '../Constants/appconstants';
-import { clearState } from '../actions';
+import { clearState, getChat } from '../actions';
 
 const Dashboard = ({ route, navigation }) => {
     const dispatch = useDispatch();
-    const { authCheck } = useSelector((state) => state.user);
+    const { authCheck, data } = useSelector((state) => state.user);
+    const { chat } = useSelector((state) => state.chat);
+    const [msgstatus, setMsgstatus] = useState(true);
+    console.log(msgstatus, 'msgstatus');
 
     AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout submit={() => clear()} />, '')
 
@@ -24,6 +27,31 @@ const Dashboard = ({ route, navigation }) => {
             _signOut()
         }
     }
+
+    useEffect(() => {
+        dispatch(getChat(get(data.user, "userId", "")));
+    }, []);
+
+    useEffect(() => {
+        if (chat && chat.length > 0) {
+            let updatedChat = [];
+            chat.map((item, i) => {
+                console.log(item, 'item')
+                // setSenderId(item.senderId)
+                updatedChat[i] = {
+                    item,
+                    text: get(item, "message", ""),
+                    createdAt: get(item, "sentTime", ""),
+                    _id: get(item, '_id'),
+                    user: get(item, "senderId", "") == get(data.user, "userId", "") ? "You" : "Expert",
+                    status: get(item, 'status', "")
+                }
+                setMsgstatus(get(item, 'status', ""));
+            })
+            // setMessages(updatedChat.reverse());
+            console.log(updatedChat, 'updatedChat');
+        }
+    }, [chat]);
 
     const _signOut = async () => {
         try {
@@ -73,8 +101,20 @@ const Dashboard = ({ route, navigation }) => {
                             textStyle={{ textAlign: 'center' }}
                             submit={() => navigation.navigate('Ask us')}
                         />
+                        {/* <View style={{ position: 'absolute', right: -5, top: -5, backgroundColor: '#1FF9B1', padding: 5, borderRadius: 10 }}>
+                            {msgstatus == false && <Text style={{ color: '#B6B6B6', fontWeight: '500', fontSize: 12 }}>New</Text>}
+                        </View> */}
                     </View>
                 </View>
+                {msgstatus == false &&
+                    <View style={{ position: 'absolute', marginTop: '80%' }}>
+                        <SubmitButton
+                            btnStyle={{ backgroundColor: '#51B3FF', padding: 20, marginRight: 10, }}
+                            text='New Message from Expert!'
+                            textStyle={{ color: '#B6B6B6', fontWeight: '500', fontSize: 12 }}
+                            submit={() => navigation.navigate('Ask us')} />
+                    </View>
+                }
             </View>
             {/* <SubmitButton
                 submit={_signOut ? _signOut : ''}

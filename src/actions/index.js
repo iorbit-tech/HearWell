@@ -92,12 +92,13 @@ export const getHearingQuestions = () => {
     }
 }
 
-export const submitChat = (data, userID) => {
-    var message = { 'subject': 'Message', 'message': data[0].text, 'sentTime': new Date(), 'senderId': userID, 'receiverId': '' };
+export const submitChat = (finalMessage) => {
+    console.log(finalMessage, 'finalMessage')
+    // var message = { 'subject': 'Message', 'message': data[0].text, 'sentTime': new Date(), 'senderId': userID, 'receiverId': '' };
     return dispatch => {
         dispatch({
             type: "CREATE_CHAT",
-            payload: api.post('/api/chat', message),
+            payload: api.post('/api/chat', finalMessage),
         })
     }
 }
