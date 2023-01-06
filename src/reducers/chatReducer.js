@@ -4,7 +4,8 @@ const defaultState = {
     fetching: false,
     chat: [],
     serverError: [],
-    isRegistered: "NOT_REGISTERED"
+    isRegistered: "NOT_REGISTERED",
+    msgStatus: false
 }
 
 export default function chatReducer(state = defaultState, action) {
@@ -53,6 +54,28 @@ export default function chatReducer(state = defaultState, action) {
             }
         }
         case "GET_CHAT_REJECTED": {
+            return {
+                ...state,
+                fetching: false,
+            }
+        }
+        case "MSG_STATUS_PENDING": {
+            return {
+                ...state,
+                fetching: true,
+                chat: {},
+                serverError: [],
+                msgStatus: false
+            }
+        }
+        case "MSG_STATUS_FULFILLED": {
+            let response = action.payload.data;
+            return {
+                ...state,
+                msgStatus: true
+            }
+        }
+        case "MSG_STATUS_REJECTED": {
             return {
                 ...state,
                 fetching: false,

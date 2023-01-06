@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 
-const Logout = ({ submit, notificationSubmit, New, notificationStyle }) => {
+const Logout = ({ submit, notificationSubmit, tint, New, notificationStyle, bell }) => {
     return (
         <View style={{ flexDirection: 'row' }}>
             <View>
@@ -17,12 +17,12 @@ const Logout = ({ submit, notificationSubmit, New, notificationStyle }) => {
             </View>
             <View>
                 <TouchableOpacity onPress={notificationSubmit}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10, }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10, marginTop: 1 }}>
                         <View>
-                            <Image tintColor={'#000'} source={require('../assets/notification.png')}
+                            <Image tintColor={tint} source={bell}
                                 style={{
-                                    width: 17,
-                                    height: 17,
+                                    width: 18,
+                                    height: 18,
                                 }}
                             />
                         </View>

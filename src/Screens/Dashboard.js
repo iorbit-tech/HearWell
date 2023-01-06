@@ -14,24 +14,25 @@ import { changeMsgStatus, clearState, getChat } from '../actions';
 const Dashboard = ({ route, navigation }) => {
     const dispatch = useDispatch();
     const { authCheck, data } = useSelector((state) => state.user);
-    const { chat } = useSelector((state) => state.chat);
+    const { chat, msgStatus } = useSelector((state) => state.chat);
     const [filteredMessages, setFilteredMessages] = useState([]);
 
     useEffect(() => {
         dispatch(getChat(get(data.user, "userId", "")));
-    }, [navigation]);
+    }, [msgStatus]);
 
     useEffect(() => {
-        msgStatus()
+        getMsgStatus()
     }, [chat]);
 
     AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout submit={() => clear()}
         notificationSubmit={() => navigation.navigate('Ask us')}
-        notificationStyle={filteredMessages.length > 0 && { backgroundColor: 'red', padding: 2, borderRadius: 100, marginBottom: 10, fontSize: 12, color: '#fff', fontWeight: '600' }}
-        New={filteredMessages.length > 0 && "New"}
+        // notificationStyle={filteredMessages.length > 0 && { backgroundColor: 'red', padding: 2, borderRadius: 100, marginBottom: 10, fontSize: 12, color: '#fff', fontWeight: '600' }}
+        // New={filteredMessages.length > 0 && ""}
+        bell={filteredMessages.length < 1 ? require('../assets/bell.png') : require('../assets/notification_dot.png')}
     />, '')
 
-    const msgStatus = () => {
+    const getMsgStatus = () => {
         console.log(chat, 'chat')
         if (chat && chat.length > 0) {
             let filteredMessages = chat.filter(item => (item.status === false && item.senderId !== get(data.user, "userId", "")))

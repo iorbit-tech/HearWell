@@ -41,8 +41,6 @@ const Chat = () => {
         // }
     }, []);
 
-    console.log(user, 'user');
-
     const changeStatus = async () => {
         console.log(chat, 'chatList')
         let filteredMessages = chat.filter(item => (item.status === false && item.senderId !== get(user, "userId", "")))
