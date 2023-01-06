@@ -111,6 +111,16 @@ export const getChat = (userID) => {
     }
 }
 
+export const changeMsgStatus = (id, data) => {
+    console.log(data, 'changeMsgStatus')
+    return dispatch => {
+        dispatch({
+            type: "MSG_STATUS",
+            payload: api.put('/api/chat/' + id, data)
+        })
+    }
+}
+
 export const submitAnswer = (data) => {
     return dispatch => {
         dispatch({

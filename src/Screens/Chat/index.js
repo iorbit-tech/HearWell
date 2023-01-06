@@ -6,7 +6,7 @@ import AttachmentPin from '../../assets/attachment.png';
 import Microphone from '../../assets/microphone.png';
 import { REPLY, SUBMIT } from '../../Constants/appconstants';
 import { useDispatch, useSelector } from 'react-redux';
-import { getChat, submitChat } from '../../actions/index';
+import { changeMsgStatus, getChat, submitChat } from '../../actions/index';
 import { get } from 'lodash';
 
 const Chat = () => {
@@ -37,11 +37,25 @@ const Chat = () => {
         // if (chat && chat.length > 0) {
         // dispatch(getChat(get(data[0], "userId", "")));
         dispatch(getChat(get(user, "userId", "")));
-
+        changeStatus()
         // }
     }, []);
 
-    console.log(user, 'user');
+    const changeStatus = async () => {
+        console.log(chat, 'chatList')
+        let filteredMessages = chat.filter(item => (item.status === false && item.senderId !== get(user, "userId", "")))
+        console.log(filteredMessages, 'filteredMessages')
+        let msgId;
+        msgId = filteredMessages.map(async (ID) => {
+            changeStatusApi(ID.messageId)
+        })
+    };
+
+    const changeStatusApi = (id) => {
+        let data = { status: true };
+        dispatch(changeMsgStatus(id, data))
+    };
+
     const renderActions = () => {
         return (
             <View style={{ flexDirection: 'row', position: 'absolute', right: 60, top: 10 }}>
