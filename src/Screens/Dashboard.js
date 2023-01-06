@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store";
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,13 +9,37 @@ import Logout from '../Components/Logout';
 import SubmitButton from '../Components/SubmitButton';
 import { AppBarStyle } from '../Components/utils';
 import { ASK_US, HEARING_DIARY, PROFILE, TELL_US, USER_TOKEN } from '../Constants/appconstants';
-import { clearState } from '../actions';
+import { changeMsgStatus, clearState, getChat } from '../actions';
 
 const Dashboard = ({ route, navigation }) => {
     const dispatch = useDispatch();
-    const { authCheck } = useSelector((state) => state.user);
+    const { authCheck, data } = useSelector((state) => state.user);
+    const { chat } = useSelector((state) => state.chat);
+    const [filteredMessages, setFilteredMessages] = useState([]);
 
-    AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout submit={() => clear()} />, '')
+    useEffect(() => {
+        dispatch(getChat(get(data.user, "userId", "")));
+    }, [navigation]);
+
+    useEffect(() => {
+        msgStatus()
+    }, [chat]);
+
+    AppBarStyle('#BFBFBF', 'black', '', 'Hearwell', <Logout submit={() => clear()}
+        notificationSubmit={() => navigation.navigate('Ask us')}
+        notificationStyle={filteredMessages.length > 0 && { backgroundColor: 'red', padding: 2, borderRadius: 100, marginBottom: 10, fontSize: 12, color: '#fff', fontWeight: '600' }}
+        New={filteredMessages.length > 0 && "New"}
+    />, '')
+
+    const msgStatus = () => {
+        console.log(chat, 'chat')
+        if (chat && chat.length > 0) {
+            let filteredMessages = chat.filter(item => (item.status === false && item.senderId !== get(data.user, "userId", "")))
+            setFilteredMessages(filteredMessages);
+        }
+    }
+
+    console.log(filteredMessages, 'filteredMessages')
 
     const clear = () => {
         dispatch(clearState());
