@@ -101,7 +101,7 @@ export default function userReducer(state = defaultState, action) {
         }
 
         case "FETCH_VITALS_FULFILLED": {
-            let response = action.payload.data;
+            let response = action.payload.data[0];
             return {
                 ...state,
                 fetching: false,

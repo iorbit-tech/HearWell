@@ -9,7 +9,7 @@ import { get } from 'lodash';
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
 import { checkRegistered, setToken, setUser, submitLogin } from '../../actions';
-import { FORGOT_PASSWORD, LOGIN, NEW_ACCOUNT, NEW_USER, PASSWORD, USER_NAME } from '../../Constants/appconstants';
+import { FORGOT_PASSWORD, LOGIN, NEW_ACCOUNT, NEW_USER, PASSWORD, USER_MAIL, USER_NAME } from '../../Constants/appconstants';
 import { showToast } from '../../Components/utils';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -66,7 +66,7 @@ const LoginForm = () => {
                                 keyboardType={'email-address'}
                                 autoCapitalize={'none'}
                                 component={Input}
-                                placeholderName={USER_NAME}
+                                placeholderName={USER_MAIL}
                             />
                             <Field
                                 name='password'
@@ -76,7 +76,8 @@ const LoginForm = () => {
                                 autoCapitalize={'none'}
                                 component={Input}
                                 placeholderName={PASSWORD}
-                                secureTextEntry={true}
+                                righticon={true}
+                                isSecure={true}
                             />
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={{ backgroundColor: '#000', marginLeft: 10, opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignItems: 'center' }}>

@@ -8,7 +8,7 @@ import { get } from 'lodash';
 import Logout from '../Components/Logout';
 import SubmitButton from '../Components/SubmitButton';
 import { AppBarStyle } from '../Components/utils';
-import { ASK_US, HEARING_DIARY, PROFILE, TELL_US, USER_TOKEN } from '../Constants/appconstants';
+import { ASK_US, CHAT, HEARING_DIARY, PROFILE, TELL_US, USER_TOKEN } from '../Constants/appconstants';
 import { changeMsgStatus, clearState, getChat } from '../actions';
 
 const Dashboard = ({ route, navigation }) => {
@@ -94,7 +94,7 @@ const Dashboard = ({ route, navigation }) => {
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, }}
-                            text={ASK_US}
+                            text={CHAT}
                             textStyle={{ textAlign: 'center' }}
                             submit={() => navigation.navigate('Ask us')}
                         />

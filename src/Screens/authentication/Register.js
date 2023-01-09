@@ -8,15 +8,10 @@ import { useNavigation } from '@react-navigation/native';
 import Input from '../../Components/Field/Input';
 import SubmitButton from '../../Components/SubmitButton';
 import { submitSignup } from '../../actions';
-import { LOGIN, OLD_USER, PASSWORD, REGISTER, USER_NAME } from '../../Constants/appconstants';
+import { CONFIRM_PASSWORD, LOGIN, OLD_USER, PASSWORD, REGISTER, USER_NAME } from '../../Constants/appconstants';
 import Radiobutton from '../../Components/Field/RadioButton';
 import Datepicker from '../../Components/Field/DatePicker';
-import { get, pad } from 'lodash';
-
-// const RadioInput = [
-//     { value: 0, input: 1, name: "Gender", options: ["Male", "Female", "Trans Gender"] },
-//     { value: 1, input: 2, name: "Marital Status", options: ["Single", "Married"] }
-// ];
+import { get } from 'lodash';
 
 const Gender = [
     { label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }, { label: 'Other', value: 'Other' }
@@ -33,9 +28,20 @@ const Register = () => {
     const { data } = useSelector((state) => state.user);
     const isInitialMount = useRef(true);
     const [value, setValue] = useState(0);
+    const [passwordMatch, setPasswordMatch] = useState(false);
+    const [password, setPassword] = useState('');
+    const [confirmpassword, setConfirmPassword] = useState('');
+
+    useEffect(() => {
+        if (password === confirmpassword) {
+            setPasswordMatch(true);
+        }
+        else {
+            setPasswordMatch(false);
+        }
+    }, [confirmpassword, password]);
 
     const submit = value => {
-        console.log(value, 'value');
         dispatch(submitSignup(value));
     }
 
@@ -53,18 +59,17 @@ const Register = () => {
     }, [data]);
 
     return (
-
         // <KeyboardAvoidingView
         //     behavior={Platform.OS === "ios" ? "padding" : "height"}
         //     style={{ flex: 1 }}
         // >
-        <KeyboardAvoidingView keyboardVerticalOffset={100} behavior = {Platform.OS === 'ios'&& 'padding'} style = {{flex: 1}} enabled>
-            <ScrollView contentContainerStyle={{alignItems: 'center', justifyContent: 'center',backgroundColor: '#fff',}}>
+        <KeyboardAvoidingView keyboardVerticalOffset={100} behavior={Platform.OS === 'ios' && 'padding'} style={{ flex: 1 }} enabled>
+            <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', }}>
                 <View style={{ marginVertical: 50 }}>
                     <Form onSubmit={submit}
                         render={({ handleSubmit, invalid }) => (
                             <View>
-                                <Field
+                                {/* <Field
                                     name='userName'
                                     label="Username *"
                                     validate={composeValidators(required())}
@@ -72,17 +77,7 @@ const Register = () => {
                                     autoCapitalize={'none'}
                                     component={Input}
                                     placeholderName={USER_NAME}
-                                />
-                                <Field
-                                    name='password'
-                                    label="Password *"
-                                    validate={composeValidators(required(), length({ min: 8 }))}
-                                    keyboardType={'default'}
-                                    autoCapitalize={'none'}
-                                    component={Input}
-                                    placeholderName={PASSWORD}
-                                    secureTextEntry={true}
-                                />
+                        /> */}
                                 <Field
                                     name='firstName'
                                     label="firstName *"
@@ -101,6 +96,33 @@ const Register = () => {
                                     component={Input}
                                     placeholderName={'Last Name'}
                                 />
+                                <Field
+                                    name='password'
+                                    label="Password *"
+                                    validate={composeValidators(required(), length({ min: 8 }))}
+                                    keyboardType={'default'}
+                                    autoCapitalize={'none'}
+                                    component={Input}
+                                    placeholderName={PASSWORD}
+                                    righticon={true}
+                                    isSecure={true}
+                                    setPassword={setPassword}
+                                />
+                                <Field
+                                    name='confirmPassword'
+                                    label="confirmPassword *"
+                                    validate={composeValidators(required(), length({ min: 8 }))}
+                                    keyboardType={'default'}
+                                    autoCapitalize={'none'}
+                                    component={Input}
+                                    placeholderName={CONFIRM_PASSWORD}
+                                    righticon={true}
+                                    isSecure={true}
+                                    setConfirmPassword={setConfirmPassword}
+                                />
+                                {passwordMatch === false &&
+                                    <Text style={{ fontSize: 14, color: 'red', bottom: 10, width: '100%' }}>Password does not match the confirm password!</Text>
+                                }
                                 <Text style={{ fontSize: 18 }}>DOB:</Text>
                                 <Field
                                     name='dob'
@@ -120,7 +142,7 @@ const Register = () => {
                                     value={value}
                                     labelStyle={{ fontSize: 16 }}
                                 />
-                                <View style = {{padding:10}}></View>
+                                <View style={{ padding: 10 }}></View>
                                 <Field
                                     name='city'
                                     label="city *"
@@ -166,9 +188,9 @@ const Register = () => {
                                     component={Input}
                                     placeholderName={'Phone'}
                                 />
-                                <View style={{ backgroundColor: '#000', opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignSelf: 'center', flexDirection: 'row' }}>
+                                <View style={{ backgroundColor: '#000', opacity: (invalid || !passwordMatch) ? 0.5 : 1, padding: 10, borderRadius: 5, alignSelf: 'center', flexDirection: 'row' }}>
                                     <SubmitButton
-                                        disabled={invalid == true && true}
+                                        disabled={(invalid || !passwordMatch) && true}
                                         submit={handleSubmit}
                                         text={REGISTER}
                                         textStyle={{ color: '#fff' }}
@@ -193,8 +215,6 @@ const Register = () => {
                 </View>
             </ScrollView>
         </KeyboardAvoidingView >
-
-
     )
 };
 

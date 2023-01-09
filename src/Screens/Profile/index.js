@@ -8,7 +8,7 @@ import { required, email } from 'redux-form-validators';
 import Input from '../../Components/Field/Input';
 import ProfilePhoto from '../../assets/profile.png'
 import SubmitButton from '../../Components/SubmitButton';
-import { AID_USER, DIABETES, DOB, HEALTH_STATS, HYPER_TENSION, NAME, OTHER, SUBMIT, UPDATE } from '../../Constants/appconstants';
+import { AID_USER, CANCEL, DIABETES, DOB, HEALTH_STATS, HYPER_TENSION, NAME, OTHER, SAVE, SUBMIT, UPDATE } from '../../Constants/appconstants';
 import { clearResponse, fetchVitals, submitVitals, updateVitals } from '../../actions';
 import ProfileCheckBox from '../../Components/Field/ProfileCheckBox';
 
@@ -17,11 +17,20 @@ const Profile = ({ navigation }) => {
     const { data, vitals } = useSelector((state) => state.user);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
+
     const submit = value => {
-        vitals === null || Object.keys(vitals).length === 0 ?
+        console.log(vitals, 'vitals')
+        if (vitals) {
+            if (Object.keys(vitals).length === 0) {
+                dispatch(submitVitals(value, get(data, 'user.userId')))
+            }
+            else {
+                dispatch(updateVitals(value, get(data, 'user.userId'), get(vitals, 'vitalId', '')));
+            }
+        }
+        else {
             dispatch(submitVitals(value, get(data, 'user.userId')))
-            :
-            dispatch(updateVitals(value, get(data, 'user.userId'), get(vitals, 'vitalId', '')));
+        }
     }
 
     const composeValidators = (...validators) => value =>
@@ -30,7 +39,6 @@ const Profile = ({ navigation }) => {
     useEffect(() => {
         dispatch(fetchVitals(get(data, 'user.userId')));
     }, []);
-
     useEffect(() => {
         if (user.response.status === 200 && user.response.data.message === 'updated successfully') {
             navigation.navigate('Dashboard');
@@ -110,16 +118,33 @@ const Profile = ({ navigation }) => {
                                 />
                                 <Text style={{ marginHorizontal: 20, alignSelf: 'center' }}>{AID_USER}</Text>
                             </View>
-                            <SubmitButton
-                                submit={handleSubmit}
-                                disabled={pristine && true}
-                                text={vitals === null ? SUBMIT : UPDATE}
-                                textStyle={{ fontWeight: 'bold', color: '#fff' }}
-                                btnStyle={{
-                                    alignSelf: 'center', backgroundColor: '#000', paddingVertical: 12, paddingHorizontal: 30,
-                                    borderRadius: 10, marginTop: 40, marginBottom: 20, opacity: !pristine ? 1 : 0.5
-                                }}
-                            />
+                            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                                <View style={{ marginRight: 10 }}>
+                                    <SubmitButton
+                                        submit={handleSubmit}
+                                        disabled={pristine && true}
+                                        // text={vitals === null ? SUBMIT : SAVE}
+                                        text={SAVE}
+                                        textStyle={{ fontWeight: 'bold', color: '#fff' }}
+                                        btnStyle={{
+                                            alignSelf: 'center', backgroundColor: '#000', paddingVertical: 12, paddingHorizontal: 30,
+                                            borderRadius: 10, marginTop: 40, marginBottom: 20, opacity: !pristine ? 1 : 0.5
+                                        }}
+                                    />
+                                </View>
+                                <View>
+                                    <SubmitButton
+                                        submit={() => navigation.goBack()}
+                                        // disabled={pristine && true}
+                                        text={CANCEL}
+                                        textStyle={{ fontWeight: 'bold', color: '#fff' }}
+                                        btnStyle={{
+                                            alignSelf: 'center', backgroundColor: '#000', paddingVertical: 12, paddingHorizontal: 30,
+                                            borderRadius: 10, marginTop: 40, marginBottom: 20
+                                        }}
+                                    />
+                                </View>
+                            </View>
                         </View>
                     )}
                 />
