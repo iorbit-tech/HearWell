@@ -1,6 +1,7 @@
 // Login
 export const USER_NAME = `UserName`;
 export const PASSWORD = `Password`;
+export const CONFIRM_PASSWORD = `Confirm Password`;
 export const FORGOT_PASSWORD = `Forgot Password`;
 export const LOGIN = `Login`;
 export const NEW_USER = `Sign up here`;
