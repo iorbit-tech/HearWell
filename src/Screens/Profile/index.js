@@ -17,11 +17,20 @@ const Profile = ({ navigation }) => {
     const { data, vitals } = useSelector((state) => state.user);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
+
     const submit = value => {
-        vitals === null || Object.keys(vitals).length === 0 ?
+        console.log(vitals, 'vitals')
+        if (vitals) {
+            if (Object.keys(vitals).length === 0) {
+                dispatch(submitVitals(value, get(data, 'user.userId')))
+            }
+            else {
+                dispatch(updateVitals(value, get(data, 'user.userId'), get(vitals, 'vitalId', '')));
+            }
+        }
+        else {
             dispatch(submitVitals(value, get(data, 'user.userId')))
-            :
-            dispatch(updateVitals(value, get(data, 'user.userId'), get(vitals, 'vitalId', '')));
+        }
     }
 
     const composeValidators = (...validators) => value =>
@@ -30,7 +39,6 @@ const Profile = ({ navigation }) => {
     useEffect(() => {
         dispatch(fetchVitals(get(data, 'user.userId')));
     }, []);
-
     useEffect(() => {
         if (user.response.status === 200 && user.response.data.message === 'updated successfully') {
             navigation.navigate('Dashboard');

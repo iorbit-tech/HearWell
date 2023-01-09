@@ -1,5 +1,5 @@
 // Login
-export const USER_NAME = `UserName`;
+export const USER_MAIL = `Email`;
 export const PASSWORD = `Password`;
 export const CONFIRM_PASSWORD = `Confirm Password`;
 export const FORGOT_PASSWORD = `Forgot Password`;
