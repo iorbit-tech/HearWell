@@ -76,7 +76,8 @@ const LoginForm = () => {
                                 autoCapitalize={'none'}
                                 component={Input}
                                 placeholderName={PASSWORD}
-                                secureTextEntry={true}
+                                righticon={true}
+                                isSecure={true}
                             />
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={{ backgroundColor: '#000', marginLeft: 10, opacity: invalid !== true ? 1 : 0.5, padding: 10, borderRadius: 5, alignItems: 'center' }}>
