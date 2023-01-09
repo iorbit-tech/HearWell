@@ -89,8 +89,8 @@ const DiaryQuestions = ({ navigation }) => {
         <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
             <View >
                 <View style={{ flexDirection: 'row', margin: 20 }}>
-                    <Text style={{ fontSize: 20, fontWeight: '600' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
-                    <Text style={{ fontSize: 20, color: 'grey' }}>{questions[questionIndex].question}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: '600', color: '#51B3FF' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
+                    <Text style={{ fontSize: 20, fontWeight: '600', color: '#51B3FF' }}>{questions[questionIndex].question}</Text>
                 </View>
                 <Form onSubmit={submit}
                     render={({ handleSubmit, form }) => (
@@ -110,7 +110,7 @@ const DiaryQuestions = ({ navigation }) => {
                                                         setArrayvalues={setArrayvalues}
                                                         arrayvalues={arrayvalues}
                                                     />
-                                                    <Text style={{ marginHorizontal: 10, alignSelf: 'center' }}>{option}</Text>
+                                                    <Text style={{ marginHorizontal: 10, alignSelf: 'center', color: '#000', fontSize: 18 }}>{option}</Text>
                                                 </View>
                                             </View>
                                         </View>
@@ -128,7 +128,7 @@ const DiaryQuestions = ({ navigation }) => {
                                                     component={Radiobutton}
                                                     Questions={optionsList}
                                                     questionIndex={questionIndex}
-                                                    labelStyle={{ fontSize: 20, color: 'grey' }}
+                                                    labelStyle={{ fontSize: 18, color: '#000', fontWeight: '500' }}
                                                 // value={values}
                                                 />
                                             </View>
@@ -147,7 +147,7 @@ const DiaryQuestions = ({ navigation }) => {
                                         component={Input}
                                         placeholderName={'Enter your input here...'}
                                         multiline={true}
-                                        style={{ backgroundColor: '#fff', paddingBottom: 150, paddingHorizontal: 15, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
+                                        style={{ backgroundColor: '#fff', fontSize: 18, paddingBottom: 150, paddingHorizontal: 15, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
                                     />
                                 </View>
 

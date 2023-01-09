@@ -18,7 +18,7 @@ export const NEXT = `Next`;
 export const TELL_US = `Tell us more`;
 export const HEARING_DIARY = `Hearing Diary`;
 export const PROFILE = `Profile`;
-export const ASK_US = `Ask us`;
+export const CHAT = `Chat`;
 
 //Profile
 export const NAME = `Name`;
@@ -32,6 +32,8 @@ export const OTHER = `Other`;
 export const AID_USER = `Hearing aid user`;
 export const SUBMIT = `Submit`;
 export const UPDATE = `Update`;
+export const SAVE = `Save`;
+export const CANCEL = `Cancel`;
 
 //HearingDetails
 export const MAKE = `Make`;
