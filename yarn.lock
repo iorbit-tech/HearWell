@@ -1597,10 +1597,10 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-9.3.7.tgz"
   "version" "9.3.7"
 
-"@react-native-google-signin/google-signin@^8.2.0":
-  "integrity" "sha512-O43gUt0UtVNuLcxFvPouIXObJ68eMO8z08j5n/TXnc/nckg6l54p/BsmefaRoby15gIAi96OADB0GAbwaraDFg=="
-  "resolved" "https://registry.npmjs.org/@react-native-google-signin/google-signin/-/google-signin-8.2.0.tgz"
-  "version" "8.2.0"
+"@react-native-google-signin/google-signin@^9.0.2":
+  "integrity" "sha512-oTD0ZT6ZSH7CZjM1i6hR/gFAXv9As7nxhN99XGliNxf6SChZcQRwGeaz1DjoYrWExWDVX00EH1Per3dMjhAWkQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-google-signin/google-signin/-/google-signin-9.0.2.tgz"
+  "version" "9.0.2"
 
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="

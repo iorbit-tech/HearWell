@@ -40,6 +40,7 @@ const GoogleAuth = () => {
       // Repleace with your webClientId
       // Generated from Firebase console
       webClientId: '74675969131-094ovgkc4o2qvqk8rh2t8datpm6rto4a.apps.googleusercontent.com',
+      iosClientId: '74675969131-6p2po3bihgokjf1opqdivh50g1qdukk1.apps.googleusercontent.com'
     });
     // Check if user is already signed in
     _isSignedIn();
@@ -66,7 +67,7 @@ const GoogleAuth = () => {
   const _isSignedIn = async () => {
     const isSignedIn = await GoogleSignin.isSignedIn();
     if (isSignedIn) {
-      alert('User is already signed in');
+      // alert('User is already signed in');
       // Set User Info if user is already signed in
       _getCurrentUserInfo();
     } else {
@@ -91,7 +92,12 @@ const GoogleAuth = () => {
     }
   };
 
+  function _signInTest ()  {
+    console.log('_signInTest')
+  }
+
   const _signIn = async () => {
+    console.log('_signIn ');
     // It will prompt google Signin Widget
     try {
       await GoogleSignin.hasPlayServices({
