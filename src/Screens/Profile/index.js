@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { Field, Form } from 'react-final-form';
 import { View, Image, Text, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,12 +11,14 @@ import SubmitButton from '../../Components/SubmitButton';
 import { AID_USER, CANCEL, DIABETES, DOB, HEALTH_STATS, HYPER_TENSION, NAME, OTHER, SAVE, SUBMIT, UPDATE } from '../../Constants/appconstants';
 import { clearResponse, fetchVitals, submitVitals, updateVitals } from '../../actions';
 import ProfileCheckBox from '../../Components/Field/ProfileCheckBox';
+import { ThemeContext } from "../../themes/theme-context";
 
 const Profile = ({ navigation }) => {
 
     const { data, vitals } = useSelector((state) => state.user);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
+    const theme = useContext(ThemeContext);
 
     const submit = value => {
         console.log(vitals, 'vitals')
@@ -47,7 +49,7 @@ const Profile = ({ navigation }) => {
     }, [user]);
 
     return (
-        <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <ScrollView style={{ flex: 1, backgroundColor: theme.blackColor }}>
             <View style={{ marginTop: 10, marginLeft: 10 }}>
                 <SubmitButton
                     imageUri={ProfilePhoto}
@@ -85,7 +87,7 @@ const Profile = ({ navigation }) => {
                                 placeholderName={HEALTH_STATS}
                                 initValue={vitals ? get(vitals, 'currentHealthStatus', '') : ''}
                             />
-                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
+                            <View style={{ backgroundColor: theme.inputField, width: 300, flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
                                 <Field
                                     name='diabets'
                                     component={ProfileCheckBox}
@@ -110,7 +112,7 @@ const Profile = ({ navigation }) => {
                                     initValue={vitals ? get(vitals, 'otherHealthConditions', '') : ''}
                                 />
                             </View>
-                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                            <View style={{ backgroundColor: theme.inputField, width: 300, flexDirection: 'row', marginTop: 10 }}>
                                 <Field
                                     name='hearingAidUser'
                                     component={ProfileCheckBox}
@@ -127,7 +129,7 @@ const Profile = ({ navigation }) => {
                                         text={SAVE}
                                         textStyle={{ fontWeight: 'bold', color: '#fff' }}
                                         btnStyle={{
-                                            alignSelf: 'center', backgroundColor: '#000', paddingVertical: 12, paddingHorizontal: 30,
+                                            alignSelf: 'center', backgroundColor: 'blue', paddingVertical: 12, paddingHorizontal: 30,
                                             borderRadius: 10, marginTop: 40, marginBottom: 20, opacity: !pristine ? 1 : 0.5
                                         }}
                                     />
@@ -139,7 +141,7 @@ const Profile = ({ navigation }) => {
                                         text={CANCEL}
                                         textStyle={{ fontWeight: 'bold', color: '#fff' }}
                                         btnStyle={{
-                                            alignSelf: 'center', backgroundColor: '#000', paddingVertical: 12, paddingHorizontal: 30,
+                                            alignSelf: 'center', backgroundColor: 'blue', paddingVertical: 12, paddingHorizontal: 30,
                                             borderRadius: 10, marginTop: 40, marginBottom: 20
                                         }}
                                     />

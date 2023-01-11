@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Field, Form } from 'react-final-form';
@@ -11,6 +11,7 @@ import { submitTellusAnswer } from '../../actions';
 import { get } from 'lodash';
 import Checkbox from '../../Components/Field/CheckBox';
 import Radiobutton from '../../Components/Field/RadioButton';
+import { ThemeContext } from "../../themes/theme-context";
 
 const Survey = ({ navigation }) => {
     const [values, setValues] = useState();
@@ -19,6 +20,7 @@ const Survey = ({ navigation }) => {
     const { questions } = useSelector((state) => state.tellus);
     const { user } = useSelector((state) => state.user.data);
     const dispatch = useDispatch();
+    const theme = useContext(ThemeContext);
     let question = questions[questionIndex];
     const [arrayvalues, setArrayvalues] = useState([]);
     questions.sort(compare);
@@ -74,7 +76,7 @@ const Survey = ({ navigation }) => {
     }, [questionIndex]);
 
     return (
-        <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <ScrollView style={{ flex: 1, backgroundColor: theme.blackColor }}>
             <View>
                 <View style={{ padding: 20 }}>
                     <Text>Help us understand your lifestyle and how it may be affected by your hearing</Text>
@@ -102,7 +104,7 @@ const Survey = ({ navigation }) => {
                                                             setArrayvalues={setArrayvalues}
                                                             arrayvalues={arrayvalues}
                                                         />
-                                                        <Text style={{ marginHorizontal: 10, fontSize: 18, alignSelf: 'center', color: '#000', fontSize: 18, }}>{option}</Text>
+                                                        <Text style={{ marginHorizontal: 10, fontSize: 18, alignSelf: 'center', color: theme.text, fontSize: 18, }}>{option}</Text>
                                                     </View>
                                                 </View>
                                             </View>
@@ -120,7 +122,7 @@ const Survey = ({ navigation }) => {
                                                         component={Radiobutton}
                                                         Questions={optionsList}
                                                         questionIndex={questionIndex}
-                                                        labelStyle={{ fontSize: 18, color: '#000' }}
+                                                        labelStyle={{ fontSize: 18, color: theme.text }}
                                                     />
                                                 </View>
                                             </View>
@@ -143,7 +145,7 @@ const Survey = ({ navigation }) => {
                                     </View>
                                 }
                                 <SubmitButton
-                                    btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50 }}
+                                    btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: 'blue', padding: 20, borderRadius: 10, marginTop: 50 }}
                                     textStyle={{ color: '#fff', textAlign: 'center' }}
                                     text={NEXT}
                                     submit={() => handleSubmit({ form: form })}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { View, Text, Alert, KeyboardAvoidingView, Platform, ScrollView, SafeAreaView } from 'react-native';
 import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
@@ -12,6 +12,7 @@ import { CONFIRM_PASSWORD, LOGIN, OLD_USER, PASSWORD, REGISTER, USER_NAME } from
 import Radiobutton from '../../Components/Field/RadioButton';
 import Datepicker from '../../Components/Field/DatePicker';
 import { get } from 'lodash';
+import { ThemeContext } from "../../themes/theme-context";
 
 const Gender = [
     { label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }, { label: 'Other', value: 'Other' }
@@ -31,6 +32,7 @@ const Register = () => {
     const [passwordMatch, setPasswordMatch] = useState(false);
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmPassword] = useState('');
+    const theme = useContext(ThemeContext);
 
     useEffect(() => {
         if (password === confirmpassword) {
@@ -64,7 +66,7 @@ const Register = () => {
         //     style={{ flex: 1 }}
         // >
         <KeyboardAvoidingView keyboardVerticalOffset={100} behavior={Platform.OS === 'ios' && 'padding'} style={{ flex: 1 }} enabled>
-            <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', }}>
+            <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', backgroundColor: theme.blackColor }}>
                 <View style={{ marginVertical: 50 }}>
                     <Form onSubmit={submit}
                         render={({ handleSubmit, invalid }) => (
@@ -133,14 +135,14 @@ const Register = () => {
                                     component={Datepicker}
                                     placeholderName={'DOB'}
                                 />
-                                <Text style={{ fontSize: 18, paddingTop: 10 }}>Gender:</Text>
+                                <Text style={{ fontSize: 18, paddingTop: 10, color: theme.text }}>Gender:</Text>
                                 <Field
                                     name='gender'
                                     component={Radiobutton}
                                     Questions={Gender}
                                     questionIndex={0}
                                     value={value}
-                                    labelStyle={{ fontSize: 16 }}
+                                    labelStyle={{ fontSize: 16, color: theme.text }}
                                 />
                                 <View style={{ padding: 10 }}></View>
                                 <Field

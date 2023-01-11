@@ -19,6 +19,8 @@ import DiaryQuestions from './src/Screens/Hearing Diary/DiaryQuestions';
 import { checkRegistered, setToken } from './src/actions';
 import { USER, USER_TOKEN } from './src/Constants/appconstants';
 
+import { ThemeContext } from './src/themes/theme-context';
+import { ThemeColors } from './src/themes';
 
 const Stack = createNativeStackNavigator();
 
@@ -69,29 +71,31 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {isRegistered === "REGISTERED" ?
-          (
-            <>
-              <Stack.Screen name="Dashboard" component={Dashboard} />
-              <Stack.Screen name="Tell us more" component={TellUs} />
-              <Stack.Screen name="Hearing test" component={Survey} />
-              <Stack.Screen name="Ask us" component={Chat} />
-              <Stack.Screen name="Profile" component={Profile} />
-              <Stack.Screen name="Hearing aid details" component={HearingDetails} />
-              <Stack.Screen name="Hearing Diary" component={HearingDiary} />
-              <Stack.Screen name="Diary Questions" component={DiaryQuestions} />
-            </>
-          ) : (
-            <>
-              <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="Register" component={Register} />
-            </>
-          )
-        }
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ThemeContext.Provider value={ThemeColors()}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {isRegistered === "REGISTERED" ?
+            (
+              <>
+                <Stack.Screen name="Dashboard" component={Dashboard} />
+                <Stack.Screen name="Tell us more" component={TellUs} />
+                <Stack.Screen name="Hearing test" component={Survey} />
+                <Stack.Screen name="Ask us" component={Chat} />
+                <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen name="Hearing aid details" component={HearingDetails} />
+                <Stack.Screen name="Hearing Diary" component={HearingDiary} />
+                <Stack.Screen name="Diary Questions" component={DiaryQuestions} />
+              </>
+            ) : (
+              <>
+                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="Register" component={Register} />
+              </>
+            )
+          }
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ThemeContext.Provider>
   );
 };
 

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-date-picker';
+import { ThemeContext } from "../../themes/theme-context";
 
 import datePicker from '../../assets/data_picker.png';
 
@@ -10,7 +11,7 @@ export default (props) => {
     const [values, setvalues] = useState(props.input.value || props.initValue || "");
     const [valueEntered, setvalueEntered] = useState((props.input.value || props.initValue) ? true : false);
     const { meta: { touched, error }, input: { value }, initValue, placeholderName, getValue, } = props;
-
+    const theme = useContext(ThemeContext);
 
     useEffect(() => {
         setvalueEntered(initValue !== "" ? true : false)
@@ -47,19 +48,19 @@ export default (props) => {
                     <TouchableOpacity
                         onPress={() => setOpen(true)}
                     >
-                        <Image style={{ width: 25, height: 25, marginLeft: 10, tintColor: 'grey', zIndex: 999 }} source={datePicker} />
+                        <Image style={{ width: 25, height: 25, marginLeft: 10, zIndex: 999 }} source={datePicker} />
                     </TouchableOpacity>
                 </View>
                 <View>
                     <TextInput
-                        style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1, }}
+                        style={{ backgroundColor: theme.inputField, padding: 10, borderRadius: 10, width: 300, marginBottom: 15, borderColor: '#000', borderWidth: 1 }}
                         value={date.toDateString()}
                         onChangeText={onChangeHandler}
                         placeholder={placeholderName}
                         defaultValue={getValue}
                         autoCorrect={false}
                         {...props}
-                        placeholderTextColor={'grey'}
+                        placeholderTextColor={theme.placeholderTextColor}
                         editable={false}
                     />
                 </View>
