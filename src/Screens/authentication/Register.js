@@ -135,14 +135,14 @@ const Register = () => {
                                     component={Datepicker}
                                     placeholderName={'DOB'}
                                 />
-                                <Text style={{ fontSize: 18, paddingTop: 10, color: theme.placeholderTextColor }}>Gender:</Text>
+                                <Text style={{ fontSize: 18, paddingTop: 10, color: theme.text }}>Gender:</Text>
                                 <Field
                                     name='gender'
                                     component={Radiobutton}
                                     Questions={Gender}
                                     questionIndex={0}
                                     value={value}
-                                    labelStyle={{ fontSize: 16 }}
+                                    labelStyle={{ fontSize: 16, color: theme.text }}
                                 />
                                 <View style={{ padding: 10 }}></View>
                                 <Field

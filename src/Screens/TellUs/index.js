@@ -17,7 +17,7 @@ const TellUs = ({ navigation }) => {
     return (
         <View style={{ flex: 1, backgroundColor: theme.blackColor }}>
             <View style={{ padding: 20 }}>
-                <Text>Take the survey to help us understand your lifestyle and how it may be affected by your hearing</Text>
+                <Text style={{ color: theme.text}}>Take the survey to help us understand your lifestyle and how it may be affected by your hearing</Text>
             </View>
             <View style={{ width: getWidth() / 1.2, alignSelf: 'center', marginTop: getHeight() / 1.3, position: 'absolute' }}>
                 <SubmitButton

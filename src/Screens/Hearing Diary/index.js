@@ -17,7 +17,7 @@ const HearingDiary = ({ navigation }) => {
     return (
         <View style={{ flex: 1, backgroundColor: theme.blackColor }}>
             <View style={{ padding: 20 }}>
-                <Text>Take some questions about hearing device...</Text>
+                <Text style={{ color: theme.text}}>Take some questions about hearing device...</Text>
             </View>
             <View style={{ width: getWidth() / 1.2, alignSelf: 'center', marginTop: getHeight() / 1.3, position: 'absolute' }}>
                 <SubmitButton

@@ -73,7 +73,7 @@ const Dashboard = ({ route, navigation }) => {
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, marginRight: 10, }}
                             text={TELL_US}
-                            textStyle={{ textAlign: 'center' }}
+                            textStyle={{ textAlign: 'center', color: theme.text }}
                             submit={() => navigation.navigate('Tell us more')}
                         />
                     </View>
@@ -81,7 +81,7 @@ const Dashboard = ({ route, navigation }) => {
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20 }}
                             text={HEARING_DIARY}
-                            textStyle={{ textAlign: 'center' }}
+                            textStyle={{ textAlign: 'center', color: theme.text }}
                             submit={() => navigation.navigate('Hearing Diary')} />
                     </View>
                 </View>
@@ -90,14 +90,14 @@ const Dashboard = ({ route, navigation }) => {
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, marginRight: 10, }}
                             text={PROFILE}
-                            textStyle={{ textAlign: 'center' }}
+                            textStyle={{ textAlign: 'center', color: theme.text }}
                             submit={() => navigation.navigate('Profile')} />
                     </View>
                     <View style={{ flex: 0.5 }}>
                         <SubmitButton
                             btnStyle={{ backgroundColor: '#51B3FF', padding: 20, }}
                             text={CHAT}
-                            textStyle={{ textAlign: 'center' }}
+                            textStyle={{ textAlign: 'center', color: theme.text }}
                             submit={() => navigation.navigate('Ask us')}
                         />
                     </View>
