@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { View, Text, Platform, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Form, Field } from 'react-final-form';
 import { required, email, length } from 'redux-form-validators';
@@ -12,6 +12,7 @@ import { checkRegistered, setToken, setUser, submitLogin } from '../../actions';
 import { FORGOT_PASSWORD, LOGIN, NEW_ACCOUNT, NEW_USER, PASSWORD, USER_MAIL, USER_NAME } from '../../Constants/appconstants';
 import { showToast } from '../../Components/utils';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ThemeContext } from "../../themes/theme-context";
 
 const LoginForm = () => {
 
@@ -19,6 +20,7 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const { data } = useSelector((state) => state.user);
     const isInitialMount = useRef(true);
+    const theme = useContext(ThemeContext);
 
     const submit = value => {
         dispatch(submitLogin(value));
@@ -55,7 +57,7 @@ const LoginForm = () => {
 
     return (
         <SafeAreaView>
-            <ScrollView contentContainerStyle={{ alignItems: 'center', backgroundColor: '#fff' }}>
+            <ScrollView contentContainerStyle={{ alignItems: 'center', backgroundColor: theme.blackColor }}>
                 <Form onSubmit={submit}
                     render={({ handleSubmit, invalid }) => (
                         <View>
@@ -91,15 +93,15 @@ const LoginForm = () => {
                                 <View style={{ position: 'absolute', right: 10 }}>
                                     <SubmitButton
                                         text={FORGOT_PASSWORD}
-                                        textStyle={{ textDecorationLine: 'underline', fontWeight: '400' }}
+                                        textStyle={{ textDecorationLine: 'underline', fontWeight: '400', color: theme.text }}
                                     />
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10, marginBottom: 10 }}>
-                                <Text>{NEW_ACCOUNT}</Text>
+                                <Text style={{ color: theme.text }}>{NEW_ACCOUNT}</Text>
                                 <SubmitButton
                                     text={NEW_USER}
-                                    textStyle={{ textDecorationLine: 'underline', fontWeight: 'bold' }}
+                                    textStyle={{ textDecorationLine: 'underline', fontWeight: 'bold', color: theme.text }}
                                     submit={() => navigation.navigate('Register')}
                                 >
                                 </SubmitButton>

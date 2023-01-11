@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { Field, Form } from 'react-final-form';
 import { View, Image, Text, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,12 +11,14 @@ import SubmitButton from '../../Components/SubmitButton';
 import { AID_USER, CANCEL, DIABETES, DOB, HEALTH_STATS, HYPER_TENSION, NAME, OTHER, SAVE, SUBMIT, UPDATE } from '../../Constants/appconstants';
 import { clearResponse, fetchVitals, submitVitals, updateVitals } from '../../actions';
 import ProfileCheckBox from '../../Components/Field/ProfileCheckBox';
+import { ThemeContext } from "../../themes/theme-context";
 
 const Profile = ({ navigation }) => {
 
     const { data, vitals } = useSelector((state) => state.user);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
+    const theme = useContext(ThemeContext);
 
     const submit = value => {
         console.log(vitals, 'vitals')
@@ -85,7 +87,7 @@ const Profile = ({ navigation }) => {
                                 placeholderName={HEALTH_STATS}
                                 initValue={vitals ? get(vitals, 'currentHealthStatus', '') : ''}
                             />
-                            <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
+                            <View style={{ backgroundColor: theme.inputField, width: 300, flexDirection: 'row', marginTop: 10, alignItems: 'center' }}>
                                 <Field
                                     name='diabets'
                                     component={ProfileCheckBox}
@@ -110,7 +112,7 @@ const Profile = ({ navigation }) => {
                                     initValue={vitals ? get(vitals, 'otherHealthConditions', '') : ''}
                                 />
                             </View>
-                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                            <View style={{ backgroundColor: theme.inputField, width: 300, flexDirection: 'row', marginTop: 10 }}>
                                 <Field
                                     name='hearingAidUser'
                                     component={ProfileCheckBox}

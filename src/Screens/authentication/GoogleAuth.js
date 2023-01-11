@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 // Import all the components we are going to use
 import {
@@ -23,6 +23,7 @@ import { get } from 'lodash';
 
 import { checkRegistered, googleauthcheck, setToken, submitGoogleAuth } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { ThemeContext } from "../../themes/theme-context";
 
 const GoogleAuth = () => {
   const navigation = useNavigation();
@@ -30,6 +31,7 @@ const GoogleAuth = () => {
   const [gettingLoginStatus, setGettingLoginStatus] = useState(true);
   const { authCheck } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const theme = useContext(ThemeContext);
 
   useEffect(() => {
     // Initial configuration
@@ -92,7 +94,7 @@ const GoogleAuth = () => {
     }
   };
 
-  function _signInTest ()  {
+  function _signInTest() {
     console.log('_signInTest')
   }
 
@@ -149,7 +151,7 @@ const GoogleAuth = () => {
     );
   } else {
     return (
-      <SafeAreaView style={{ backgroundColor: '#fff', }}>
+      <SafeAreaView style={{ backgroundColor: theme.blackColor }}>
         <View style={styles.container}>
           <View style={styles.container}>
             {/* {
