@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import RNSecureKeyStore, { ACCESSIBLE } from "react-native-secure-key-store";
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import { get } from 'lodash';
 import Logout from '../Components/Logout';
 import SubmitButton from '../Components/SubmitButton';
 import { AppBarStyle } from '../Components/utils';
+import { ThemeContext } from "../themes/theme-context";
 import { ASK_US, CHAT, HEARING_DIARY, PROFILE, TELL_US, USER_TOKEN } from '../Constants/appconstants';
 import { changeMsgStatus, clearState, getChat } from '../actions';
 
@@ -16,6 +17,7 @@ const Dashboard = ({ route, navigation }) => {
     const { authCheck, data } = useSelector((state) => state.user);
     const { chat, msgStatus } = useSelector((state) => state.chat);
     const [filteredMessages, setFilteredMessages] = useState([]);
+    const theme = useContext(ThemeContext);
 
     useEffect(() => {
         dispatch(getChat(get(data.user, "userId", "")));
@@ -61,7 +63,7 @@ const Dashboard = ({ route, navigation }) => {
     };
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: theme.blackColor }}>
             <View style={{ backgroundColor: 'grey' }}>
                 <Text style={{ textAlign: 'center', height: 100 }}>Banner</Text>
             </View>

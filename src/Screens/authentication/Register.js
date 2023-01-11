@@ -66,7 +66,7 @@ const Register = () => {
         //     style={{ flex: 1 }}
         // >
         <KeyboardAvoidingView keyboardVerticalOffset={100} behavior={Platform.OS === 'ios' && 'padding'} style={{ flex: 1 }} enabled>
-            <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', }}>
+            <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center', backgroundColor: theme.blackColor }}>
                 <View style={{ marginVertical: 50 }}>
                     <Form onSubmit={submit}
                         render={({ handleSubmit, invalid }) => (

@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Field, Form } from 'react-final-form';
 import { View, Text, Alert, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import Radiobutton from '../../Components/Field/RadioButton';
 import SubmitButton from '../../Components/SubmitButton';
 import { compare } from '../../Components/utils';
 import { NEXT } from '../../Constants/appconstants';
+import { ThemeContext } from "../../themes/theme-context";
 
 const DiaryQuestions = ({ navigation }) => {
     const [questionIndex, setQuestionIndex] = useState(0);
@@ -21,6 +22,7 @@ const DiaryQuestions = ({ navigation }) => {
     const [optionsList, setOptionsList] = useState([]);
     const dispatch = useDispatch();
     let question = questions[questionIndex];
+    const theme = useContext(ThemeContext);
 
     questions.sort(compare);
 
@@ -86,7 +88,7 @@ const DiaryQuestions = ({ navigation }) => {
     }, [questionIndex]);
 
     return (
-        <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <ScrollView style={{ flex: 1, backgroundColor: theme.blackColor }}>
             <View >
                 <View style={{ flexDirection: 'row', margin: 20 }}>
                     <Text style={{ fontSize: 20, fontWeight: '600', color: '#51B3FF' }}>{questions[questionIndex] !== undefined && questions[questionIndex].order}: </Text>
@@ -110,7 +112,7 @@ const DiaryQuestions = ({ navigation }) => {
                                                         setArrayvalues={setArrayvalues}
                                                         arrayvalues={arrayvalues}
                                                     />
-                                                    <Text style={{ marginHorizontal: 10, alignSelf: 'center', color: '#000', fontSize: 18 }}>{option}</Text>
+                                                    <Text style={{ marginHorizontal: 10, alignSelf: 'center', color: theme.text, fontSize: 18 }}>{option}</Text>
                                                 </View>
                                             </View>
                                         </View>
@@ -128,7 +130,7 @@ const DiaryQuestions = ({ navigation }) => {
                                                     component={Radiobutton}
                                                     Questions={optionsList}
                                                     questionIndex={questionIndex}
-                                                    labelStyle={{ fontSize: 18, color: '#000', fontWeight: '500' }}
+                                                    labelStyle={{ fontSize: 18, color: theme.text, fontWeight: '500' }}
                                                 // value={values}
                                                 />
                                             </View>
@@ -153,13 +155,12 @@ const DiaryQuestions = ({ navigation }) => {
 
                             }
                             <SubmitButton
-                                btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: '#000', padding: 20, borderRadius: 10, marginTop: 50, marginBottom: 20 }}
+                                btnStyle={{ alignSelf: 'center', width: 100, backgroundColor: 'blue', padding: 20, borderRadius: 10, marginTop: 50, marginBottom: 20 }}
                                 textStyle={{ color: '#fff', textAlign: 'center' }}
                                 text={NEXT}
                                 submit={() => handleSubmit({ form: form })}
                             />
                         </View>
-
                     )}
                 />
             </View>
